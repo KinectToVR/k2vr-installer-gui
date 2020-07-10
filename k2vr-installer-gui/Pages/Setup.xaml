@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="k2vr_installer_gui.Pages.Setup"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:k2vr_installer_gui.Pages"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Background="{StaticResource brush_background}">
+    <StackPanel>
+        <TextBlock Style="{StaticResource Heading}" Text="Select which device you intend to use:"/>
+        <ListBox Style="{StaticResource ListBox}"  x:Name="ListBox_devices" ItemsSource="{DynamicResource devices}"
+                 HorizontalAlignment="Center" Background="Transparent" BorderThickness="0">
+            <ListBox.ItemsPanel>
+                <!-- https://stackoverflow.com/a/1052512/ -->
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <Image Source="{Binding Path=Image}" Width="170" RenderOptions.BitmapScalingMode="Fant" Margin="8"/>
+                        <TextBlock Foreground="{StaticResource brush_foreground}" FontWeight="Bold" FontSize="15"
+                                   HorizontalAlignment="Center" Text="{Binding Path=PrettyName}"/>
+                        <TextBlock Foreground="{StaticResource brush_foreground}" FontSize="15"
+                                   HorizontalAlignment="Center" Text="{Binding Path=Information}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <TextBlock Style="{StaticResource Heading}" Text="Select install location:"/>
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+            <TextBox x:Name="TextBox_installLocation" Width="240" Height="20" VerticalContentAlignment="Center" Margin="0,0,10,0" />
+            <Button Style="{StaticResource Button_Secondary}" Content="Choose..." Click="Button_ChooseLocation_Click"/>
+        </StackPanel>
+
+        <TextBlock Style="{StaticResource Heading}" Text="Allow collecting anonymous usage data?"/>
+        <ListBox Style="{StaticResource ListBox}" x:Name="ListBox_analytics" HorizontalAlignment="Center" Foreground="{StaticResource brush_foreground}" Background="Transparent" BorderThickness="0">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBoxItem IsSelected="True">Yes</ListBoxItem>
+            <ListBoxItem>No</ListBoxItem>
+        </ListBox>
+
+        <Button Style="{StaticResource Button_Primary}" Margin="20,0" Content="Install" Click="Button_Install_Click"/>
+    </StackPanel>
+
+    <UserControl.Resources>
+        <x:Array Type="{x:Type local:Device}" x:Key="devices">
+            <local:Device Name="kinect_v2" PrettyName="Xbox One Kinect (V2)" Image="/Resources/Devices/kinect_v2.png" />
+            <local:Device Name="kinect_v1" PrettyName="Xbox 360 Kinect (V1)" Image="/Resources/Devices/kinect_v1.png" />
+            <local:Device Name="psmove" PrettyName="PlayStation Move" Image="/Resources/Devices/psmove.png" />
+        </x:Array>
+    </UserControl.Resources>
+</UserControl>
