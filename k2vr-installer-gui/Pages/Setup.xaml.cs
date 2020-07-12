@@ -135,7 +135,7 @@ namespace k2vr_installer_gui.Pages
 
             InstallerState settings = ((App)Application.Current).settings;
             settings.trackingDevice = device;
-            settings.allowAnalytics = ListBox_analytics.SelectedIndex == 0;
+            settings.allowAnalytics = checkBox_analytics.IsChecked == false;
             settings.installationPath = installLocation;
 
             settings.Write();
@@ -144,6 +144,11 @@ namespace k2vr_installer_gui.Pages
 
         public void OnSelected()
         {
+        }
+
+        private void ListBox_devices_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

@@ -25,6 +25,16 @@
 
         <SolidColorBrush x:Key="brush_button_inactive" Color="#FF6E9B66" />
 
+        <!--<Style x:Key="CheckBoxStyle1" TargetType="{x:Type CheckBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type CheckBox}">
+                        <Border BorderThickness="2" CornerRadius=""></Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>-->
+
         <Style TargetType="{x:Type Button}" x:Key="Button_Primary">
             <Setter Property="Foreground" Value="{StaticResource brush_foreground}"/>
             <Setter Property="Background" Value="{StaticResource brush_button_primary}"/>
@@ -32,7 +42,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="8" Padding="10">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="12 4">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                     </ControlTemplate>
@@ -71,9 +81,9 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="ListBoxItem">
                                 <Border x:Name="BorderOuter" Background="Transparent"
-                                BorderThickness="5" CornerRadius="10" BorderBrush="{StaticResource brush_button_secondary}"
+                                BorderThickness="5" CornerRadius="4" BorderBrush="{StaticResource brush_button_secondary}"
                                 Margin="10">
-                                    <Border x:Name="BorderInner" CornerRadius="10" Margin="-1" Padding="5" Background="{StaticResource brush_button_secondary}">
+                                    <Border x:Name="BorderInner" CornerRadius="4" Margin="-1" Padding="5" Background="{StaticResource brush_button_secondary}">
                                         <ContentPresenter />
                                     </Border>
                                     <VisualStateManager.VisualStateGroups>
@@ -124,7 +134,7 @@
                             <Border Name="PART_Track" CornerRadius="15"
                                     Background="{TemplateBinding Background}">
                             </Border>
-                            <Border Name="PART_Indicator" HorizontalAlignment="Left" CornerRadius="15"
+                            <Border Name="PART_Indicator" HorizontalAlignment="Left" CornerRadius="15 0 0 15"
                                     Background="{TemplateBinding Foreground}"/>
                         </Grid>
                     </ControlTemplate>

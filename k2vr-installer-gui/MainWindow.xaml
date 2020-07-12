@@ -6,16 +6,16 @@
         xmlns:local="clr-namespace:k2vr_installer_gui"
         xmlns:pages="clr-namespace:k2vr_installer_gui.Pages"
         mc:Ignorable="d"
-        ResizeMode="CanResize"
+        ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen"
-        Title="KinectToVR Installer" Height="500" Width="800" Background="{StaticResource brush_background}">
+        Title="KinectToVR Installer" Height="550" Width="800" Background="{StaticResource brush_background}" FontFamily="Jost*" FontWeight="Normal" Icon="installer-icon.png">
 
     <TabControl x:Name="TabControl_tabs" Background="{StaticResource brush_primary}" SelectionChanged="TabControl_tabs_SelectionChanged">
-        <TabItem Header="Home">
+        <TabItem Header="Start" FontFamily="Jost*">
             <pages:Home />
         </TabItem>
-        <TabItem Header="Setup">
-            <pages:Setup />
+        <TabItem Header="Options">
+            <pages:Setup/>
         </TabItem>
         <TabItem Header="Download">
             <pages:Download />
@@ -36,12 +36,10 @@
                     <DockPanel Grid.Row="0" Dock="Right" VerticalAlignment="Top" Background="{StaticResource brush_primary}">
                         <Image Source="/Resources/k2vr-logo.png" RenderOptions.BitmapScalingMode="Fant" Margin="8"/>
                         <UniformGrid Rows="1" x:Name="headerPanel" IsItemsHost="True" VerticalAlignment="Stretch" />
-                        <Label x:Name="kinectToVRVersionLabel" Content="KinectToVR Installer"
-                               HorizontalAlignment="Right" VerticalAlignment="Center"
-                               Foreground="#FF878EC5" FontSize="16" Margin="0,0,8,0"/>
+                        
                     </DockPanel>
 
-                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Disabled">
                         <Border x:Name="contentPanel">
                             <ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent"/>
                         </Border>
@@ -59,17 +57,15 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TabItem}">
-                        <Border Background="{TemplateBinding Background}" VerticalAlignment="Bottom" Margin="2,0,2,0" CornerRadius="5 5 0 0">
-                            <TextBlock x:Name="text_block" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10"
-                                       Foreground="{TemplateBinding Foreground}">
+                        <Border x:Name="border" BorderThickness="0 0 0 4" VerticalAlignment="Bottom" CornerRadius="0 0 0 0" Height="50" Margin="14 0">
+                            <TextBlock x:Name="text_block" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="17" Margin="0 4 0 0"
+                                       Foreground="{TemplateBinding Foreground}" Height="25">
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding Header}" />
                             </TextBlock>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="text_block" Property="TextBlock.TextDecorations" Value="Underline"/>
-                            </Trigger>
                             <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="border" Property="Border.BorderBrush" Value="{StaticResource brush_button_primary}"/>
                                 <Setter TargetName="text_block" Property="TextBlock.Foreground" Value="{StaticResource brush_button_primary}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>

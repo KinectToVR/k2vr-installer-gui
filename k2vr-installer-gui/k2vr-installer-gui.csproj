@@ -136,6 +136,9 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Resource Include="installer-icon.png" />
+    <Resource Include="Pages\cover.png" />
+    <Content Include="Resources\Jost-600-Semi.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
