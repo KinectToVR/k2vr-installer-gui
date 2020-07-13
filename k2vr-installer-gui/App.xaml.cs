@@ -9,13 +9,12 @@ namespace k2vr_installer_gui
     /// </summary>
     public partial class App : Application
     {
-        public string exeDirectory = AppDomain.CurrentDomain.BaseDirectory;
-        public InstallerState settings;
+        public static readonly string exeDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        public static readonly InstallerState state = InstallerState.Read();
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            settings = (new InstallerState()).Read();
-            settings.Update();
+            state.Update();
         }
     }
 }

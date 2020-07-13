@@ -8,7 +8,7 @@ namespace k2vr_installer_gui.Tools
 {
     public class InstallerState
     {
-        readonly string path = ((App)Application.Current).exeDirectory + "installerSettings.xml";
+        static readonly string path = App.exeDirectory + "installerSettings.xml";
 
         public enum TrackingDevice
         {
@@ -38,7 +38,7 @@ namespace k2vr_installer_gui.Tools
             }
         }
 
-        public InstallerState Read()
+        public static InstallerState Read()
         {
             try
             {

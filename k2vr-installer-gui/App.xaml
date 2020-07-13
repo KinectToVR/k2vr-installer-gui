@@ -63,6 +63,10 @@
             </Style.Triggers>
         </Style>
 
+        <Style TargetType="{x:Type Hyperlink}">
+            <Setter Property="Foreground" Value="{StaticResource brush_button_primary}" />
+        </Style>
+
         <Style TargetType="{x:Type CheckBox}" x:Key="CheckBox">
             <Setter Property="Foreground" Value="{StaticResource brush_foreground}"/>
             <Setter Property="Template">

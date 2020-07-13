@@ -58,7 +58,7 @@ namespace k2vr_installer_gui.Pages
 
         public void OnSelected()
         {
-            string tempPath = ((App)Application.Current).exeDirectory + @"temp\";
+            string tempPath = App.exeDirectory + @"temp\";
             if (!System.IO.Directory.Exists(tempPath))
             {
                 System.IO.Directory.CreateDirectory(tempPath);

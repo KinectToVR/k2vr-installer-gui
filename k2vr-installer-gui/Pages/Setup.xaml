@@ -34,8 +34,11 @@
             <TextBox x:Name="TextBox_installLocation" Width="240" Height="20" VerticalContentAlignment="Center" Margin="0,0,10,0" BorderBrush="{x:Null}" Background="{DynamicResource brush_background}" Foreground="{DynamicResource brush_foreground}" SelectionBrush="{DynamicResource brush_primary}" />
             <Button Style="{StaticResource Button_Secondary}" Content="Change" Click="Button_ChooseLocation_Click"/>
         </StackPanel>
-        <CheckBox Style="{StaticResource CheckBox}" x:Name="CheckBox_analytics" HorizontalAlignment="Center" Margin="0,16,0,8"
+        <CheckBox Style="{StaticResource CheckBox}" x:Name="CheckBox_analytics" HorizontalAlignment="Center" Margin="0,16,0,0"
                   FontFamily="Jost* Semi" FontSize="20" Content="Allow sending anonymous usage data" />
+        <TextBlock HorizontalAlignment="Center" Margin="0,0,0,8">
+            <Hyperlink Click="Hyperlink_Analytics_Click">What data is being collected?</Hyperlink>
+        </TextBlock>
         <!--<ListBox Style="{StaticResource ListBox}" x:Name="ListBox_analytics" HorizontalAlignment="Center" Foreground="{StaticResource brush_foreground}" Background="Transparent" BorderThickness="0">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
