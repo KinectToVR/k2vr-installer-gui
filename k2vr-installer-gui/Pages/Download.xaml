@@ -7,28 +7,31 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="{StaticResource brush_background}">
 
-    <Border Style="{StaticResource Element_Border}">
-        <ItemsControl x:Name="ItemsControl_downloads">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Expander Margin="0,0,0,1" IsExpanded="{Binding Path=Expanded}">
-                        <Expander.Header>
-                            <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" FontSize="20" Padding="0,0,0,2"/>
-                        </Expander.Header>
-                        <Expander.Content>
-                            <StackPanel Margin="1,0,0,6">
-                                <Grid>
-                                    <ProgressBar Style="{StaticResource Progress_Bar}" Height="30" Value="{Binding Path=Percentage}" />
-                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"
+
+    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+        <Border Style="{StaticResource Element_Border}">
+            <ItemsControl x:Name="ItemsControl_downloads">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Expander Margin="0,0,0,1" IsExpanded="{Binding Path=Expanded}">
+                            <Expander.Header>
+                                <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" FontSize="20" Padding="0,0,0,2"/>
+                            </Expander.Header>
+                            <Expander.Content>
+                                <StackPanel Margin="1,0,0,6">
+                                    <Grid>
+                                        <ProgressBar Style="{StaticResource Progress_Bar}" Height="30" Value="{Binding Path=Percentage}" />
+                                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"
                                                    Text="{Binding Path=PercentageString}"/>
-                                </Grid>
-                            </StackPanel>
-                        </Expander.Content>
-                    </Expander>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-    </Border>
+                                    </Grid>
+                                </StackPanel>
+                            </Expander.Content>
+                        </Expander>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Border>
+    </ScrollViewer>
 
     <UserControl.Resources>
         <Style TargetType="{x:Type Expander}">

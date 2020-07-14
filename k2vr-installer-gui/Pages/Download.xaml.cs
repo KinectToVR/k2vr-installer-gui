@@ -77,10 +77,5 @@ namespace k2vr_installer_gui.Pages
             }
             ItemsControl_downloads.ItemsSource = downloadItems;
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Console.WriteLine(downloadItems);
-        }
     }
 }
