@@ -1,0 +1,38 @@
+﻿using Microsoft.Win32;
+using System;
+using System.Globalization;
+using System.IO;
+using System.Reflection;
+using System.Xml.Serialization;
+using static k2vr_installer_gui.Tools.InstallerState;
+
+namespace k2vr_installer_gui.Tools
+{
+    public class Analytics
+    {
+        public TrackingDevice trackingDevice;
+        public string installerVersion;
+        public string windowsReleaseId;
+        public string windowsBuild;
+        public string language;
+
+        public Analytics()
+        {
+            trackingDevice = App.state.trackingDevice;
+            installerVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            windowsReleaseId = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", "").ToString();
+            windowsBuild = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentBuild", "").ToString();
+            language = CultureInfo.CurrentUICulture.Name;
+        }
+
+        public string ToXmlString()
+        {
+            using (var writer = new StringWriter())
+            {
+                var xmlSerializer = new XmlSerializer(typeof(Analytics));
+                xmlSerializer.Serialize(writer, this);
+                return writer.ToString();
+            }
+        }
+    }
+}

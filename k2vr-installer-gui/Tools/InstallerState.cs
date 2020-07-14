@@ -63,7 +63,6 @@ namespace k2vr_installer_gui.Tools
                 {
                     try
                     {
-                        Console.WriteLine();
                         string dependent = (string)device.GetPropertyValue("Dependent");
                         string devId = dependent.Substring(dependent.IndexOf("DeviceID=\""));
                         if (devId.Contains("02B0") || devId.Contains("02BB") || devId.Contains("02AE"))

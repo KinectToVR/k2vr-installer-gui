@@ -141,6 +141,11 @@ namespace k2vr_installer_gui.Pages
             ((MainWindow)Application.Current.MainWindow).GoToTab(2);
         }
 
+        private void Hyperlink_Analytics_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(new Analytics().ToXmlString());
+        }
+
         public void OnSelected()
         {
         }
