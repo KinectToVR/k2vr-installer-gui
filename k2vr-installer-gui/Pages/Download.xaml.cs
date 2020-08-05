@@ -3,12 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace k2vr_installer_gui.Pages
 {
-    public class DownloadItem: INotifyPropertyChanged
+    public class DownloadItem : INotifyPropertyChanged
     {
         public string Name { get; set; }
 
@@ -33,7 +34,7 @@ namespace k2vr_installer_gui.Pages
             }
         }
 
-        public string PercentageString { get; set;  }
+        public string PercentageString { get; set; }
         public bool Expanded { get; set; }
 
         public DownloadItem(string name)
@@ -56,6 +57,18 @@ namespace k2vr_installer_gui.Pages
             InitializeComponent();
         }
 
+        private void AddToDownloadQueue(File file, string targetFolder)
+        {
+            var downloadItem = new DownloadItem(file.PrettyName);
+            var wc = new WebClient();
+            wc.DownloadFileAsync(new Uri(file.Url), targetFolder + file.OutName);
+            wc.DownloadProgressChanged += (object sender, DownloadProgressChangedEventArgs e) =>
+            {
+                downloadItem.Percentage = e.ProgressPercentage;
+            };
+            downloadItems.Add(downloadItem);
+        }
+
         public void OnSelected()
         {
             string tempPath = App.exeDirectory + @"temp\";
@@ -66,14 +79,14 @@ namespace k2vr_installer_gui.Pages
             foreach (KeyValuePair<string, File> entry in FileDownloader.files)
             {
                 var file = entry.Value;
-                var downloadItem = new DownloadItem(file.PrettyName);
-                var wc = new WebClient();
-                wc.DownloadFileAsync(new Uri(file.Url), tempPath + file.OutName);
-                wc.DownloadProgressChanged += (object sender, DownloadProgressChangedEventArgs e) =>
+                if (file.AlwaysRequired)
                 {
-                    downloadItem.Percentage = e.ProgressPercentage;
-                };
-                downloadItems.Add(downloadItem);
+                    AddToDownloadQueue(file, tempPath);
+                }
+                else if (file.RequiredForDevice == App.state.trackingDevice)
+                {
+                    AddToDownloadQueue(file, tempPath);
+                }
             }
             ItemsControl_downloads.ItemsSource = downloadItems;
         }
