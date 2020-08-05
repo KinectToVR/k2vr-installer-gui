@@ -29,8 +29,8 @@ namespace k2vr_installer_gui.Pages
         public Setup()
         {
             InitializeComponent();
-            TextBox_installLocation.Text = Environment.ExpandEnvironmentVariables(@"%ProgramFiles%\KinectToVR");
-            switch (App.state.pluggedInDevice) {
+            switch (App.state.pluggedInDevice)
+            {
                 case TrackingDevice.XboxOneKinect:
                     ListBox_devices.SelectedIndex = 0;
                     break;
@@ -41,6 +41,14 @@ namespace k2vr_installer_gui.Pages
             if (App.state.pluggedInDevice != TrackingDevice.None)
             {
                 ((Device)ListBox_devices.SelectedItem).Information = "(Detected)";
+            }
+            try
+            {
+                TextBox_installLocation.Text = Path.GetFullPath(Environment.ExpandEnvironmentVariables(App.state.installationPath));
+            }
+            catch (Exception)
+            {
+                TextBox_installLocation.Text = Environment.ExpandEnvironmentVariables(@"%ProgramFiles%\KinectToVR");
             }
         }
 
