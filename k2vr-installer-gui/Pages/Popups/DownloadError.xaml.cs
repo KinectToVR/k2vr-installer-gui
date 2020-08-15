@@ -20,20 +20,30 @@ namespace k2vr_installer_gui.Pages.Popups
     /// </summary>
     public partial class DownloadError : Window
     {
-        public DownloadError(Exception exception)
+        public DownloadError(string file, Exception exception, bool cancelled)
         {
             InitializeComponent();
+            TextBlock_title.Text = $"Download of {file} failed!";
             if (exception != null)
             {
                 if (exception is WebException)
                 {
-                    TextBlock_status.Text = "Status: " + ((WebException)exception).Status.ToString();
+                    TextBlock_status.Text = "Status code: " + ((WebException)exception).Status.ToString();
                     if (((WebException)exception).Status == WebExceptionStatus.NameResolutionFailure)
                     {
                         TextBlock_hint.Text = "Please check your internet connection and try again." + Environment.NewLine + TextBlock_hint.Text;
                     }
                 }
                 TextBlock_reason.Text = exception.Message;
+            }
+            else if (cancelled)
+            {
+                TextBlock_status.Text = "Status code: Cancelled";
+            }
+            else
+            {
+                TextBlock_reason.Text = "The downloaded file was corrupted.";
+                TextBlock_status.Text = "Status code: Checksum mismatch";
             }
         }
 

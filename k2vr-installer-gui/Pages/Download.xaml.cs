@@ -37,18 +37,24 @@ namespace k2vr_installer_gui.Pages
             {
                 percentage = value;
                 PercentageString = value.ToString() + "%";
-                if (percentage == 100)
-                {
-                    Expanded = false;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Expanded"));
-                }
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Percentage"));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("PercentageString"));
             }
         }
 
         public string PercentageString { get; set; }
-        public bool Expanded { get; set; }
+
+        private bool expanded = false;
+
+        public bool Expanded
+        {
+            get { return expanded; }
+            set
+            {
+                expanded = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Expanded"));
+            }
+        }
 
         public DownloadItem(string title, FileToDownload fileToDownload, string destination)
         {
@@ -57,7 +63,6 @@ namespace k2vr_installer_gui.Pages
             FileToDownload = fileToDownload;
             Destination = destination;
             Percentage = 0;
-            Expanded = false;
         }
 
         public void SetStatus(string value)
@@ -118,6 +123,7 @@ namespace k2vr_installer_gui.Pages
                 {
                     item.SetStatus("already downloaded");
                     item.Percentage = 100;
+                    item.Expanded = false;
                     ProcessNextQueueItem(wc);
                 }
                 else
@@ -166,16 +172,19 @@ namespace k2vr_installer_gui.Pages
             };
             wc.DownloadFileCompleted += (object sender, AsyncCompletedEventArgs e) =>
             {
-                if (e.Error == null && !e.Cancelled && CheckMD5(downloadQueue[currentQueuePosition]))
+                DownloadItem item = downloadQueue[currentQueuePosition];
+                item.SetStatus("checking");
+                if (e.Error == null && !e.Cancelled && CheckMD5(item))
                 {
-                    downloadQueue[currentQueuePosition].SetStatus("downloaded");
+                    item.SetStatus("downloaded");
+                    item.Expanded = false;
                 }
                 else
                 {
-                    downloadQueue[currentQueuePosition].FailedDownloadAttempts += 1;
-                    if (downloadQueue[currentQueuePosition].FailedDownloadAttempts >= MaxFailedDownloadAttemps)
+                    item.FailedDownloadAttempts += 1;
+                    if (item.FailedDownloadAttempts >= MaxFailedDownloadAttemps)
                     {
-                        new DownloadError(e.Error).ShowDialog();
+                        new DownloadError(item.FileToDownload.PrettyName, e.Error, e.Cancelled).ShowDialog();
                         Application.Current.Shutdown(1);
                         return;
                     }

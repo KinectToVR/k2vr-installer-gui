@@ -11,7 +11,7 @@
         Icon="/installer-icon.png" Background="{StaticResource brush_background}"
         FontFamily="Jost*">
     <StackPanel Margin="10">
-        <TextBlock Style="{StaticResource Heading}" Foreground="#FF6464" Margin="0 0 0 5"
+        <TextBlock x:Name="TextBlock_title" Style="{StaticResource Heading}" Foreground="#FF6464" Margin="0 0 0 5"
                    Text="Download failed!"/>
         <TextBlock Style="{StaticResource Heading}" Text="Reason:"/>
         <TextBlock x:Name="TextBlock_reason" Text="Unknown reason"
