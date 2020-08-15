@@ -15,7 +15,7 @@
                     <DataTemplate>
                         <Expander Margin="0,0,0,1" IsExpanded="{Binding Path=Expanded}">
                             <Expander.Header>
-                                <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" FontSize="20" Padding="0,0,0,2"/>
+                                <TextBlock Text="{Binding Path=Title}" FontWeight="Bold" FontSize="20" Padding="0,0,0,2"/>
                             </Expander.Header>
                             <Expander.Content>
                                 <StackPanel Margin="1,0,0,6">

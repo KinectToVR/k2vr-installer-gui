@@ -1,21 +1,34 @@
-﻿using k2vr_installer_gui.Tools;
+﻿using k2vr_installer_gui.Pages.Popups;
+using k2vr_installer_gui.Tools;
+using Microsoft.WindowsAPICodePack.Shell.Interop;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
+using System.Xaml;
 
 namespace k2vr_installer_gui.Pages
 {
     public class DownloadItem : INotifyPropertyChanged
     {
-        public string Name { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private string originalTitle;
+
+        public string Title { get; set; }
+
+        public FileToDownload FileToDownload;
+
+        public string Destination;
+
+        public int FailedDownloadAttempts = 0;
 
         private int percentage;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public int Percentage
         {
@@ -37,11 +50,20 @@ namespace k2vr_installer_gui.Pages
         public string PercentageString { get; set; }
         public bool Expanded { get; set; }
 
-        public DownloadItem(string name)
+        public DownloadItem(string title, FileToDownload fileToDownload, string destination)
         {
-            Name = name;
+            originalTitle = title;
+            Title = title;
+            FileToDownload = fileToDownload;
+            Destination = destination;
             Percentage = 0;
-            Expanded = true;
+            Expanded = false;
+        }
+
+        public void SetStatus(string value)
+        {
+            Title = originalTitle + " - " + value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Title"));
         }
     }
 
@@ -50,33 +72,76 @@ namespace k2vr_installer_gui.Pages
     /// </summary>
     public partial class Download : UserControl, IInstallerPage
     {
-        public List<DownloadItem> downloadItems = new List<DownloadItem>();
+        public const int MaxFailedDownloadAttemps = 2;
+
+        public List<DownloadItem> downloadQueue = new List<DownloadItem>();
+        public int currentQueuePosition = -1;
 
         public Download()
         {
             InitializeComponent();
         }
 
-        private void AddToDownloadQueue(File file, string targetFolder)
+        private void AddToDownloadQueue(FileToDownload file, string targetFolder)
         {
-            var downloadItem = new DownloadItem(file.PrettyName);
-            var wc = new WebClient();
-            wc.DownloadFileAsync(new Uri(file.Url), targetFolder + file.OutName);
-            wc.DownloadProgressChanged += (object sender, DownloadProgressChangedEventArgs e) =>
+            var downloadItem = new DownloadItem(file.PrettyName, file, targetFolder + file.OutName);
+            downloadItem.SetStatus("pending");
+            downloadQueue.Add(downloadItem);
+        }
+
+        private bool CheckMD5(DownloadItem item)
+        {
+            if (File.Exists(item.Destination))
             {
-                downloadItem.Percentage = e.ProgressPercentage;
-            };
-            downloadItems.Add(downloadItem);
+                using (var md5 = MD5.Create())
+                {
+                    using (var stream = File.OpenRead(item.Destination))
+                    {
+                        // https://stackoverflow.com/a/10520086/
+                        if (BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "") == item.FileToDownload.Md5)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        private void ProcessNextQueueItem(WebClient wc)
+        {
+            currentQueuePosition++;
+            if (currentQueuePosition < downloadQueue.Count)
+            {
+                DownloadItem item = downloadQueue[currentQueuePosition];
+                if (CheckMD5(item))
+                {
+                    item.SetStatus("already downloaded");
+                    item.Percentage = 100;
+                    ProcessNextQueueItem(wc);
+                }
+                else
+                {
+                    item.SetStatus("downloading");
+                    item.Expanded = true;
+                    wc.DownloadFileAsync(new Uri(item.FileToDownload.Url), item.Destination);
+                }
+            }
+            else
+            {
+                wc.Dispose();
+                ((MainWindow)Application.Current.MainWindow).GoToTab(3);
+            }
         }
 
         public void OnSelected()
         {
             string tempPath = App.exeDirectory + @"temp\";
-            if (!System.IO.Directory.Exists(tempPath))
+            if (!Directory.Exists(tempPath))
             {
-                System.IO.Directory.CreateDirectory(tempPath);
+                Directory.CreateDirectory(tempPath);
             }
-            foreach (KeyValuePair<string, File> entry in FileDownloader.files)
+            foreach (KeyValuePair<string, FileToDownload> entry in FileDownloader.files)
             {
                 var file = entry.Value;
                 if (file.AlwaysRequired)
@@ -88,7 +153,36 @@ namespace k2vr_installer_gui.Pages
                     AddToDownloadQueue(file, tempPath);
                 }
             }
-            ItemsControl_downloads.ItemsSource = downloadItems;
+
+            ItemsControl_downloads.ItemsSource = downloadQueue;
+
+            var wc = new WebClient();
+
+            ProcessNextQueueItem(wc);
+
+            wc.DownloadProgressChanged += (object sender, DownloadProgressChangedEventArgs e) =>
+            {
+                downloadQueue[currentQueuePosition].Percentage = e.ProgressPercentage;
+            };
+            wc.DownloadFileCompleted += (object sender, AsyncCompletedEventArgs e) =>
+            {
+                if (e.Error == null && !e.Cancelled && CheckMD5(downloadQueue[currentQueuePosition]))
+                {
+                    downloadQueue[currentQueuePosition].SetStatus("downloaded");
+                }
+                else
+                {
+                    downloadQueue[currentQueuePosition].FailedDownloadAttempts += 1;
+                    if (downloadQueue[currentQueuePosition].FailedDownloadAttempts >= MaxFailedDownloadAttemps)
+                    {
+                        new DownloadError(e.Error).ShowDialog();
+                        Application.Current.Shutdown(1);
+                        return;
+                    }
+                    currentQueuePosition--;
+                }
+                ProcessNextQueueItem(wc);
+            };
         }
     }
 }
