@@ -29,6 +29,11 @@ namespace k2vr_installer_gui.Tools
         public bool ovrie_fix_installed = false;
         public string steamvr_path = "";
 
+        public string GetFullInstallationPath()
+        {
+            return Path.GetFullPath(Environment.ExpandEnvironmentVariables(installationPath));
+        }
+
         public void Write()
         {
             using (var writer = new StreamWriter(path))

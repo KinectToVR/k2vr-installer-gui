@@ -61,7 +61,7 @@ namespace k2vr_installer_gui.Pages
             CheckBox_analytics.IsChecked = App.state.allowAnalytics;
             try
             {
-                TextBox_installLocation.Text = Path.GetFullPath(Environment.ExpandEnvironmentVariables(App.state.installationPath));
+                TextBox_installLocation.Text = App.state.GetFullInstallationPath();
             }
             catch (Exception)
             {
