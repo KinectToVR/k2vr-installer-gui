@@ -26,8 +26,8 @@ namespace k2vr_installer_gui.Tools
         public string installationPath;
 
         public TrackingDevice pluggedInDevice = TrackingDevice.None;
-        public bool kinect_v1_sdk_installed = false;
-        public bool kinect_v2_sdk_installed = false;
+        public bool kinectV1SdkInstalled = false;
+        public bool kinectV2SdkInstalled = false;
         public string steamPath = "";
         public string steamVrPath = "";
 
@@ -86,6 +86,17 @@ namespace k2vr_installer_gui.Tools
                 devices.Dispose();
             }
 
+            kinectV1SdkInstalled = false;
+            if (Directory.Exists(Path.Combine("C:", "Program Files", "Microsoft SDKs", "Kinect", "v1.8")))
+            {
+                kinectV1SdkInstalled = true;
+            }
+            kinectV2SdkInstalled = false;
+            if (Directory.Exists(Path.Combine("C:", "Program Files", "Microsoft SDKs", "Kinect", "v2.0_1409")))
+            {
+                kinectV2SdkInstalled = true;
+            }
+
             steamPath = "";
             steamPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Valve\Steam", "InstallPath", "").ToString();
             if (steamPath == "")
@@ -114,7 +125,7 @@ namespace k2vr_installer_gui.Tools
 
             steamVrPath = "";
 
-            foreach(string folder in libraryFolders)
+            foreach (string folder in libraryFolders)
             {
                 string potentialSteamVrPath = Path.Combine(folder, @"steamapps", "common", "SteamVR");
                 if (Directory.Exists(potentialSteamVrPath))

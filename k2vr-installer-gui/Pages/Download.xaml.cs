@@ -155,7 +155,11 @@ namespace k2vr_installer_gui.Pages
                 }
                 else if (file.RequiredForDevice == App.state.trackingDevice)
                 {
-                    AddToDownloadQueue(file, App.downloadDirectory);
+                    if ((App.state.trackingDevice == InstallerState.TrackingDevice.Xbox360Kinect && !App.state.kinectV1SdkInstalled) ||
+                        (App.state.trackingDevice == InstallerState.TrackingDevice.XboxOneKinect && !App.state.kinectV2SdkInstalled))
+                    {
+                        AddToDownloadQueue(file, App.downloadDirectory);
+                    }
                 }
             }
 
