@@ -5,7 +5,9 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -33,17 +35,20 @@ namespace k2vr_installer_gui.Pages
 
         private void Log(string text, bool newLine = true)
         {
+            if (newLine) text += Environment.NewLine;
             TextBlock_installLog.Dispatcher.Invoke(() =>
             {
                 TextBlock_installLog.Text += text;
-                if (newLine) TextBlock_installLog.Text += Environment.NewLine;
             });
+            File.AppendAllText(Path.Combine(App.downloadDirectory, "install.log"), text);
         }
 
         public async void OnSelected()
         {
             await Task.Run(() =>
             {
+                Log("K2VR Installer " + Assembly.GetExecutingAssembly().GetName().Version.ToString() + " on " + DateTime.Now.ToString());
+
                 Log("Checking if SteamVR is open...", false);
                 foreach (Process process in Process.GetProcesses())
                 {
@@ -162,10 +167,43 @@ namespace k2vr_installer_gui.Pages
                         {
                             element.SetFocus();
                         }
-                    } catch (Exception e) { } // Don't want the whole install to fail for something that mundane
+                    }
+                    catch (Exception e) { } // Don't want the whole install to fail for something that mundane
                     sdkInstallerProcess.WaitForExit();
                     Log("Done!");
                 }
+
+                Log("Registering OpenVR driver...", false);
+                string vrPathReg = Path.Combine(App.state.steamVrPath, "bin", "win64", "vrpathreg.exe");
+                Process.Start(vrPathReg, "adddriver \"" + Path.Combine(App.state.GetFullInstallationPath(), "KinectToVR") + "\"");
+                Log("Checking...", false);
+                string openVrPathsPath = Environment.ExpandEnvironmentVariables(Path.Combine("%LocalAppData%", "openvr", "openvrpaths.vrpath"));
+                if (!File.ReadAllText(openVrPathsPath).Contains("KinectToVR")) // ToDo: Do this properly
+                {
+                    Log("Didn't work...", false);
+                }
+                Log("Done!");
+
+                Log("Registering OpenVR overlay...", false);
+                string appConfigPath = Path.Combine(App.state.steamPath, "config", "appconfig.json");
+                // ToDo: Do this properly
+                string appConfig = File.ReadAllText(appConfigPath);
+                if (!Regex.IsMatch(appConfig, @"KinectV\dProcess\.vrmanifest"))
+                {
+                    appConfig = appConfig.Replace("   ]", ", \"" +
+                        Path.Combine(App.state.installationPath,
+                            "KinectV" + (App.state.trackingDevice == InstallerState.TrackingDevice.XboxOneKinect ? "2" : "1") + "Process.vrmanifest")
+                            .Replace(@"\", @"\\") +
+                       "\"\n   ]");
+                    File.WriteAllText(appConfigPath, appConfig);
+                    Log("Done!");
+                }
+                else
+                {
+                    Log("Already done!");
+                }
+
+                Log("Installation complete!");
             });
         }
     }

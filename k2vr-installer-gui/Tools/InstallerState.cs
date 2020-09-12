@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Management;
 using System.Windows;
+using System.Windows.Documents;
 using System.Xml.Serialization;
 
 namespace k2vr_installer_gui.Tools
@@ -25,9 +28,8 @@ namespace k2vr_installer_gui.Tools
         public TrackingDevice pluggedInDevice = TrackingDevice.None;
         public bool kinect_v1_sdk_installed = false;
         public bool kinect_v2_sdk_installed = false;
-        public bool ovrie_installed = false;
-        public bool ovrie_fix_installed = false;
-        public string steamvr_path = "";
+        public string steamPath = "";
+        public string steamVrPath = "";
 
         public string GetFullInstallationPath()
         {
@@ -82,6 +84,53 @@ namespace k2vr_installer_gui.Tools
                     catch (ManagementException) { }
                 }
                 devices.Dispose();
+            }
+
+            steamPath = "";
+            steamPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Valve\Steam", "InstallPath", "").ToString();
+            if (steamPath == "")
+            {
+                MessageBox.Show("Steam installation folder not found!" + Environment.NewLine +
+                    "Are you sure it is installed?" + Environment.NewLine +
+                    "If you are, please join our Discord server for further assistance (link on www.k2vr.tech)");
+                Application.Current.Shutdown(1);
+                return;
+            }
+
+            string steamVrSettingsPath = Path.Combine(steamPath, "config", "steamvr.vrsettings");
+
+            string libraryFoldersPath = Path.Combine(steamPath, "steamapps", "libraryfolders.vdf");
+            string[] libraryFoldersFile = File.ReadAllLines(libraryFoldersPath);
+            List<string> libraryFolders = new List<string>();
+
+            libraryFolders.Add(steamPath);
+
+            for (int i = 4; i < libraryFoldersFile.Length - 1; i++)
+            {
+                string folder = libraryFoldersFile[i];
+                folder = folder.Substring(7, folder.Length - (7 + 1)).Replace(@"\\", @"\");
+                libraryFolders.Add(folder);
+            }
+
+            steamVrPath = "";
+
+            foreach(string folder in libraryFolders)
+            {
+                string potentialSteamVrPath = Path.Combine(folder, @"steamapps", "common", "SteamVR");
+                if (Directory.Exists(potentialSteamVrPath))
+                {
+                    steamVrPath = potentialSteamVrPath;
+                    break;
+                }
+            }
+
+            if (steamVrPath == "")
+            {
+                MessageBox.Show("SteamVR installation folder not found!" + Environment.NewLine +
+                    "Are you sure it is installed?" + Environment.NewLine +
+                    "If you are, please join our Discord server for further assistance (link on www.k2vr.tech)");
+                Application.Current.Shutdown(1);
+                return;
             }
         }
     }
