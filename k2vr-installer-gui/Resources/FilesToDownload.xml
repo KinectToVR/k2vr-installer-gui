@@ -2,51 +2,11 @@
 <FilesToDownload>
   <Files>
     <FileToDownload>
-      <Name>7zip</Name>
-      <Md5>2FAC454A90AE96021F4FFC607D4C00F8</Md5>
-      <OutName>7za920.zip</OutName>
-      <PrettyName>7-Zip Tools</PrettyName>
-      <Url>https://www.7-zip.org/a/7za920.zip</Url>
-      <AlwaysRequired>true</AlwaysRequired>
-    </FileToDownload>
-    <FileToDownload>
       <Name>k2vr</Name>
-      <Md5>C76CDA20DD2D939101E39B95DD30CF1F</Md5>
-      <OutName>k2vr-0.6.0r2.7z</OutName>
-      <PrettyName>KinectToVR 0.6.0r2</PrettyName>
-      <Url>https://github.com/sharkyh20/KinectToVR/releases/download/a0.6.0/KinectToVR-a0.6.0.Prime-time.Test.R2.7z</Url>
-      <AlwaysRequired>true</AlwaysRequired>
-    </FileToDownload>
-    <FileToDownload>
-      <Name>vcredist-2010-x64</Name>
-      <Md5>630D75210B325A280C3352F879297ED5</Md5>
-      <OutName>vcredist-2010-x64.exe</OutName>
-      <PrettyName>Visual C++ Redistribuable C++ 2010 x64</PrettyName>
-      <Url>https://download.microsoft.com/download/3/2/2/3224B87F-CFA0-4E70-BDA3-3DE650EFEBA5/vcredist_x64.exe</Url>
-      <AlwaysRequired>true</AlwaysRequired>
-    </FileToDownload>
-    <FileToDownload>
-      <Name>vcredist-2017-x64</Name>
-      <Md5>77C0F604585FB429C722BE111CA30C37</Md5>
-      <OutName>vcredist-2017-x64.exe</OutName>
-      <PrettyName>Visual C++ Redistribuable C++ 2017 x64</PrettyName>
-      <Url>https://download.visualstudio.microsoft.com/download/pr/11100230/15ccb3f02745c7b206ad10373cbca89b/VC_redist.x64.exe</Url>
-      <AlwaysRequired>true</AlwaysRequired>
-    </FileToDownload>
-    <FileToDownload>
-      <Name>ovrie</Name>
-      <Md5>2E742FDF0B00293CF55EEB9C5860EAC8</Md5>
-      <OutName>ovrie-1.3.exe</OutName>
-      <PrettyName>OpenVR-InputEmulator 1.3</PrettyName>
-      <Url>https://github.com/matzman666/OpenVR-InputEmulator/releases/download/v1.3/OpenVR-InputEmulator-v1.3.exe</Url>
-      <AlwaysRequired>true</AlwaysRequired>
-    </FileToDownload>
-    <FileToDownload>
-      <Name>ovrie-fix</Name>
-      <Md5>A4BEFBE4A2D5BCA5C52F4542A15BEC89</Md5>
-      <OutName>driver_00vrinputemulator.dll</OutName>
-      <PrettyName>OpenVR-InputEmulator SteamVR Driver Fix</PrettyName>
-      <Url>https://github.com/sharkyh20/OpenVR-InputEmulator/releases/download/SteamVR-Fix/driver_00vrinputemulator.dll</Url>
+      <Md5>1DFB76ADD039A08658D8521BCEE0780E</Md5>
+      <OutName>K2EX.zip</OutName>
+      <PrettyName>KinectToVR 0.7.1 EX</PrettyName>
+      <Url>https://github.com/KinectToVR/k2vr-website/releases/download/0.7.1ex/K2EX.zip</Url>
       <AlwaysRequired>true</AlwaysRequired>
     </FileToDownload>
     <FileToDownload>
