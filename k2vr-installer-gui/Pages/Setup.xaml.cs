@@ -42,6 +42,23 @@ namespace k2vr_installer_gui.Pages
             {
                 ((Device)ListBox_devices.SelectedItem).Information = "(Detected)";
             }
+            switch (App.state.trackingDevice)
+            {
+                case TrackingDevice.XboxOneKinect:
+                    ListBox_devices.SelectedIndex = 0;
+                    break;
+                case TrackingDevice.Xbox360Kinect:
+                    ListBox_devices.SelectedIndex = 1;
+                    break;
+                case TrackingDevice.PlayStationMove:
+                    ListBox_devices.SelectedIndex = 2;
+                    break;
+            }
+            if (App.state.trackingDevice != TrackingDevice.None)
+            {
+                ((Device)ListBox_devices.SelectedItem).Information = "(Remembered)";
+            }
+            CheckBox_analytics.IsChecked = App.state.allowAnalytics;
             try
             {
                 TextBox_installLocation.Text = Path.GetFullPath(Environment.ExpandEnvironmentVariables(App.state.installationPath));

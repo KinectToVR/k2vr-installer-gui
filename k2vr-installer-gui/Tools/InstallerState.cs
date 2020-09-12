@@ -19,7 +19,7 @@ namespace k2vr_installer_gui.Tools
         }
 
         public TrackingDevice trackingDevice = TrackingDevice.None;
-        public bool allowAnalytics;
+        public bool allowAnalytics = false;
         public string installationPath;
 
         public TrackingDevice pluggedInDevice = TrackingDevice.None;
