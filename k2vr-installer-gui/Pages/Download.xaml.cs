@@ -142,21 +142,20 @@ namespace k2vr_installer_gui.Pages
 
         public void OnSelected()
         {
-            string tempPath = App.exeDirectory + @"temp\";
-            if (!Directory.Exists(tempPath))
+            if (!Directory.Exists(App.downloadDirectory))
             {
-                Directory.CreateDirectory(tempPath);
+                Directory.CreateDirectory(App.downloadDirectory);
             }
             foreach (KeyValuePair<string, FileToDownload> entry in FileDownloader.files)
             {
                 var file = entry.Value;
                 if (file.AlwaysRequired)
                 {
-                    AddToDownloadQueue(file, tempPath);
+                    AddToDownloadQueue(file, App.downloadDirectory);
                 }
                 else if (file.RequiredForDevice == App.state.trackingDevice)
                 {
-                    AddToDownloadQueue(file, tempPath);
+                    AddToDownloadQueue(file, App.downloadDirectory);
                 }
             }
 
