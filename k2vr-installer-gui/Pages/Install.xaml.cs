@@ -184,6 +184,8 @@ namespace k2vr_installer_gui.Pages
                 }
                 Log("Done!");
 
+                string kinectProcessName = "KinectV" + (App.state.trackingDevice == InstallerState.TrackingDevice.XboxOneKinect ? "2" : "1") + "Process";
+
                 Log("Registering OpenVR overlay...", false);
                 string appConfigPath = Path.Combine(App.state.steamPath, "config", "appconfig.json");
                 // ToDo: Do this properly
@@ -192,7 +194,7 @@ namespace k2vr_installer_gui.Pages
                 {
                     appConfig = appConfig.Replace("   ]", ", \"" +
                         Path.Combine(App.state.installationPath,
-                            "KinectV" + (App.state.trackingDevice == InstallerState.TrackingDevice.XboxOneKinect ? "2" : "1") + "Process.vrmanifest")
+                            kinectProcessName + ".vrmanifest")
                             .Replace(@"\", @"\\") +
                        "\"\n   ]");
                     File.WriteAllText(appConfigPath, appConfig);
@@ -202,6 +204,28 @@ namespace k2vr_installer_gui.Pages
                 {
                     Log("Already done!");
                 }
+
+                Log("Creating start menu entry...", false);
+                string startMenuFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), "K2EX");
+                if (!Directory.Exists(startMenuFolder)) Directory.CreateDirectory(startMenuFolder);
+                // https://stackoverflow.com/a/4909475/
+                var shell = new IWshRuntimeLibrary.WshShell();
+                string shortcutAddress = Path.Combine(startMenuFolder, "KinectToVR.lnk");
+                var shortcut = (IWshRuntimeLibrary.IWshShortcut)shell.CreateShortcut(shortcutAddress);
+                shortcut.Description = "Launch KinectToVR";
+                shortcut.TargetPath = Path.Combine(App.state.GetFullInstallationPath(), kinectProcessName + ".exe");
+                shortcut.IconLocation = Path.Combine(App.state.GetFullInstallationPath(), "k2vr.ico");
+                shortcut.Save();
+                Log("Refreshing...", false);
+                foreach (Process process in Process.GetProcesses())
+                {
+                    if (process.ProcessName == "StartMenuExperienceHost")
+                    {
+                        process.Kill();
+                        Thread.Sleep(500);
+                    }
+                }
+                Log("Done!");
 
                 Log("Installation complete!");
             });
