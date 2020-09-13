@@ -8,6 +8,7 @@ using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Xaml;
@@ -94,37 +95,40 @@ namespace k2vr_installer_gui.Pages
             downloadQueue.Add(downloadItem);
         }
 
-        private bool CheckMD5(DownloadItem item)
+        private async Task<bool> CheckMD5(DownloadItem item)
         {
-            if (File.Exists(item.Destination))
+            return await Task<bool>.Run(() =>
             {
-                using (var md5 = MD5.Create())
+                if (File.Exists(item.Destination))
                 {
-                    using (var stream = File.OpenRead(item.Destination))
+                    using (var md5 = MD5.Create())
                     {
-                        // https://stackoverflow.com/a/10520086/
-                        if (BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "") == item.FileToDownload.Md5)
+                        using (var stream = File.OpenRead(item.Destination))
                         {
-                            return true;
+                            // https://stackoverflow.com/a/10520086/
+                            if (BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "") == item.FileToDownload.Md5)
+                            {
+                                return true;
+                            }
                         }
                     }
                 }
-            }
-            return false;
+                return false;
+            });
         }
 
-        private void ProcessNextQueueItem(WebClient wc)
+        private async Task ProcessNextQueueItem(WebClient wc)
         {
             currentQueuePosition++;
             if (currentQueuePosition < downloadQueue.Count)
             {
                 DownloadItem item = downloadQueue[currentQueuePosition];
-                if (CheckMD5(item))
+                if (await CheckMD5(item))
                 {
                     item.SetStatus("already downloaded");
                     item.Percentage = 100;
                     item.Expanded = false;
-                    ProcessNextQueueItem(wc);
+                    await ProcessNextQueueItem(wc);
                 }
                 else
                 {
@@ -140,7 +144,7 @@ namespace k2vr_installer_gui.Pages
             }
         }
 
-        public void OnSelected()
+        public async void OnSelected()
         {
             if (!Directory.Exists(App.downloadDirectory))
             {
@@ -167,17 +171,17 @@ namespace k2vr_installer_gui.Pages
 
             var wc = new WebClient();
 
-            ProcessNextQueueItem(wc);
+            await ProcessNextQueueItem(wc);
 
             wc.DownloadProgressChanged += (object sender, DownloadProgressChangedEventArgs e) =>
             {
                 downloadQueue[currentQueuePosition].Percentage = e.ProgressPercentage;
             };
-            wc.DownloadFileCompleted += (object sender, AsyncCompletedEventArgs e) =>
+            wc.DownloadFileCompleted += async (object sender, AsyncCompletedEventArgs e) =>
             {
                 DownloadItem item = downloadQueue[currentQueuePosition];
                 item.SetStatus("checking");
-                if (e.Error == null && !e.Cancelled && CheckMD5(item))
+                if (e.Error == null && !e.Cancelled && await CheckMD5(item))
                 {
                     item.SetStatus("downloaded");
                     item.Expanded = false;
@@ -193,7 +197,7 @@ namespace k2vr_installer_gui.Pages
                     }
                     currentQueuePosition--;
                 }
-                ProcessNextQueueItem(wc);
+                await ProcessNextQueueItem(wc);
             };
         }
     }

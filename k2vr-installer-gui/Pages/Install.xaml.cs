@@ -152,8 +152,8 @@ namespace k2vr_installer_gui.Pages
                 }
                 Log("Done!");
 
-                if (App.state.trackingDevice == InstallerState.TrackingDevice.Xbox360Kinect ||
-                App.state.trackingDevice == InstallerState.TrackingDevice.XboxOneKinect)
+                if ((App.state.trackingDevice == InstallerState.TrackingDevice.Xbox360Kinect && !App.state.kinectV1SdkInstalled) ||
+                    (App.state.trackingDevice == InstallerState.TrackingDevice.XboxOneKinect && !App.state.kinectV2SdkInstalled))
                 {
                     Log("Installing the Kinect SDK...", false);
                     string sdkInstaller = Path.Combine(App.downloadDirectory, FileDownloader.files[(App.state.trackingDevice == InstallerState.TrackingDevice.Xbox360Kinect) ? "kinect_v1_sdk" : "kinect_v2_sdk"].OutName);
