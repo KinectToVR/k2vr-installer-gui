@@ -168,9 +168,26 @@ namespace k2vr_installer_gui.Pages
                             element.SetFocus();
                         }
                     }
-                    catch (Exception e) { } // Don't want the whole install to fail for something that mundane
+                    catch (Exception) { } // Don't want the whole install to fail for something that mundane
                     sdkInstallerProcess.WaitForExit();
+
+                    App.state.UpdateSdkInstalled();
+
+                    if ((App.state.trackingDevice == InstallerState.TrackingDevice.Xbox360Kinect && !App.state.kinectV1SdkInstalled) ||
+                        (App.state.trackingDevice == InstallerState.TrackingDevice.XboxOneKinect && !App.state.kinectV2SdkInstalled))
+                    {
+                        Log("Failed!");
+                        MessageBox.Show("Kinect SDK was not installed successfully!" + Environment.NewLine +
+                            "Restart this installer to try again" + Environment.NewLine +
+                            "Please join our Discord server for further assistance (link on www.k2vr.tech)");
+                        Dispatcher.Invoke(() =>
+                        {
+                            Application.Current.Shutdown(1);
+                        });
+                    }
                     Log("Done!");
+                } else {
+                    Log("Kinect SDK is already installed.");
                 }
 
                 Log("Registering OpenVR driver...", false);

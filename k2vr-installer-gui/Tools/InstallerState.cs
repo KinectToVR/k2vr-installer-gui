@@ -61,7 +61,7 @@ namespace k2vr_installer_gui.Tools
             }
         }
 
-        public void Update()
+        public void UpdatePluggedInDevice()
         {
             using (var searcher = new ManagementObjectSearcher(@"Select * From Win32_USBControllerDevice"))
             {
@@ -85,7 +85,10 @@ namespace k2vr_installer_gui.Tools
                 }
                 devices.Dispose();
             }
+        }
 
+        public void UpdateSdkInstalled()
+        {
             kinectV1SdkInstalled = false;
             if (Directory.Exists(Path.Combine("C:", "Program Files", "Microsoft SDKs", "Kinect", "v1.8")))
             {
@@ -96,7 +99,10 @@ namespace k2vr_installer_gui.Tools
             {
                 kinectV2SdkInstalled = true;
             }
+        }
 
+        public void UpdateSteamPaths()
+        {
             steamPath = "";
             steamPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Valve\Steam", "InstallPath", "").ToString();
             if (steamPath == "")
@@ -143,6 +149,15 @@ namespace k2vr_installer_gui.Tools
                 Application.Current.Shutdown(1);
                 return;
             }
+        }
+
+        public void Update()
+        {
+            UpdatePluggedInDevice();
+
+            UpdateSdkInstalled();
+
+            UpdateSteamPaths();
         }
     }
 }
