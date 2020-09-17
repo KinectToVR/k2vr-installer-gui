@@ -11,19 +11,19 @@
         Title="KinectToVR Installer" Height="550" Width="800" Background="{StaticResource brush_background}" FontFamily="Jost*" FontWeight="Normal" Icon="installer-icon.png">
 
     <TabControl x:Name="TabControl_tabs" Background="{StaticResource brush_primary}" SelectionChanged="TabControl_tabs_SelectionChanged">
-        <TabItem Header="Start" FontFamily="Jost*">
+        <TabItem Header="Start" FontFamily="Jost*" IsEnabled="False">
             <pages:Home />
         </TabItem>
-        <TabItem Header="Options">
+        <TabItem Header="Options" IsEnabled="False">
             <pages:Setup/>
         </TabItem>
-        <TabItem Header="Download">
+        <TabItem Header="Download" IsEnabled="False">
             <pages:Download />
         </TabItem>
-        <TabItem Header="Install">
+        <TabItem Header="Install" IsEnabled="False">
             <pages:Install />
         </TabItem>
-        <TabItem Header="Finish">
+        <TabItem Header="Finish" IsEnabled="False">
             <pages:Finish />
         </TabItem>
         <TabControl.Template>
