@@ -24,12 +24,16 @@ namespace k2vr_installer_gui.Tools
         public TrackingDevice trackingDevice = TrackingDevice.None;
         public bool allowAnalytics = false;
         public string installationPath;
+        public List<string> installedFiles;
+        public List<string> installedFolders;
 
         public TrackingDevice pluggedInDevice = TrackingDevice.None;
         public bool kinectV1SdkInstalled = false;
         public bool kinectV2SdkInstalled = false;
         public string steamPath = "";
         public string steamVrPath = "";
+        public string vrPathReg = "";
+        public string copiedDriverPath = "";
 
         public string GetFullInstallationPath()
         {
@@ -149,6 +153,10 @@ namespace k2vr_installer_gui.Tools
                 Application.Current.Shutdown(1);
                 return;
             }
+
+
+            vrPathReg = Path.Combine(steamVrPath, "bin", "win64", "vrpathreg.exe");
+            copiedDriverPath = Path.Combine(App.state.steamVrPath, "drivers", "KinectToVR");
         }
 
         public void Update()

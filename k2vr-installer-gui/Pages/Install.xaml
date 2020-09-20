@@ -7,8 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="{StaticResource brush_background}" Foreground="{StaticResource brush_foreground}">
     <Grid>
-        <Border Style="{StaticResource Element_Border}">
-            <TextBlock x:Name="TextBlock_installLog" FontSize="20"/>
-        </Border>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <Border Style="{StaticResource Element_Border}">
+                <TextBlock x:Name="TextBlock_installLog" FontSize="20" TextWrapping="Wrap"/>
+            </Border>
+        </ScrollViewer>
     </Grid>
 </UserControl>

@@ -10,6 +10,14 @@
       <AlwaysRequired>true</AlwaysRequired>
     </FileToDownload>
     <FileToDownload>
+      <Name>vc_redist2019</Name>
+      <Md5>1E7BD6790391B5B710C6372AB2042351</Md5>
+      <OutName>VC_redist.x64.exe</OutName>
+      <PrettyName>Visual C++ 2019 Redistributable</PrettyName>
+      <Url>https://aka.ms/vs/16/release/vc_redist.x64.exe</Url>
+      <AlwaysRequired>true</AlwaysRequired>
+    </FileToDownload>
+    <FileToDownload>
       <Name>kinect_v1_sdk</Name>
       <Md5>479010273D25BEAB4868D57FFF907D50</Md5>
       <OutName>kinectv1-sdk-1.8.exe</OutName>
