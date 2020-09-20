@@ -1,9 +1,12 @@
-﻿using k2vr_installer_gui.Tools.OpenVRFiles;
+﻿using k2vr_installer_gui.Tools;
+using k2vr_installer_gui.Tools.OpenVRFiles;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -37,6 +40,7 @@ namespace k2vr_installer_gui.Uninstall
     {
         static string k2exDefaultPath = Path.Combine("C:\\", "K2EX");
         static string k2vrLegacyDefaultPath = Path.Combine("C:\\", "KinectToVR");
+        static Guid uninstallGuid = new Guid("ba21a8d1-e588-48ab-bf4c-b37e8fb3708e"); // this was randomly generated
 
         public static void UninstallK2VrLegacy(Pages.Install installPage)
         {
@@ -58,7 +62,7 @@ namespace k2vr_installer_gui.Uninstall
                     {
                         File.Delete(Path.Combine(startMenuFolder, "KinectToVR (Xbox 360).lnk"));
                         File.Delete(Path.Combine(startMenuFolder, "KinectToVR (Xbox One).lnk"));
-                        try { Directory.Delete(startMenuFolder, false); } catch (IOException e) { }
+                        try { Directory.Delete(startMenuFolder, false); } catch (IOException) { }
                     }
 
                     installPage.Log("Done!");
@@ -89,7 +93,7 @@ namespace k2vr_installer_gui.Uninstall
             foreach (KeyValuePair<string, K2EXInstallProperties> pair in paths)
             {
                 string path = pair.Key;
-                if (path == App.state.installationPath) continue;
+                if (path == App.state.GetFullInstallationPath()) continue;
                 installPage.Log("Found old installation at \"" + path + "\"...", false);
                 if (pair.Value.DriverRegistered || pair.Value.AppConfigRegistered)
                 {
@@ -126,10 +130,10 @@ namespace k2vr_installer_gui.Uninstall
                 try { Directory.Delete(App.state.copiedDriverPath, false); } catch (IOException) { }
                 installPage.Log("Deleted...", false);
             }
-            if (Directory.Exists(App.state.installationPath))
+            if (Directory.Exists(App.state.GetFullInstallationPath()))
             {
                 installPage.Log("Removing previous version...", false);
-                if (!DeleteK2EXFolder(App.state.installationPath))
+                if (!DeleteK2EXFolder(App.state.GetFullInstallationPath()))
                 {
                     // We need to abort because we can't unzip into a dir with files in it
                     MessageBox.Show("Cannot install two versions of KinectToVR into the same directory." + Environment.NewLine +
@@ -175,23 +179,49 @@ namespace k2vr_installer_gui.Uninstall
             appConfig.Write();
         }
 
-        public static bool DeleteK2EXFolder(string path)
+        public static bool DeleteK2EXFolder(string path, bool uninstallFromSettings = false)
         {
             if (Directory.Exists(path))
             {
-                if (path == App.state.installationPath && App.state.installedFiles.Count > 0)
+                if ((path == App.state.GetFullInstallationPath() && App.state.installedFiles.Count > 0) || uninstallFromSettings)
                 {
                     foreach (string file in App.state.installedFiles)
                     {
-                        File.Delete(file);
+                        if (File.Exists(file)) File.Delete(file);
                     }
                     for (int i = App.state.installedFolders.Count - 1; i >= 0; i--)
                     {
-                        Directory.Delete(App.state.installedFolders[i], false);
+                        string dir = App.state.installedFolders[i];
+                        if (Directory.Exists(dir)) Directory.Delete(dir, false);
                     }
-                    App.state.installedFiles.Clear();
-                    App.state.installedFolders.Clear();
-                    App.state.Write();
+                    if (uninstallFromSettings)
+                    {
+                        File.Delete(Path.Combine(path, InstallerState.fileName));
+                        string confSettingsPath = Path.Combine(path, "ConfigSettings.cfg");
+                        if (File.Exists(confSettingsPath) && MessageBox.Show("Do you wish to delete your calibration settings as well?" + Environment.NewLine +
+                            "Note: To reuse them, you will need to install KinectToVR in the directory \"" + path + "\" again!") == MessageBoxResult.Yes)
+                        {
+                            File.Delete(confSettingsPath);
+                        }
+                        string[] files = Directory.GetFiles(path);
+                        if (files.Length == 1 && files[0] == Path.Combine(path, "k2vr-installer-gui.exe"))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Directory \"" + path + "\" contained non-standard files." + Environment.NewLine +
+                                            "Clicking OK will open the file explorer to allow you to investigate.");
+                            Process.Start("explorer.exe", path);
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        App.state.installedFiles.Clear();
+                        App.state.installedFolders.Clear();
+                        App.state.Write();
+                    }
                     return true;
                 }
                 else
@@ -256,7 +286,74 @@ namespace k2vr_installer_gui.Uninstall
         public static bool UninstallK2EX(string path)
         {
             UnregisterK2EX(path);
-            return DeleteK2EXFolder(path); ;
+            bool retVal = DeleteK2EXFolder(path, true);
+            DeleteK2EXStartMenuShortcuts();
+            UnregisterUninstaller();
+            return retVal;
+        }
+
+        public static void UnregisterUninstaller()
+        {
+            string uninstallRegKeyPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
+            using (RegistryKey parent = Registry.LocalMachine.OpenSubKey(uninstallRegKeyPath, true))
+            {
+                if (parent == null) return;
+                string guidText = uninstallGuid.ToString("B").ToUpper();
+                parent.DeleteSubKey(guidText);
+            }
+        }
+
+        public static void RegisterUninstaller()
+        {
+            string uninstallRegKeyPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
+            using (RegistryKey parent = Registry.LocalMachine.OpenSubKey(uninstallRegKeyPath, true))
+            {
+                if (parent == null)
+                {
+                    App.Log("Uninstall registry key not found.");
+                    return;
+                }
+                try
+                {
+                    RegistryKey key = null;
+
+                    try
+                    {
+                        string guidText = uninstallGuid.ToString("B").ToUpper();
+                        key = parent.OpenSubKey(guidText, true) ??
+                              parent.CreateSubKey(guidText);
+
+                        if (key == null)
+                        {
+                            App.Log(string.Format("Unable to create uninstaller '{0}\\{1}'", uninstallRegKeyPath, guidText));
+                            return;
+                        }
+
+                        Assembly asm = Assembly.GetExecutingAssembly();
+
+                        key.SetValue("DisplayName", "KinectToVR");
+                        key.SetValue("ApplicationVersion", FileDownloader.files["k2vr"].Version);
+                        key.SetValue("Publisher", asm.GetCustomAttribute<AssemblyCompanyAttribute>().Company);
+                        key.SetValue("DisplayIcon", Path.Combine(App.state.GetFullInstallationPath(), "k2vr.ico"));
+                        key.SetValue("DisplayVersion", FileDownloader.files["k2vr"].Version);
+                        key.SetValue("URLInfoAbout", "https://k2vr.tech");
+                        key.SetValue("Contact", "https://k2vr.tech");
+                        key.SetValue("InstallDate", DateTime.Now.ToString("yyyyMMdd"));
+                        key.SetValue("UninstallString", Path.Combine(App.state.GetFullInstallationPath(), "k2vr-installer-gui.exe") + " /uninstall \"" + App.state.GetFullInstallationPath() + "\"");
+                    }
+                    finally
+                    {
+                        if (key != null)
+                        {
+                            key.Close();
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    App.Log("An error occurred writing uninstall information to the registry.  The service is fully installed but can only be uninstalled manually through the command line.");
+                }
+            }
         }
     }
 }

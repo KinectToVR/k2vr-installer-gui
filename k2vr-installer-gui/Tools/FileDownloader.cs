@@ -11,6 +11,7 @@ namespace k2vr_installer_gui.Tools
         public string Md5;
         public string OutName;
         public string PrettyName;
+        public string Version = "";
         public string Url;
         public bool AlwaysRequired = false;
         public InstallerState.TrackingDevice RequiredForDevice = InstallerState.TrackingDevice.None;

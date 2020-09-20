@@ -42,7 +42,7 @@ namespace k2vr_installer_gui.Pages
             {
                 TextBlock_installLog.Text += text;
             });
-            File.AppendAllText(Path.Combine(App.downloadDirectory, "install.log"), text);
+            App.Log(text);
         }
 
         public void Cancel()
@@ -89,7 +89,7 @@ namespace k2vr_installer_gui.Pages
                 }
 
                 /* Apparently, SteamVR server can run without the monitor,
-                   so we close that, if it's open aswell (monitor will complain if you close server first) */
+                   so we close that, if it's open as well (monitor will complain if you close server first) */
                 foreach (Process process in Process.GetProcesses())
                 {
                     if (process.ProcessName == "vrserver")
@@ -142,8 +142,13 @@ namespace k2vr_installer_gui.Pages
                         }
                     }
                 }
-                App.state.Write();
                 Log("Done!");
+
+                Log("Registering application...", false);
+                App.state.Write();
+                File.Copy(InstallerState.path, Path.Combine(App.state.GetFullInstallationPath(), InstallerState.fileName), true);
+                File.Copy(Assembly.GetExecutingAssembly().Location, Path.Combine(App.state.GetFullInstallationPath(), "k2vr-installer-gui.exe"), true);
+                Uninstaller.RegisterUninstaller();
 
                 if ((App.state.trackingDevice == InstallerState.TrackingDevice.Xbox360Kinect && !App.state.kinectV1SdkInstalled) ||
                     (App.state.trackingDevice == InstallerState.TrackingDevice.XboxOneKinect && !App.state.kinectV2SdkInstalled))
@@ -198,7 +203,7 @@ namespace k2vr_installer_gui.Pages
                 Log("Registering OpenVR overlay...", false);
 
                 var appConfig = AppConfig.Read();
-                string manifestPath = Path.Combine(App.state.installationPath, kinectProcessName + ".vrmanifest");
+                string manifestPath = Path.Combine(App.state.GetFullInstallationPath(), kinectProcessName + ".vrmanifest");
                 if (!appConfig.manifest_paths.Contains(manifestPath))
                 {
                     appConfig.manifest_paths.Add(manifestPath);

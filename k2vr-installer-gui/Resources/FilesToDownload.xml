@@ -6,6 +6,7 @@
       <Md5>1DFB76ADD039A08658D8521BCEE0780E</Md5>
       <OutName>K2EX.zip</OutName>
       <PrettyName>KinectToVR 0.7.1 EX</PrettyName>
+      <Version>0.7.1</Version>
       <Url>https://github.com/KinectToVR/k2vr-website/releases/download/0.7.1ex/K2EX.zip</Url>
       <AlwaysRequired>true</AlwaysRequired>
     </FileToDownload>

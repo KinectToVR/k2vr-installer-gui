@@ -11,7 +11,8 @@ namespace k2vr_installer_gui.Tools
 {
     public class InstallerState
     {
-        static readonly string path = App.exeDirectory + "installerSettings.xml";
+        public const string fileName = "installerSettings.xml";
+        public static readonly string path = App.exeDirectory + fileName;
 
         public enum TrackingDevice
         {
@@ -49,11 +50,12 @@ namespace k2vr_installer_gui.Tools
             }
         }
 
-        public static InstallerState Read()
+        public static InstallerState Read(string readPath = null)
         {
+            if (readPath == null) readPath = path;
             try
             {
-                using (var reader = new StreamReader(path))
+                using (var reader = new StreamReader(readPath))
                 {
                     var xmlSerializer = new XmlSerializer(typeof(InstallerState));
                     return (InstallerState)xmlSerializer.Deserialize(reader);
