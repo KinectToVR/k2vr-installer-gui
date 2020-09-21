@@ -21,7 +21,7 @@ namespace k2vr_installer_gui
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            string installPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\" + installedPathRegKeyName, "InstallPath", "");
+            string installPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\" + installedPathRegKeyName, "InstallPath", "") ?? "";
 
             state = InstallerState.Read(installPath);
             state.Update();
