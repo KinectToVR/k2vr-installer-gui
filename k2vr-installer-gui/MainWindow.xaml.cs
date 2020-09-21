@@ -40,5 +40,17 @@ namespace k2vr_installer_gui
                 ((IInstallerPage)((TabItem)this.TabControl_tabs.SelectedItem).Content).OnSelected();
             }
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (TabControl_tabs.SelectedIndex == 3) // we can't cancel on the install tab or it might be left in a broken state
+            {
+                e.Cancel = true;
+            } else if (TabControl_tabs.SelectedIndex == 2 && // Download page
+                MessageBox.Show("Are you sure you want to cancel the download(s)?", "Confirm exit", MessageBoxButton.YesNo) == MessageBoxResult.No)
+            {
+                e.Cancel = true;
+            }
+        }
     }
 }
