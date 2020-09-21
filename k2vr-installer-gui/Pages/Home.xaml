@@ -13,7 +13,14 @@
             <TextBlock VerticalAlignment="Center">
                 <Hyperlink Click="Hyperlink_ViewOpenSourceLicenses_Click">View Open Source Licenses</Hyperlink>
             </TextBlock>
-            <Button Style="{StaticResource Button_Primary}"  HorizontalAlignment="Right" Content="Begin Installation" Click="Button_Click" VerticalAlignment="Center" FontSize="16" Height="38" Padding="16,1"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock FontWeight="Normal" Foreground="{StaticResource brush_foreground}" Margin="0,0,8,0" TextWrapping="Wrap" Width="430" VerticalAlignment="Center">
+                    By clicking on "Begin Installation" you agree that this software is provided to you "as is" without
+                    any warranty whatsoever.
+                    In no event shall the authors of this software be liable for any claim, damages or other liability.
+                </TextBlock>
+                <Button Style="{StaticResource Button_Primary}" Content="Begin Installation" Click="Button_Click" FontSize="16" Height="38"/>
+            </StackPanel>
         </DockPanel>
     </StackPanel>
 </UserControl>
