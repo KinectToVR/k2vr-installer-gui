@@ -1,6 +1,5 @@
 ﻿using k2vr_installer_gui.Pages.Popups;
 using k2vr_installer_gui.Tools;
-using Microsoft.WindowsAPICodePack.Shell.Interop;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

@@ -1,5 +1,5 @@
 ﻿using k2vr_installer_gui.Tools;
-using Microsoft.WindowsAPICodePack.Dialogs;
+using Ookii.Dialogs.Wpf;
 using System;
 using System.Configuration;
 using System.IO;
@@ -71,52 +71,18 @@ namespace k2vr_installer_gui.Pages
 
         private void Button_ChooseLocation_Click(object sender, RoutedEventArgs e)
         {
-            // METHOD 1: Windows Forms
-            // Problem: Can't paste path
-            //using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
-            //{
-            //    System.Windows.Forms.DialogResult result = dialog.ShowDialog();
-            //    if (result == System.Windows.Forms.DialogResult.OK &&
-            //        !string.IsNullOrWhiteSpace(dialog.SelectedPath))
-            //    {
-            //        TextBox_installLocation.Text = dialog.SelectedPath;
-            //    }
-            //}
-
-            // METHOD 2: Hack adapted from https://stackoverflow.com/a/50261723/
-            // Problem: Hacky af
-            //string nbsp = "\u00a0";
-            //var dialog = new Microsoft.Win32.SaveFileDialog
-            //{
-            //    InitialDirectory = TextBox_installLocation.Text,
-            //    Title = "Select a Directory", // instead of default "Save As"
-            //    Filter = "Directory|" + nbsp, // Prevents displaying files
-            //    FileName = nbsp // Filename will be the nbsp character
-            //};
-            //if (dialog.ShowDialog() == true)
-            //{
-            //    string path = dialog.FileName;
-            //    // Remove fake filename from resulting path
-            //    path = path.Replace("\\" + nbsp, "");
-            //    path = path.Replace(nbsp, "");
-            //    // Our final value is in path
-            //    TextBox_installLocation.Text = path;
-            //}
-
-            // METHOD 3: WindowsAPICodePack
-            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            if (Directory.Exists(TextBox_installLocation.Text))
+            var dialog = new VistaFolderBrowserDialog();
+            if (Directory.Exists(TextBox_installLocation.Text) || new DirectoryInfo(TextBox_installLocation.Text).Root.Exists)
             {
-                dialog.InitialDirectory = TextBox_installLocation.Text;
+                dialog.SelectedPath = TextBox_installLocation.Text;
             }
             else
             {
-                dialog.InitialDirectory = Environment.ExpandEnvironmentVariables(@"%ProgramFiles%");
+                dialog.SelectedPath = Environment.ExpandEnvironmentVariables(@"%ProgramFiles%");
             }
-            dialog.IsFolderPicker = true;
-            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            if (dialog.ShowDialog() == true)
             {
-                TextBox_installLocation.Text = dialog.FileName;
+                TextBox_installLocation.Text = dialog.SelectedPath;
             }
         }
 
