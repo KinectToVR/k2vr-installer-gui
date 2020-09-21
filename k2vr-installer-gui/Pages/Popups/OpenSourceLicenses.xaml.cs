@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,27 +17,24 @@ using System.Windows.Shapes;
 namespace k2vr_installer_gui.Pages
 {
     /// <summary>
-    /// Interaction logic for Home.xaml
+    /// Interaction logic for OpenSourceLicenses.xaml
     /// </summary>
-    public partial class Home : UserControl, IInstallerPage
+    public partial class OpenSourceLicenses : Window
     {
-        public Home()
+        public OpenSourceLicenses()
         {
             InitializeComponent();
+            TabControl_OpenSourceLicenses.DataContext = new VersionContext();
         }
+    }
 
-        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            ((MainWindow)Application.Current.MainWindow).GoToTab(1);
-        }
+    internal class VersionContext
+    {
+        public string Version { get; set; }
 
-        public void OnSelected()
+        public VersionContext()
         {
-        }
-
-        private void Hyperlink_ViewOpenSourceLicenses_Click(object sender, RoutedEventArgs e)
-        {
-            new OpenSourceLicenses().ShowDialog();
+            Version = "KinectToVR Installer " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
     }
 }

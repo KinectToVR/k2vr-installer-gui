@@ -93,6 +93,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Pages\InstallerPage.cs" />
+    <Compile Include="Pages\Popups\OpenSourceLicenses.xaml.cs">
+      <DependentUpon>OpenSourceLicenses.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Popups\DownloadError.xaml.cs">
       <DependentUpon>DownloadError.xaml</DependentUpon>
     </Compile>
@@ -131,6 +134,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Install.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Popups\OpenSourceLicenses.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

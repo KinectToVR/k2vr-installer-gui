@@ -5,10 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:k2vr_installer_gui.Pages"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="{StaticResource brush_background}">
+             d:DesignHeight="462" d:DesignWidth="800" Background="{StaticResource brush_background}">
 
-    <StackPanel Height="461">
+    <StackPanel Height="462">
         <Image x:Name="image" Height="409" Source="cover.png" StretchDirection="DownOnly" Stretch="UniformToFill"/>
-        <Button Style="{StaticResource Button_Primary}"  HorizontalAlignment="Right" Content="Begin Installation" Click="Button_Click" Margin="0,7,8,0" VerticalAlignment="Center" FontSize="16" Height="38" Padding="16,1"/>
+        <DockPanel Margin="8,8,8,0" >
+            <TextBlock VerticalAlignment="Center">
+                <Hyperlink Click="Hyperlink_ViewOpenSourceLicenses_Click">View Open Source Licenses</Hyperlink>
+            </TextBlock>
+            <Button Style="{StaticResource Button_Primary}"  HorizontalAlignment="Right" Content="Begin Installation" Click="Button_Click" VerticalAlignment="Center" FontSize="16" Height="38" Padding="16,1"/>
+        </DockPanel>
     </StackPanel>
 </UserControl>
