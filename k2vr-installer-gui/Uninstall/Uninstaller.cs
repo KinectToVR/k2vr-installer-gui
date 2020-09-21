@@ -201,7 +201,8 @@ namespace k2vr_installer_gui.Uninstall
                         File.Delete(Path.Combine(path, InstallerState.fileName));
                         string confSettingsPath = Path.Combine(path, "ConfigSettings.cfg");
                         if (File.Exists(confSettingsPath) && MessageBox.Show("Do you wish to delete your calibration settings as well?" + Environment.NewLine +
-                            "Note: To reuse them, you will need to install KinectToVR in the directory \"" + path + "\" again!") == MessageBoxResult.Yes)
+                            "Note: To reuse them, you will need to install KinectToVR in the directory \"" + path + "\" again!",
+                            "Delete calibration settings?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                         {
                             File.Delete(confSettingsPath);
                         }
