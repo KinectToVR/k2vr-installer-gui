@@ -7,10 +7,18 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="{StaticResource brush_background}" Foreground="{StaticResource brush_foreground}">
     <Grid>
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
             <Border Style="{StaticResource Element_Border}">
                 <TextBlock x:Name="TextBlock_installLog" FontSize="20" TextWrapping="Wrap"/>
             </Border>
         </ScrollViewer>
+        <Button Grid.Row="1" Style="{StaticResource Button_Primary}" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="16" Height="38" Margin="8,0,8,8"
+                IsEnabled="False" x:Name="Button_Complete_Install" Click="Button_Complete_Install_Click">
+            Complete Installation
+        </Button>
     </Grid>
 </UserControl>

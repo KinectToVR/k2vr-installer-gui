@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,16 @@ namespace k2vr_installer_gui.Pages
 
         public void OnSelected()
         {
+        }
+
+        private void Button_Visit_website_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://k2vr.tech/");
+        }
+
+        private void Button_Visit_discord_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://discord.gg/Mu28W4N");
         }
     }
 }

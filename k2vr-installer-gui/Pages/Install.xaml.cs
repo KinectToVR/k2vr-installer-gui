@@ -236,7 +236,16 @@ namespace k2vr_installer_gui.Pages
                 Log("Done!");
 
                 Log("Installation complete!");
+                Button_Complete_Install.Dispatcher.Invoke(() =>
+                {
+                    Button_Complete_Install.IsEnabled = true;
+                });
             });
+        }
+
+        private void Button_Complete_Install_Click(object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)Application.Current.MainWindow).GoToTab(4);
         }
     }
 }

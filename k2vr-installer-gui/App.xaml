@@ -23,7 +23,9 @@
         <SolidColorBrush x:Key="brush_button_secondary" Color="#FF1630EE" />
         <SolidColorBrush x:Key="brush_button_secondary_hover" Color="#FF152DDC" />
 
-        <SolidColorBrush x:Key="brush_button_inactive" Color="#FF6E9B66" />
+        <SolidColorBrush x:Key="brush_button_inactive" Color="#FF74956E" />
+
+        <SolidColorBrush x:Key="brush_button_disabled" Color="#79DBDBDB"/>
 
         <Style TargetType="{x:Type Button}" x:Key="Button_Primary">
             <Setter Property="Foreground" Value="{StaticResource brush_foreground}"/>
@@ -41,6 +43,10 @@
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="{StaticResource brush_button_primary_hover}"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Foreground" Value="#AAFFFFFF"/>
+                    <Setter Property="Background" Value="{StaticResource brush_button_disabled}"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
