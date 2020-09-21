@@ -133,7 +133,9 @@ namespace k2vr_installer_gui.Uninstall
             if (Directory.Exists(App.state.GetFullInstallationPath()))
             {
                 installPage.Log("Removing previous version...", false);
-                if (!DeleteK2EXFolder(App.state.GetFullInstallationPath()))
+                if (MessageBox.Show("KinectToVR appears to be already installed in \"" +App.state.GetFullInstallationPath() + "\"." + Environment.NewLine +
+                                    "Do you wish to update this installation?", "Confirm update", MessageBoxButton.YesNo) != MessageBoxResult.Yes ||
+                    !DeleteK2EXFolder(App.state.GetFullInstallationPath()))
                 {
                     // We need to abort because we can't unzip into a dir with files in it
                     MessageBox.Show("Cannot install two versions of KinectToVR into the same directory." + Environment.NewLine +
@@ -294,6 +296,10 @@ namespace k2vr_installer_gui.Uninstall
 
         public static void UnregisterUninstaller()
         {
+            using (RegistryKey parent = Registry.LocalMachine.OpenSubKey("SOFTWARE", true))
+            {
+                parent.DeleteSubKey(App.installedPathRegKeyName);
+            }
             string uninstallRegKeyPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
             using (RegistryKey parent = Registry.LocalMachine.OpenSubKey(uninstallRegKeyPath, true))
             {
@@ -305,6 +311,12 @@ namespace k2vr_installer_gui.Uninstall
 
         public static void RegisterUninstaller()
         {
+            using (RegistryKey parent = Registry.LocalMachine.OpenSubKey("SOFTWARE", true))
+            {
+                RegistryKey key = parent.OpenSubKey(App.installedPathRegKeyName, true) ?? parent.CreateSubKey(App.installedPathRegKeyName);
+                key.SetValue("InstallPath", App.state.GetFullInstallationPath());
+            }
+
             string uninstallRegKeyPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
             using (RegistryKey parent = Registry.LocalMachine.OpenSubKey(uninstallRegKeyPath, true))
             {
@@ -339,7 +351,7 @@ namespace k2vr_installer_gui.Uninstall
                         key.SetValue("URLInfoAbout", "https://k2vr.tech");
                         key.SetValue("Contact", "https://k2vr.tech");
                         key.SetValue("InstallDate", DateTime.Now.ToString("yyyyMMdd"));
-                        key.SetValue("UninstallString", Path.Combine(App.state.GetFullInstallationPath(), "k2vr-installer-gui.exe") + " /uninstall \"" + App.state.GetFullInstallationPath() + "\"");
+                        key.SetValue("UninstallString", Path.Combine(App.state.GetFullInstallationPath(), "k2vr-installer-gui.exe") + " /uninstall");
                     }
                     finally
                     {

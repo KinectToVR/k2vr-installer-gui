@@ -146,7 +146,6 @@ namespace k2vr_installer_gui.Pages
 
                 Log("Registering application...", false);
                 App.state.Write();
-                File.Copy(InstallerState.path, Path.Combine(App.state.GetFullInstallationPath(), InstallerState.fileName), true);
                 File.Copy(Assembly.GetExecutingAssembly().Location, Path.Combine(App.state.GetFullInstallationPath(), "k2vr-installer-gui.exe"), true);
                 Uninstaller.RegisterUninstaller();
 

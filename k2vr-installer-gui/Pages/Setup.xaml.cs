@@ -128,7 +128,6 @@ namespace k2vr_installer_gui.Pages
             App.state.allowAnalytics = CheckBox_analytics.IsChecked == true;
             App.state.installationPath = installLocation;
 
-            App.state.Write();
             ((MainWindow)Application.Current.MainWindow).GoToTab(2);
         }
 

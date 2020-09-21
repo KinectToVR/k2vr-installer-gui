@@ -12,7 +12,6 @@ namespace k2vr_installer_gui.Tools
     public class InstallerState
     {
         public const string fileName = "installerSettings.xml";
-        public static readonly string path = App.exeDirectory + fileName;
 
         public enum TrackingDevice
         {
@@ -25,8 +24,8 @@ namespace k2vr_installer_gui.Tools
         public TrackingDevice trackingDevice = TrackingDevice.None;
         public bool allowAnalytics = false;
         public string installationPath;
-        public List<string> installedFiles;
-        public List<string> installedFolders;
+        public List<string> installedFiles = new List<string>();
+        public List<string> installedFolders = new List<string>();
 
         public TrackingDevice pluggedInDevice = TrackingDevice.None;
         public bool kinectV1SdkInstalled = false;
@@ -43,19 +42,19 @@ namespace k2vr_installer_gui.Tools
 
         public void Write()
         {
-            using (var writer = new StreamWriter(path))
+            using (var writer = new StreamWriter(GetInstallerStatePath()))
             {
                 var xmlSerializer = new XmlSerializer(typeof(InstallerState));
                 xmlSerializer.Serialize(writer, this);
             }
         }
 
-        public static InstallerState Read(string readPath = null)
+        public static InstallerState Read(string path)
         {
-            if (readPath == null) readPath = path;
+            if (path == "") return new InstallerState();
             try
             {
-                using (var reader = new StreamReader(readPath))
+                using (var reader = new StreamReader(Path.Combine(path, fileName)))
                 {
                     var xmlSerializer = new XmlSerializer(typeof(InstallerState));
                     return (InstallerState)xmlSerializer.Deserialize(reader);
@@ -65,6 +64,11 @@ namespace k2vr_installer_gui.Tools
             {
                 return new InstallerState();
             }
+        }
+
+        public string GetInstallerStatePath()
+        {
+            return Path.Combine(GetFullInstallationPath(), fileName);
         }
 
         public void UpdatePluggedInDevice()
