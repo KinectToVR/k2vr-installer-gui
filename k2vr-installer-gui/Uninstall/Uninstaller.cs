@@ -353,6 +353,9 @@ namespace k2vr_installer_gui.Uninstall
                         key.SetValue("Contact", "https://k2vr.tech");
                         key.SetValue("InstallDate", DateTime.Now.ToString("yyyyMMdd"));
                         key.SetValue("UninstallString", Path.Combine(App.state.GetFullInstallationPath(), "k2vr-installer-gui.exe") + " /uninstall");
+                        key.SetValue("InstallLocation", App.state.GetFullInstallationPath());
+                        // https://stackoverflow.com/a/1765801/ and https://stackoverflow.com/a/22111211
+                        key.SetValue("EstimatedSize", new DirectoryInfo(App.state.GetFullInstallationPath()).EnumerateFiles("*", SearchOption.AllDirectories).Sum(file => file.Length) / 1024, RegistryValueKind.DWord);
                     }
                     finally
                     {
