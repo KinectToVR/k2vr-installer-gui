@@ -33,6 +33,7 @@ namespace k2vr_installer_gui.Tools
         public bool kinectV2SdkInstalled = false;
         public string steamPath = "";
         public string steamVrPath = "";
+        public string steamVrSettingsPath = "";
         public string vrPathReg = "";
         public string copiedDriverPath = "";
 
@@ -146,6 +147,7 @@ namespace k2vr_installer_gui.Tools
                 return;
             }
 
+            steamVrSettingsPath = Path.Combine(App.state.steamPath, "config", "steamvr.vrsettings");
             vrPathReg = Path.Combine(steamVrPath, "bin", "win64", "vrpathreg.exe");
             copiedDriverPath = Path.Combine(App.state.steamVrPath, "drivers", "KinectToVR");
         }

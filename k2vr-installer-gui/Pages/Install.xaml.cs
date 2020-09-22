@@ -1,6 +1,7 @@
 ﻿using k2vr_installer_gui.Tools;
 using k2vr_installer_gui.Tools.OpenVRFiles;
 using k2vr_installer_gui.Uninstall;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -219,6 +220,20 @@ namespace k2vr_installer_gui.Pages
                     Log("Already done!");
                 }
 
+                Log("Disabling SteamVR Home, enabling advanced settings...", false);
+                var steamVrSettings = JsonConvert.DeserializeObject<dynamic>(File.ReadAllText(App.state.steamVrSettingsPath));
+                try
+                {
+                    steamVrSettings["steamvr"]["enableHomeApp"] = false;
+                    steamVrSettings["steamvr"]["showAdvancedSettings"] = true;
+                    JsonFile.Write(App.state.steamVrSettingsPath, steamVrSettings, 3, ' ');
+                    Log("Done!");
+                }
+                catch (Exception)
+                {
+                    Log("Failed (uncritical)!");
+                }
+
                 Log("Creating start menu entry...", false);
                 if (!Directory.Exists(App.startMenuFolder)) Directory.CreateDirectory(App.startMenuFolder);
                 // https://stackoverflow.com/a/4909475/
@@ -240,7 +255,7 @@ namespace k2vr_installer_gui.Pages
                 }
                 Log("Done!");
 
-                Log("Installation complete!");
+                Log("Installation complete!", false);
                 Button_Complete_Install.Dispatcher.Invoke(() =>
                 {
                     Button_Complete_Install.IsEnabled = true;

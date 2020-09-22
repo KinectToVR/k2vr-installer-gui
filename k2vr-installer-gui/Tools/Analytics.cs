@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Newtonsoft.Json;
 using System;
 using System.Globalization;
 using System.IO;
@@ -15,6 +16,8 @@ namespace k2vr_installer_gui.Tools
         public string windowsReleaseId;
         public string windowsBuild;
         public string language;
+        public string headsetManufacturer = "";
+        public string headsetModel = "";
 
         public Analytics()
         {
@@ -23,6 +26,13 @@ namespace k2vr_installer_gui.Tools
             windowsReleaseId = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", "").ToString();
             windowsBuild = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentBuild", "").ToString();
             language = CultureInfo.CurrentUICulture.Name;
+            try
+            {
+                var steamVrSettings = JsonConvert.DeserializeObject<dynamic>(File.ReadAllText(App.state.steamVrSettingsPath));
+                headsetManufacturer = steamVrSettings["LastKnown"]["HMDManufacturer"];
+                headsetModel = steamVrSettings["LastKnown"]["HMDModel"];
+            }
+            catch (Exception) { }
         }
 
         public string ToXmlString()
