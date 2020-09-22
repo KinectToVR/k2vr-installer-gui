@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using k2vr_installer_gui.Tools.OpenVRFiles;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -124,42 +125,26 @@ namespace k2vr_installer_gui.Tools
                 return;
             }
 
-            string steamVrSettingsPath = Path.Combine(steamPath, "config", "steamvr.vrsettings");
-
-            string libraryFoldersPath = Path.Combine(steamPath, "steamapps", "libraryfolders.vdf");
-            string[] libraryFoldersFile = File.ReadAllLines(libraryFoldersPath);
-            List<string> libraryFolders = new List<string>();
-
-            libraryFolders.Add(steamPath);
-
-            for (int i = 4; i < libraryFoldersFile.Length - 1; i++)
+            try
             {
-                string folder = libraryFoldersFile[i];
-                folder = folder.Substring(7, folder.Length - (7 + 1)).Replace(@"\\", @"\");
-                libraryFolders.Add(folder);
-            }
-
-            steamVrPath = "";
-
-            foreach (string folder in libraryFolders)
-            {
-                string potentialSteamVrPath = Path.Combine(folder, @"steamapps", "common", "SteamVR");
-                if (Directory.Exists(potentialSteamVrPath))
+                var openVrPaths = OpenVrPaths.Read();
+                if (openVrPaths.runtime.Count > 1)
                 {
-                    steamVrPath = potentialSteamVrPath;
-                    break;
+                    MessageBox.Show("More than one SteamVR installation folder found!" + Environment.NewLine +
+                        "Please join our Discord server for further assistance (link on www.k2vr.tech)");
+                    Application.Current.Shutdown(1);
+                    return;
                 }
+                steamVrPath = openVrPaths.runtime[0];
             }
-
-            if (steamVrPath == "")
+            catch (Exception)
             {
                 MessageBox.Show("SteamVR installation folder not found!" + Environment.NewLine +
-                    "Are you sure it is installed?" + Environment.NewLine +
-                    "If you are, please join our Discord server for further assistance (link on www.k2vr.tech)");
+                                "Are you sure it is installed?" + Environment.NewLine +
+                                "If you are, please join our Discord server for further assistance (link on www.k2vr.tech)");
                 Application.Current.Shutdown(1);
                 return;
             }
-
 
             vrPathReg = Path.Combine(steamVrPath, "bin", "win64", "vrpathreg.exe");
             copiedDriverPath = Path.Combine(App.state.steamVrPath, "drivers", "KinectToVR");
