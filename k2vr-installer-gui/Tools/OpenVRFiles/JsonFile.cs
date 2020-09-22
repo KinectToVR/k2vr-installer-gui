@@ -13,6 +13,7 @@ namespace k2vr_installer_gui.Tools.OpenVRFiles
         public static T Read<T>(string path)
         {
             var jsonSerializer = new JsonSerializer();
+            jsonSerializer.DefaultValueHandling = DefaultValueHandling.Populate;
             using (var textReader = new StreamReader(path))
             {
                 using (var jsonTextReader = new JsonTextReader(textReader))
