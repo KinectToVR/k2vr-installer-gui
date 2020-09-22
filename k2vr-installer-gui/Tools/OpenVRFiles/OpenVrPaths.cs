@@ -11,7 +11,7 @@ namespace k2vr_installer_gui.Tools.OpenVRFiles
         // Prevent Warning CS0649: Field '...' is never assigned to, and will always have its default value null:
 #pragma warning disable 0649
         public List<string> config;
-        public List<string> external_drivers;
+        public List<string> external_drivers = new List<string>();
         public string jsonid;
         public List<string> log;
         public List<string> runtime;
