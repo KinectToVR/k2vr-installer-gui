@@ -185,6 +185,11 @@ namespace k2vr_installer_gui.Pages
                     Log("Kinect SDK is already installed.");
                 }
 
+                Log("Installing Visual C++ Redistributable...", false);
+                string vcRedistPath = Path.Combine(App.downloadDirectory, FileDownloader.files["vc_redist2019"].OutName);
+                Process.Start(vcRedistPath, "/quiet").WaitForExit();
+                Log("Done!");
+
                 Log("Registering OpenVR driver...", false);
                 string driverPath = Path.Combine(App.state.GetFullInstallationPath(), "KinectToVR");
                 Process.Start(App.state.vrPathReg, "adddriver \"" + driverPath + "\"").WaitForExit();
