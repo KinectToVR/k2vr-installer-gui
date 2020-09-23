@@ -20,7 +20,14 @@ namespace k2vr_installer_gui.Tools.OpenVRFiles
 
         public static OpenVrPaths Read()
         {
-            return JsonFile.Read<OpenVrPaths>(path);
+            OpenVrPaths temp = JsonFile.Read<OpenVrPaths>(path);
+
+            if (temp.external_drivers == null)
+            {
+                temp.external_drivers = new List<string>();
+            }
+
+            return temp;
         }
 
         public void Write()
