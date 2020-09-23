@@ -188,7 +188,7 @@ namespace k2vr_installer_gui.Pages
 
                 Log("Installing Visual C++ Redistributable...", false);
                 string vcRedistPath = Path.Combine(App.downloadDirectory, FileDownloader.files["vc_redist2019"].OutName);
-                Process.Start(vcRedistPath, "/quiet").WaitForExit();
+                Process.Start(vcRedistPath, "/quiet /norestart").WaitForExit();
                 Log("Done!");
 
                 Log("Registering OpenVR driver...", false);
