@@ -67,7 +67,7 @@ namespace k2vr_installer_gui.Pages
         {
             await Task.Run(() =>
             {
-                Log("K2VR Installer " + Assembly.GetExecutingAssembly().GetName().Version.ToString() + " on " + DateTime.Now.ToString());
+                Log("K2EX Installer " + Assembly.GetExecutingAssembly().GetName().Version.ToString() + " on " + DateTime.Now.ToString());
 
                 Log("Checking if SteamVR is open...", false);
                 foreach (Process process in Process.GetProcesses())

@@ -34,7 +34,7 @@ namespace k2vr_installer_gui.Pages
 
         public VersionContext()
         {
-            Version = "KinectToVR Installer " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            Version = "K2EX Installer " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
     }
 }
