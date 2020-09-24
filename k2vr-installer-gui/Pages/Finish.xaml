@@ -7,15 +7,15 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="{StaticResource brush_background}">
     <StackPanel>
-        <TextBlock Style="{StaticResource Heading}" Text="Thank you for installing KinectToVR EX!" FontSize="35" Margin="0,40,0,20"/>
+        <Image Source="/Resources/k2vr-banner.png" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Stretch"/>
+        <TextBlock Style="{StaticResource Heading}" FontSize="35" Margin="0,40,0,20"><Run Text="Thank you for installing KinectToVR"/><Run Text="!"/></TextBlock>
         <TextBlock Style="{StaticResource Heading}" FontStyle="Normal" Margin="0,0,0,10"
                    Text="Visit our website for further instructions:"/>
-        <Button Style="{StaticResource Button_Primary}" HorizontalAlignment="Center" FontSize="15" Click="Button_Visit_website_Click">Visit website</Button>
+        <Button Style="{StaticResource Button_Primary}" HorizontalAlignment="Center" FontSize="15" Click="Button_Visit_website_Click" Content="Visit website"/>
         <TextBlock Style="{StaticResource Heading}" FontStyle="Normal" Margin="0,10,0,10"
                    Text="We also highly recommend joining our Discord server for updates and support:"/>
-        <Button Style="{StaticResource Button_Primary}" HorizontalAlignment="Center" FontSize="15" Background="#7289DA" Click="Button_Visit_discord_Click">Join Discord</Button>
+        <Button Style="{StaticResource Button_Primary}" HorizontalAlignment="Center" FontSize="15" Background="#7289DA" Click="Button_Visit_discord_Click" Content="Join Discord"/>
         <TextBlock Style="{StaticResource Heading}" FontStyle="Normal" Margin="0,35,0,10"
                    Text="We recommend restarting your computer now."/>
-        <Image Source="/Resources/k2vr-banner.png" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Stretch"/>
     </StackPanel>
 </UserControl>
