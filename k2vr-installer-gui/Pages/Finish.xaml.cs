@@ -37,7 +37,7 @@ namespace k2vr_installer_gui.Pages
 
         private void Button_Visit_discord_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start("https://discord.gg/Mu28W4N");
+            Process.Start("https://discord.gg/YBQCRDG");
         }
 
         private void Button_Close_Installer_Click(object sender, RoutedEventArgs e)
