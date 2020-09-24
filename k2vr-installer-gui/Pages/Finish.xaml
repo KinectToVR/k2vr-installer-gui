@@ -17,5 +17,6 @@
         <Button Style="{StaticResource Button_Primary}" HorizontalAlignment="Center" FontSize="15" Background="#7289DA" Click="Button_Visit_discord_Click" Content="Join Discord"/>
         <TextBlock Style="{StaticResource Heading}" FontStyle="Normal" Margin="0,35,0,10"
                    Text="We recommend restarting your computer now."/>
+        <Button Style="{StaticResource Button_Primary}" HorizontalAlignment="Center" FontSize="20" Click="Button_Close_Installer_Click" Content="Close this window" Background="#FFFF0322"/>
     </StackPanel>
 </UserControl>
