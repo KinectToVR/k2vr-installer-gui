@@ -8,24 +8,24 @@
     <Application.Resources>
         <SolidColorBrush x:Key="brush_foreground" Color="White" />
 
-        <SolidColorBrush x:Key="brush_primary" Color="#FF0C1B89" />
-        <SolidColorBrush x:Key="brush_secondary" Color="#FF283BBE" />
-        <SolidColorBrush x:Key="brush_background" Color="#FF000840" />
+        <SolidColorBrush x:Key="brush_primary" Color="#FF222222" />
+        <SolidColorBrush x:Key="brush_secondary" Color="#FF292929" />
+        <SolidColorBrush x:Key="brush_background" Color="#FF121212" />
 
-        <Color x:Key="col_button_primary">#FF2CB812</Color>
-        <Color x:Key="col_button_primary_hover">#FF2AAB12</Color>
+        <Color x:Key="col_button_primary">#FFAA379F</Color>
+        <Color x:Key="col_button_primary_hover">#FF551796</Color>
 
         <SolidColorBrush x:Key="brush_button_primary"
                          Color="{StaticResource col_button_primary}" />
         <SolidColorBrush x:Key="brush_button_primary_hover"
                          Color="{StaticResource col_button_primary_hover}" />
 
-        <SolidColorBrush x:Key="brush_button_secondary" Color="#FF1630EE" />
-        <SolidColorBrush x:Key="brush_button_secondary_hover" Color="#FF152DDC" />
+        <SolidColorBrush x:Key="brush_button_secondary" Color="#FFAA379F" />
+        <SolidColorBrush x:Key="brush_button_secondary_hover" Color="#FF551796" />
 
-        <SolidColorBrush x:Key="brush_button_inactive" Color="#FF74956E" />
+        <SolidColorBrush x:Key="brush_button_inactive" Color="#FF2A035D" />
 
-        <SolidColorBrush x:Key="brush_button_disabled" Color="#79DBDBDB"/>
+        <SolidColorBrush x:Key="brush_button_disabled" Color="#792E243D"/>
 
         <Style TargetType="{x:Type Button}" x:Key="Button_Primary">
             <Setter Property="Foreground" Value="{StaticResource brush_foreground}"/>
