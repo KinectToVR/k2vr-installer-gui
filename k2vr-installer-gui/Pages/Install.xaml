@@ -13,7 +13,7 @@
         </Grid.RowDefinitions>
         <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
             <Border Style="{StaticResource Element_Border}">
-                <TextBlock x:Name="TextBlock_installLog" FontSize="20" TextWrapping="Wrap"/>
+                <TextBlock x:Name="TextBlock_installLog" FontSize="14" TextWrapping="Wrap" FontFamily="Lucida Console"/>
             </Border>
         </ScrollViewer>
         <Button Grid.Row="1" Style="{StaticResource Button_Primary}" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="16" Height="38" Margin="8,0,8,8"
