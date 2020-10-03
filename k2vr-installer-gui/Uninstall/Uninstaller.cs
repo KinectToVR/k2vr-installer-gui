@@ -10,8 +10,10 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Threading;
 using System.Xml.Serialization;
 
@@ -64,7 +66,6 @@ namespace k2vr_installer_gui.Uninstall
                         File.Delete(Path.Combine(startMenuFolder, "KinectToVR (Xbox One).lnk"));
                         try { Directory.Delete(startMenuFolder, false); } catch (IOException) { }
                     }
-
                     installPage.Log("Done!");
                 }
                 else
@@ -76,8 +77,20 @@ namespace k2vr_installer_gui.Uninstall
             {
                 installPage.Log("Not found!");
             }
+            string ovrieFolder = Path.Combine("C:\\", "Program Files", "OpenVR-InputEmulator");
+            if (Directory.Exists(ovrieFolder))
+            {
+                if (MessageBox.Show("OpenVR Input Emulator found!" + Environment.NewLine +
+                "Do you wish to uninstall it? (recommended)", "Uninstall OpenVR Input Emulator?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    installPage.Log("Uninstalling OpenVR Input Emulator...", false);
+                    // copy installer to temp
+                    File.Copy(Path.Combine(ovrieFolder, "Uninstall.exe"), Path.Combine(App.downloadDirectory, "Uninstall.exe"), true);
+                    Process.Start(Path.Combine(App.downloadDirectory, "Uninstall.exe"), "_?=" + ovrieFolder + "\\").WaitForExit();
+                    installPage.Log("Done!");
+                }
+            }
         }
-
         private static string GetBasePath(string path, string end)
         {
             if (path.EndsWith(end))
