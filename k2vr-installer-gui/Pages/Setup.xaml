@@ -35,8 +35,8 @@
             <Button Style="{StaticResource Button_Secondary}" Content="Change" Click="Button_ChooseLocation_Click"/>
         </StackPanel>
         <CheckBox Style="{StaticResource CheckBox}" x:Name="CheckBox_analytics" HorizontalAlignment="Center" Margin="0,16,0,0"
-                  FontFamily="Jost* Semi" FontSize="20" Content="Allow sending anonymous usage data" />
-        <TextBlock HorizontalAlignment="Center" Margin="0,0,0,8">
+                  FontFamily="Jost* Semi" FontSize="20" Content="Allow sending anonymous usage data" Visibility="Collapsed" />
+        <TextBlock HorizontalAlignment="Center" Margin="0,0,0,8" Visibility="Collapsed">
             <Hyperlink Click="Hyperlink_Analytics_Click">What data is being collected?</Hyperlink>
         </TextBlock>
         <!--<ListBox Style="{StaticResource ListBox}" x:Name="ListBox_analytics" HorizontalAlignment="Center" Foreground="{StaticResource brush_foreground}" Background="Transparent" BorderThickness="0">
@@ -49,7 +49,7 @@
             <ListBoxItem>No</ListBoxItem>
         </ListBox>-->
 
-        <Button Style="{StaticResource Button_Primary}" Margin="20,0" Content="Download and install now" Click="Button_Install_Click" HorizontalAlignment="Center" Height="36" FontSize="16"/>
+        <Button Style="{StaticResource Button_Primary}" Margin="20,20,20,0" Content="Download and install now" Click="Button_Install_Click" HorizontalAlignment="Center" Height="36" FontSize="16"/>
     </StackPanel>
 
     <UserControl.Resources>
