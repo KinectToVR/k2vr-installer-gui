@@ -35,6 +35,7 @@ namespace k2vr_installer_gui.Pages
         public VersionContext()
         {
             Version = "K2EX Installer " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            Version = Version.Remove(Version.Length - 2);
         }
     }
 }

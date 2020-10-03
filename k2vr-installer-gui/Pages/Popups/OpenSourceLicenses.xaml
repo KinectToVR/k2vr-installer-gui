@@ -77,7 +77,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         <UniformGrid Rows="1" x:Name="headerPanel" IsItemsHost="True" VerticalAlignment="Stretch" />
                         <TextBlock Text="{Binding Path=Version}"
                                HorizontalAlignment="Right" VerticalAlignment="Center"
-                               Foreground="#FF878EC5" FontSize="16" Margin="0,0,8,0"/>
+                               Foreground="#FFFFFFFF" FontSize="16" Margin="0,0,8,0"/>
                     </DockPanel>
 
                     <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
