@@ -65,7 +65,7 @@ namespace k2vr_installer_gui.Pages
             }
             catch (Exception)
             {
-                TextBox_installLocation.Text = Environment.ExpandEnvironmentVariables(@"%ProgramFiles%\KinectToVR");
+                TextBox_installLocation.Text = Environment.ExpandEnvironmentVariables(@"%SystemDrive%\K2EX");
             }
         }
 
