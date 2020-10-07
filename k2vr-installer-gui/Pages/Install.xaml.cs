@@ -233,6 +233,19 @@ namespace k2vr_installer_gui.Pages
                 {
                     Log("Failed (uncritical)!");
                 }
+                Log("Registering tracker roles...", false);
+                try
+                {
+                    steamVrSettings["steamvr"]["trackers"]["/devices/htc/vive_trackerLHR-CB11ABEC"] = "TrackerRole_Waist";
+                    steamVrSettings["steamvr"]["trackers"]["/devices/htc/vive_trackerLHR-CB1441A7"] = "TrackerRole_RightFoot";
+                    steamVrSettings["steamvr"]["trackers"]["/devices/htc/vive_trackerLHR-CB9AD1T2"] = "TrackerRole_LeftFoot";
+                    JsonFile.Write(App.state.steamVrSettingsPath, steamVrSettings, 3, ' ');
+                    Log("Done!");
+                }
+                catch (Exception)
+                {
+                    Log("Failed (uncritical)!");
+                }
 
                 Log("Creating start menu entry...", false);
                 if (!Directory.Exists(App.startMenuFolder)) Directory.CreateDirectory(App.startMenuFolder);
