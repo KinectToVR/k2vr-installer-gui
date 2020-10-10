@@ -78,7 +78,7 @@ namespace k2vr_installer_gui.Uninstall
                 installPage.Log("Not found!");
             }
             string ovrieFolder = Path.Combine("C:\\", "Program Files", "OpenVR-InputEmulator");
-            if (Directory.Exists(ovrieFolder))
+            if (File.Exists(Path.Combine(ovrieFolder, "Uninstall.exe")))
             {
                 if (MessageBox.Show("OpenVR Input Emulator found!" + Environment.NewLine +
                 "Do you wish to uninstall it? (recommended)", "Uninstall OpenVR Input Emulator?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
