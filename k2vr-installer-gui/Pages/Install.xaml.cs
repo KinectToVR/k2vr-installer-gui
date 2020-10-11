@@ -2,6 +2,7 @@
 using k2vr_installer_gui.Tools.OpenVRFiles;
 using k2vr_installer_gui.Uninstall;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -236,9 +237,13 @@ namespace k2vr_installer_gui.Pages
                 Log("Registering tracker roles...", false);
                 try
                 {
-                    steamVrSettings["steamvr"]["trackers"]["/devices/htc/vive_trackerLHR-CB11ABEC"] = "TrackerRole_Waist";
-                    steamVrSettings["steamvr"]["trackers"]["/devices/htc/vive_trackerLHR-CB1441A7"] = "TrackerRole_RightFoot";
-                    steamVrSettings["steamvr"]["trackers"]["/devices/htc/vive_trackerLHR-CB9AD1T2"] = "TrackerRole_LeftFoot";
+                    if (steamVrSettings["trackers"] == null)
+                    {
+                        steamVrSettings["trackers"] = new JObject();
+                    }
+                    steamVrSettings["trackers"]["/devices/htc/vive_trackerLHR-CB11ABEC"] = "TrackerRole_Waist";
+                    steamVrSettings["trackers"]["/devices/htc/vive_trackerLHR-CB1441A7"] = "TrackerRole_RightFoot";
+                    steamVrSettings["trackers"]["/devices/htc/vive_trackerLHR-CB9AD1T2"] = "TrackerRole_LeftFoot";
                     JsonFile.Write(App.state.steamVrSettingsPath, steamVrSettings, 3, ' ');
                     Log("Done!");
                 }
