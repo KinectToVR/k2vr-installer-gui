@@ -14,9 +14,9 @@
         <Button Style="{StaticResource Button_Primary}" HorizontalAlignment="Center" FontSize="15" Click="Button_Visit_website_Click" Content="Visit website"/>
         <TextBlock Style="{StaticResource Heading}" FontStyle="Normal" Margin="0,10,0,10"
                    Text="We also highly recommend joining our Discord server for updates and support:"/>
-        <Button Style="{StaticResource Button_Primary}" HorizontalAlignment="Center" FontSize="15" Background="#7289DA" Click="Button_Visit_discord_Click" Content="Join Discord"/>
+        <Button Style="{StaticResource Button_Blurple}" HorizontalAlignment="Center" FontSize="15" Click="Button_Visit_discord_Click" Content="Join Discord"/>
         <TextBlock Style="{StaticResource Heading}" FontStyle="Normal" Margin="0,35,0,10"
                    Text="We recommend restarting your computer now."/>
-        <Button Style="{StaticResource Button_Primary}" HorizontalAlignment="Center" FontSize="20" Click="Button_Close_Installer_Click" Content="Close this window" Background="#FFFF0322"/>
+        <Button Style="{StaticResource Button_Red}" HorizontalAlignment="Center" FontSize="20" Click="Button_Close_Installer_Click" Content="Close this window"/>
     </StackPanel>
 </UserControl>

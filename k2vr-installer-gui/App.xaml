@@ -13,19 +13,25 @@
         <SolidColorBrush x:Key="brush_background" Color="#FF121212" />
 
         <Color x:Key="col_button_primary">#FFAA379F</Color>
-        <Color x:Key="col_button_primary_hover">#FF551796</Color>
+        <Color x:Key="col_button_primary_hover">#FF903287</Color>
 
         <SolidColorBrush x:Key="brush_button_primary"
                          Color="{StaticResource col_button_primary}" />
         <SolidColorBrush x:Key="brush_button_primary_hover"
                          Color="{StaticResource col_button_primary_hover}" />
 
-        <SolidColorBrush x:Key="brush_button_secondary" Color="#FFAA379F" />
-        <SolidColorBrush x:Key="brush_button_secondary_hover" Color="#FF551796" />
+        <SolidColorBrush x:Key="brush_button_secondary" Color="#FF551796" />
+        <SolidColorBrush x:Key="brush_button_secondary_hover" Color="#FF4F1988" />
 
         <SolidColorBrush x:Key="brush_button_inactive" Color="#FF2A035D" />
 
         <SolidColorBrush x:Key="brush_button_disabled" Color="#792E243D"/>
+
+        <SolidColorBrush x:Key="brush_button_blurple" Color="#7289DA" />
+        <SolidColorBrush x:Key="brush_button_blurple_hover" Color="#637ACE" />
+
+        <SolidColorBrush x:Key="brush_button_red" Color="#FFFF0322" />
+        <SolidColorBrush x:Key="brush_button_red_hover" Color="#FFD9001B" />
 
         <Style TargetType="{x:Type Button}" x:Key="Button_Primary">
             <Setter Property="Foreground" Value="{StaticResource brush_foreground}"/>
@@ -65,6 +71,24 @@
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="{StaticResource brush_button_inactive}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="{x:Type Button}" x:Key="Button_Blurple" BasedOn="{StaticResource Button_Primary}">
+            <Setter Property="Background" Value="{StaticResource brush_button_blurple}"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource brush_button_blurple_hover}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="{x:Type Button}" x:Key="Button_Red" BasedOn="{StaticResource Button_Primary}">
+            <Setter Property="Background" Value="{StaticResource brush_button_red}"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource brush_button_red_hover}"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -149,9 +173,9 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="ListBoxItem">
                                 <Border x:Name="BorderOuter" Background="Transparent"
-                                BorderThickness="5" CornerRadius="4" BorderBrush="{StaticResource brush_button_secondary}"
+                                BorderThickness="5" CornerRadius="4" BorderBrush="{StaticResource brush_button_primary}"
                                 Margin="10">
-                                    <Border x:Name="BorderInner" CornerRadius="4" Margin="-1" Padding="5" Background="{StaticResource brush_button_secondary}">
+                                    <Border x:Name="BorderInner" CornerRadius="4" Margin="-1" Padding="5" Background="{StaticResource brush_button_primary}">
                                         <ContentPresenter />
                                     </Border>
                                     <VisualStateManager.VisualStateGroups>
