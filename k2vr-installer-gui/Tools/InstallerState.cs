@@ -133,9 +133,13 @@ namespace k2vr_installer_gui.Tools
                 var openVrPaths = OpenVrPaths.Read();
                 foreach (string runtimePath in openVrPaths.runtime)
                 {
-                    steamVrPath = runtimePath;
-                    vrPathReg = Path.Combine(steamVrPath, "bin", "win64", "vrpathreg.exe");
-                    if (File.Exists(vrPathReg)) break;
+                    string tempVrPathReg = Path.Combine(runtimePath, "bin", "win64", "vrpathreg.exe");
+                    if (File.Exists(tempVrPathReg))
+                    {
+                        steamVrPath = runtimePath;
+                        vrPathReg = tempVrPathReg;
+                        break;
+                    }
                 }
             }
             catch (Exception)
