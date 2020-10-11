@@ -274,7 +274,7 @@ namespace k2vr_installer_gui.Pages
                 Log("Done!");
 
                 Log("Installation complete!");
-                Log("The installation log can be found in " + App.downloadDirectory, false);
+                Log("The installation log can be found in \"" + App.downloadDirectory + "\"", false);
                 Button_Complete_Install.Dispatcher.Invoke(() =>
                 {
                     Button_Complete_Install.IsEnabled = true;
