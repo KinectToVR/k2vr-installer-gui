@@ -1,0 +1,44 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Setup msbuild
+        uses: microsoft/setup-msbuild@v1
+      
+      - name: Change into working directory
+        run: cd $GITHUB_WORKSPACE
+        
+      - name: Restore NuGet packages
+        run: nuget.exe restore k2vr-installer-gui.sln
+      
+      - name: Build
+        run: MSBuild.exe "/p:Configuration=Release;Platform=x64"
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v2.2.0
+        with:
+          name: k2vr-installer-gui.exe
+          path: k2vr-installer-gui/bin/x64/Release/k2vr-installer-gui.exe
+          if-no-files-found: error
