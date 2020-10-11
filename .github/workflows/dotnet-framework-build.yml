@@ -39,5 +39,5 @@ jobs:
       - name: Upload build artifact
         uses: actions/upload-artifact@v2.2.0
         with:
-          path: bin/x64/Release/k2vr-installer-gui.exe
+          path: k2vr-installer-gui/bin/x64/Release/k2vr-installer-gui.exe
           if-no-files-found: error
