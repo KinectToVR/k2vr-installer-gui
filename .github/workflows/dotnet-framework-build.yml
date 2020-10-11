@@ -30,8 +30,8 @@ jobs:
       - name: Change into working directory
         run: cd $GITHUB_WORKSPACE
         
-      - name: Restoring NuGet packages
-        run: MSBuild.exe /t:Restore
+      - name: Restore NuGet packages
+        run: nuget.exe restore k2vr-installer-gui.sln
       
-      - name: Building
+      - name: Build
         run: MSBuild.exe "/p:Configuration=Release;Platform=x64"
