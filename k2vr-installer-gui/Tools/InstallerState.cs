@@ -126,17 +126,17 @@ namespace k2vr_installer_gui.Tools
                 return;
             }
 
+            steamVrPath = "";
+            vrPathReg = "";
             try
             {
                 var openVrPaths = OpenVrPaths.Read();
-                if (openVrPaths.runtime.Count > 1)
+                foreach (string runtimePath in openVrPaths.runtime)
                 {
-                    MessageBox.Show("More than one SteamVR installation folder found!" + Environment.NewLine +
-                        "Please join our Discord server for further assistance (link on www.k2vr.tech)");
-                    Application.Current.Shutdown(1);
-                    return;
+                    steamVrPath = runtimePath;
+                    vrPathReg = Path.Combine(steamVrPath, "bin", "win64", "vrpathreg.exe");
+                    if (File.Exists(vrPathReg)) break;
                 }
-                steamVrPath = openVrPaths.runtime[0];
             }
             catch (Exception)
             {
@@ -146,10 +146,16 @@ namespace k2vr_installer_gui.Tools
                 Application.Current.Shutdown(1);
                 return;
             }
+            if (vrPathReg == "")
+            {
+                MessageBox.Show("VRPathReg not found!" + Environment.NewLine +
+                                "Please join our Discord server for further assistance (link on www.k2vr.tech)");
+                Application.Current.Shutdown(1);
+                return;
+            }
 
-            steamVrSettingsPath = Path.Combine(App.state.steamPath, "config", "steamvr.vrsettings");
-            vrPathReg = Path.Combine(steamVrPath, "bin", "win64", "vrpathreg.exe");
-            copiedDriverPath = Path.Combine(App.state.steamVrPath, "drivers", "KinectToVR");
+            steamVrSettingsPath = Path.Combine(steamPath, "config", "steamvr.vrsettings");
+            copiedDriverPath = Path.Combine(steamVrPath, "drivers", "KinectToVR");
         }
 
         public void Update()
