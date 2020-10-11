@@ -11,7 +11,7 @@
       Title="Open Source Licenses" Background="{StaticResource brush_background}" FontFamily="Jost*">
     <TabControl x:Name="TabControl_OpenSourceLicenses" Background="{StaticResource brush_primary}">
         <TabItem Header="Newtonsoft.Json">
-            <TextBlock xml:space="preserve">The MIT License (MIT)
+            <TextBlock xml:space="preserve" Padding="5">The MIT License (MIT)
 
 Copyright (c) 2007 James Newton-King
 
@@ -34,7 +34,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             </TextBlock>
         </TabItem>
         <TabItem Header="ookii-dialogs-wpf" Foreground="{StaticResource brush_foreground}" >
-            <TextBlock xml:space="preserve">BSD 3-Clause License
+            <TextBlock xml:space="preserve" Padding="5">BSD 3-Clause License
 
 Copyright (c) C. Augusto Proiete 2018-2020
 Copyright (c) Sven Groot         2009-2018
@@ -70,7 +70,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <ControlTemplate TargetType="{x:Type TabControl}">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <DockPanel Grid.Row="0" Dock="Right" VerticalAlignment="Top" Background="{StaticResource brush_primary}">
