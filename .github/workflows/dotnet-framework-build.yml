@@ -35,10 +35,14 @@ jobs:
       
       - name: Build
         run: MSBuild.exe "/p:Configuration=Release;Platform=x64"
+      
+      - name: Get short SHA
+        id: slug
+        run: "$slug = '::set-output name=slug::' + $env:GITHUB_SHA.SubString(0,7); echo $slug"
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v2.2.0
         with:
-          name: k2vr-installer-${{ github.ref }}.exe
+          name: k2vr-installer-${{ steps.slug.outputs.slug }}.exe
           path: k2vr-installer-gui/bin/x64/Release/k2vr-installer-gui.exe
           if-no-files-found: error
