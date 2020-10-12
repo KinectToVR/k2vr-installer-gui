@@ -39,6 +39,6 @@ jobs:
       - name: Upload build artifact
         uses: actions/upload-artifact@v2.2.0
         with:
-          name: k2vr-installer-gui.exe
+          name: k2vr-installer-${{ github.ref }}.exe
           path: k2vr-installer-gui/bin/x64/Release/k2vr-installer-gui.exe
           if-no-files-found: error
