@@ -1,4 +1,5 @@
-﻿using k2vr_installer_gui.Tools;
+﻿using k2vr_installer_gui.Pages.Popups;
+using k2vr_installer_gui.Tools;
 using k2vr_installer_gui.Uninstall;
 using Microsoft.Win32;
 using System;
@@ -51,6 +52,12 @@ namespace k2vr_installer_gui
         public static void Log(string text)
         {
             File.AppendAllText(Path.Combine(App.downloadDirectory, "install.log"), text + Environment.NewLine);
+        }
+
+        private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            new ExceptionDialog(e.Exception).ShowDialog();
+            Current.Shutdown(1);
         }
     }
 }

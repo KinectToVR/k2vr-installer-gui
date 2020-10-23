@@ -4,6 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:k2vr_installer_gui"
              Startup="Application_Startup"
+             DispatcherUnhandledException="App_DispatcherUnhandledException"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <SolidColorBrush x:Key="brush_foreground" Color="White" />

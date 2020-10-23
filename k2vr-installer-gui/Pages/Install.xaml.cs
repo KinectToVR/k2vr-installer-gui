@@ -1,4 +1,5 @@
-﻿using k2vr_installer_gui.Tools;
+﻿using k2vr_installer_gui.Pages.Popups;
+using k2vr_installer_gui.Tools;
 using k2vr_installer_gui.Tools.OpenVRFiles;
 using k2vr_installer_gui.Uninstall;
 using Newtonsoft.Json;
@@ -114,7 +115,20 @@ namespace k2vr_installer_gui.Pages
                 Uninstaller.UninstallK2VrLegacy(this);
 
                 Log("Checking for other K2EX installations...", false);
-                if (!Uninstaller.UninstallAllK2EX(this)) return;
+                try
+                {
+                    if (!Uninstaller.UninstallAllK2EX(this)) return;
+                }
+                catch (Exception e)
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        if (new ExceptionDialog(e, true).ShowDialog().Value != true)
+                        {
+                            Application.Current.Shutdown(1);
+                        }
+                    });
+                }
                 Log("Done!");
 
                 Log("Checking install directory...", false);
@@ -183,7 +197,9 @@ namespace k2vr_installer_gui.Pages
                         return;
                     }
                     Log("Done!");
-                } else {
+                }
+                else
+                {
                     Log("Kinect SDK is already installed.");
                 }
 
