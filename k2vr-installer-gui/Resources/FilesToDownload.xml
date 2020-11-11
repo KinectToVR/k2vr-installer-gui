@@ -12,7 +12,7 @@
     </FileToDownload>
     <FileToDownload>
       <Name>vc_redist2019</Name>
-      <Md5>9F096B97D204078B443DBCBF18E0EBB0</Md5>
+      <Md5>0</Md5>
       <OutName>VC_redist.x64.exe</OutName>
       <PrettyName>Visual C++ 2019 Redistributable</PrettyName>
       <Url>https://aka.ms/vs/16/release/vc_redist.x64.exe</Url>

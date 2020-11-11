@@ -109,6 +109,10 @@ namespace k2vr_installer_gui.Pages
                             {
                                 return true;
                             }
+                            else if (item.FileToDownload.Md5 == "0")
+                            {
+                                return true;
+                            }
                         }
                     }
                 }
