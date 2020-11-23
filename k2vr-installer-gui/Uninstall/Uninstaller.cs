@@ -220,7 +220,8 @@ namespace k2vr_installer_gui.Uninstall
                             File.Delete(confSettingsPath);
                         }
                         string[] files = Directory.GetFiles(path);
-                        if (files.Length == 1 && files[0] == Path.Combine(path, "k2vr-installer-gui.exe"))
+                        string[] directories = Directory.GetDirectories(path);
+                        if (directories.Length == 0 && files.Length == 1 && files[0] == Path.Combine(path, "k2vr-installer-gui.exe"))
                         {
                             return true;
                         }
