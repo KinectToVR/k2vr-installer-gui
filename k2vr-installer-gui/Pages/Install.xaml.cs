@@ -277,6 +277,7 @@ namespace k2vr_installer_gui.Pages
                 shortcut.Description = "Launch KinectToVR";
                 shortcut.TargetPath = Path.Combine(App.state.GetFullInstallationPath(), kinectProcessName + ".exe");
                 shortcut.IconLocation = Path.Combine(App.state.GetFullInstallationPath(), "k2vr.ico");
+                shortcut.WorkingDirectory = Path.Combine(App.state.GetFullInstallationPath());
                 shortcut.Save();
                 Log("Refreshing...", false);
                 foreach (Process process in Process.GetProcesses())
