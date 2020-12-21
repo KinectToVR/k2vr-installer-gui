@@ -25,7 +25,7 @@ namespace k2vr_installer_gui.Pages
             InitializeComponent();
         }
 
-        private void BeginButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             ((MainWindow)Application.Current.MainWindow).GoToTab(1);
         }
@@ -34,14 +34,9 @@ namespace k2vr_installer_gui.Pages
         {
         }
 
-        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        private void Hyperlink_ViewOpenSourceLicenses_Click(object sender, RoutedEventArgs e)
         {
             new OpenSourceLicenses().ShowDialog();
-        }
-
-        private void LangButton_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Not implemented yet!");
         }
     }
 }

@@ -12,7 +12,7 @@
 
     <TabControl x:Name="TabControl_tabs" Background="{StaticResource brush_primary}" SelectionChanged="TabControl_tabs_SelectionChanged">
         <TabItem Header="Start" FontFamily="Jost*" IsEnabled="False">
-            <pages:Home Margin="0" Padding="0"/>
+            <pages:Home />
         </TabItem>
         <TabItem Header="Options" IsEnabled="False">
             <pages:Setup/>
