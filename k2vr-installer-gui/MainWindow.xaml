@@ -49,7 +49,7 @@
 
     <Window.Resources>
         <Style TargetType="{x:Type TabItem}">
-            <Setter Property="Foreground" Value="{StaticResource brush_foreground}" />
+            <Setter Property="Foreground" Value="{StaticResource brush_button_transparent}" />
             <Setter Property="Background" Value="{StaticResource brush_secondary}"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Template">
@@ -63,8 +63,8 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="border" Property="Border.BorderBrush" Value="{StaticResource brush_button_primary}"/>
-                                <Setter TargetName="text_block" Property="TextBlock.Foreground" Value="{StaticResource brush_button_primary}"/>
+                                <Setter TargetName="border" Property="Border.BorderBrush" Value="{StaticResource brush_foreground}"/>
+                                <Setter TargetName="text_block" Property="TextBlock.Foreground" Value="{StaticResource brush_foreground}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
