@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
+using System.Globalization;
 
 namespace k2vr_installer_gui
 {
@@ -24,25 +25,36 @@ namespace k2vr_installer_gui
         {
             string installPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\" + installedPathRegKeyName, "InstallPath", "") ?? "";
 
+            // get system display language
+            string displayLanguage = CultureInfo.InstalledUICulture.TwoLetterISOLanguageName;
+            // import strings.json from resources and parse it into a JObject
+
+
             state = InstallerState.Read(installPath);
             state.Update();
             if (e.Args.Length > 0 && e.Args[0] == "/uninstall")
             {
                 if (MessageBox.Show("Are you sure you want to uninstall KinectToVR?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    if (Uninstaller.UninstallK2EX(installPath))
-                    {
-                        MessageBox.Show("Uninstalled successfully!");
-                        if (Directory.Exists(installPath))
+                    try {
+                        if (Uninstaller.UninstallK2EX(installPath))
                         {
-                            // https://stackoverflow.com/a/1305478/
-                            ProcessStartInfo Info = new ProcessStartInfo();
-                            Info.Arguments = "/C choice /C Y /N /D Y /T 3 & rmdir /S /Q \"" + installPath + "\"";
-                            Info.WindowStyle = ProcessWindowStyle.Hidden;
-                            Info.CreateNoWindow = true;
-                            Info.FileName = "cmd.exe";
-                            Process.Start(Info);
+                            MessageBox.Show("Uninstalled successfully!");
+                            if (Directory.Exists(installPath))
+                            {
+                                // https://stackoverflow.com/a/1305478/
+                                ProcessStartInfo Info = new ProcessStartInfo();
+                                Info.Arguments = "/C choice /C Y /N /D Y /T 3 & rmdir /S /Q \"" + installPath + "\"";
+                                Info.WindowStyle = ProcessWindowStyle.Hidden;
+                                Info.CreateNoWindow = true;
+                                Info.FileName = "cmd.exe";
+                                Process.Start(Info);
+                            }
                         }
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("An error happened while trying to uninstall. Join our Discord for help on manually uninstalling.");
                     }
                 }
                 Current.Shutdown(0);

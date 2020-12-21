@@ -118,152 +118,149 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="download_cancel" xml:space="preserve">
-    <value>Are you sure you want to cancel the download(s)?</value>
+    <value>現在進行中のダウンロードを停止しても大丈夫でしょうか？</value>
   </data>
   <data name="finish_close_button" xml:space="preserve">
-    <value>Close this window</value>
+    <value>このアプリケーションを閉じる</value>
   </data>
   <data name="finish_discord" xml:space="preserve">
-    <value>We also highly recommend joining our Discord server for updates and support:</value>
+    <value>また、ヘルプや告知のためにDiscordサーバーに参加することをお勧めします。</value>
   </data>
   <data name="finish_discord_button" xml:space="preserve">
-    <value>Join Discord</value>
+    <value>Discord</value>
   </data>
   <data name="finish_restart" xml:space="preserve">
-    <value>We recommend restarting your computer now.</value>
+    <value>今すぐパソコンを再起動することをお勧めします。</value>
   </data>
   <data name="finish_thanks" xml:space="preserve">
-    <value>Thank you for installing KinectToVR!</value>
+    <value>この度はKinectToVRをお選びいただきありがとうございます！</value>
   </data>
   <data name="finish_website" xml:space="preserve">
-    <value>Visit our website for further instructions:</value>
+    <value>詳細については、我々のウェブサイトをご覧ください。</value>
   </data>
   <data name="finish_website_button" xml:space="preserve">
-    <value>Visit website</value>
+    <value>ウェブサイト</value>
   </data>
   <data name="home_begin_button" xml:space="preserve">
-    <value>Begin Installation</value>
+    <value>インストールを開始する</value>
   </data>
   <data name="home_language_button" xml:space="preserve">
-    <value>Change Language</value>
+    <value>言語の変更</value>
   </data>
   <data name="home_licenses_button" xml:space="preserve">
-    <value>View Open Source Licenses</value>
+    <value>オープンソースライセンス</value>
   </data>
   <data name="installer_previous_disable" xml:space="preserve">
-    <value>K2EX appears to also be installed in {0}. Do you wish to disable it?</value>
+    <value>{0} にK2EXの別のインストールが見つかりました。無効にしますか？</value>
   </data>
   <data name="installer_previous_disable_title" xml:space="preserve">
-    <value>Already Installed</value>
+    <value>既存のインストールが検出されました。</value>
   </data>
   <data name="install_calibration_remove" xml:space="preserve">
-    <value>Do you wish to delete your calibration settings as well?
-To resuse them you will need to install KinectToVR in the directory {0} again.
-Delete calibration settings?</value>
+    <value>キャリブレーションの設定を削除しますか？
+これらの設定を再利用するには、再度同じフォルダにKinectToVRをインストールする必要があります。</value>
   </data>
   <data name="install_calibration_remove_title" xml:space="preserve">
-    <value>Delete calibration settings?</value>
+    <value>キャリブレーションの設定</value>
   </data>
   <data name="install_completed_button" xml:space="preserve">
-    <value>Complete Installation</value>
+    <value>キャリブレーションの設定</value>
   </data>
   <data name="install_existing_folder_fail" xml:space="preserve">
-    <value>Cannot install two versions of KinectToVR into the same directory.
-Either uninstall the old version or select another install directory.
-Restart this install to try again.</value>
+    <value>複数のバージョンを同じフォルダにインストールすることはできません。
+古いバージョンをアンインストールするか、別のインストールパスを選択する必要があります。
+インストーラを再起動して再試行してください。</value>
   </data>
   <data name="install_legacy_k2vr_confirm" xml:space="preserve">
-    <value>Uninstalling legacy K2VR will delete the folder {0} and all it's contents.</value>
+    <value>レガシーバージョンをアンインストールすると、フォルダ {0} とその中のすべてのファイルが削除されます。</value>
   </data>
   <data name="install_legacy_k2vr_confirm_title" xml:space="preserve">
-    <value>Are you sure?</value>
+    <value>本当ですか？</value>
   </data>
   <data name="install_legacy_k2vr_remove" xml:space="preserve">
-    <value>Legacy K2VR installation found!
-Do you wish to uninstall it? (Recommended)</value>
+    <value>レガシーバージョンをアンインストールすると、フォルダ {0} とその中のすべてのファイルが削除されます。</value>
   </data>
   <data name="install_multiple_k2ex" xml:space="preserve">
-    <value>Multiple installations of K2EX risk interfering with each other.
-Restart this installer to try again
-Please join our Discord for further assistance (Link on k2vr.tech)</value>
+    <value>複数のバージョンのK2EXを同時にインストールすることはできません。
+インストーラを再起動して再試行してください。
+助けが必要な方はDiscordサーバーに参加してください。(リンクについては k2vr.tech をチェック)</value>
   </data>
   <data name="install_sdk_failed" xml:space="preserve">
-    <value>Kinect SDK was not installed successfully
-Restart this installer to try again
-Please join our Discord for further assistance (Link on k2vr.tech)</value>
+    <value>Kinect SDKのインストールに失敗しました
+インストーラを再起動して再試行してください。
+助けが必要な方はDiscordサーバーに参加してください。(リンクについては k2vr.tech をチェック)</value>
   </data>
   <data name="install_steamvr_close_failed" xml:space="preserve">
-    <value>Couldn't close SteamVR, please close it manually and try running this installer again!</value>
+    <value>SteamVRは閉じられませんでした。ご自身でアプリを終了し、再度インストーラーを開いてください。</value>
   </data>
   <data name="install_uninstall_confirm" xml:space="preserve">
-    <value>Do you wish to permanently delete the (old) installation directory {0} and all of it's contents?</value>
+    <value>{0} というフォルダとその中にある全てのファイルをアンインストールしても大丈夫ですか？</value>
   </data>
   <data name="install_unknown_files" xml:space="preserve">
-    <value>The directory {0} contains user-created files.
-Clicking OK will open the directory in a file explorer window for you to look into.</value>
+    <value>{0} フォルダには、ユーザーが作成したファイルが格納されています。
+OKをクリックすると、ファイルエクスプローラが開きます。その後、自分で見てみましょう。</value>
   </data>
   <data name="install_update" xml:space="preserve">
-    <value>KinectToVR appears to be already installed in {0}
-Do you wish to update this installation?</value>
+    <value>KinectToVRは既に {0} にインストールされているようです。\nこのインストールを更新しますか？</value>
   </data>
   <data name="install_update_title" xml:space="preserve">
-    <value>Confirm update?</value>
+    <value>既存のフォルダを更新しますか？</value>
   </data>
   <data name="instal_legacy_k2vr_remove_title" xml:space="preserve">
-    <value>Legacy K2VR Found!</value>
+    <value>レガシーK2VRが検出されました</value>
   </data>
   <data name="lang" xml:space="preserve">
-    <value>English</value>
+    <value>Japanese</value>
   </data>
   <data name="lang_native" xml:space="preserve">
-    <value>English</value>
+    <value>日本語</value>
   </data>
   <data name="setup_allow_analytics_button" xml:space="preserve">
-    <value>Allow sending anonymous usage data</value>
+    <value>匿名の遠隔測定データを送信できるようにする</value>
   </data>
   <data name="setup_analytics_info" xml:space="preserve">
-    <value>What data is being collected?</value>
+    <value>匿名の遠隔測定データを送信できるようにする</value>
   </data>
   <data name="setup_change_location_button" xml:space="preserve">
-    <value>Change</value>
+    <value>変更</value>
   </data>
   <data name="setup_device_known" xml:space="preserve">
-    <value>Remembered</value>
+    <value>既知</value>
   </data>
   <data name="setup_device_selected" xml:space="preserve">
-    <value>Detected</value>
+    <value>検出されました</value>
   </data>
   <data name="setup_device_unselected" xml:space="preserve">
-    <value>No device selected!</value>
+    <value>デバイスが選択されていません！</value>
   </data>
   <data name="setup_install_button" xml:space="preserve">
-    <value>Download and install now</value>
+    <value>ダウンロードとインストールを開始する</value>
   </data>
   <data name="setup_location" xml:space="preserve">
-    <value>Select install location:</value>
+    <value>インストール先を選択：</value>
   </data>
   <data name="setup_location_invalid" xml:space="preserve">
-    <value>Invalid install location!</value>
+    <value>インストール先が無効です！</value>
   </data>
   <data name="setup_location_unselected" xml:space="preserve">
-    <value>No install location selected!</value>
+    <value>インストール先が選択されていません！</value>
   </data>
   <data name="setup_selection" xml:space="preserve">
-    <value>Select which device you intend to use:</value>
+    <value>使用するデバイスを選択:</value>
   </data>
   <data name="tabs_download" xml:space="preserve">
-    <value>Download</value>
+    <value>ダウンロード</value>
   </data>
   <data name="tabs_finish" xml:space="preserve">
-    <value>Finish</value>
+    <value>完了</value>
   </data>
   <data name="tabs_home" xml:space="preserve">
-    <value>Home</value>
+    <value>開始</value>
   </data>
   <data name="tabs_install" xml:space="preserve">
-    <value>Install</value>
+    <value>インストール</value>
   </data>
   <data name="tabs_setup" xml:space="preserve">
-    <value>Options</value>
+    <value>設定</value>
   </data>
 </root>
