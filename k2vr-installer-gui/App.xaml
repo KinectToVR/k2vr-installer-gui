@@ -15,11 +15,17 @@
 
         <Color x:Key="col_button_primary">#FFAA379F</Color>
         <Color x:Key="col_button_primary_hover">#FF903287</Color>
+        <Color x:Key="col_button_transparent">#40FFFFFF</Color>
+        <Color x:Key="col_button_transparent_hover">#90FFFFFF</Color>
 
         <SolidColorBrush x:Key="brush_button_primary"
                          Color="{StaticResource col_button_primary}" />
         <SolidColorBrush x:Key="brush_button_primary_hover"
                          Color="{StaticResource col_button_primary_hover}" />
+        <SolidColorBrush x:Key="brush_button_transparent"
+                         Color="{StaticResource col_button_transparent}" />
+        <SolidColorBrush x:Key="brush_button_transparent_hover"
+                         Color="{StaticResource col_button_transparent_hover}" />
 
         <SolidColorBrush x:Key="brush_button_secondary" Color="#FF551796" />
         <SolidColorBrush x:Key="brush_button_secondary_hover" Color="#FF4F1988" />
@@ -63,6 +69,15 @@
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="{StaticResource brush_button_secondary_hover}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="{x:Type Button}" x:Key="Button_Transparent" BasedOn="{StaticResource Button_Primary}">
+            <Setter Property="Background" Value="{StaticResource brush_button_transparent}"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource brush_button_transparent_hover}"/>
                 </Trigger>
             </Style.Triggers>
         </Style>

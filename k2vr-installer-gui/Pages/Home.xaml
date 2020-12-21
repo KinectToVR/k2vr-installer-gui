@@ -7,16 +7,18 @@
              mc:Ignorable="d" 
              d:DesignHeight="462" d:DesignWidth="800" Background="{StaticResource brush_background}">
 
-    <StackPanel Height="462">
-        <Image x:Name="image" Height="409" Source="cover.png" StretchDirection="DownOnly" Stretch="UniformToFill"/>
-        <DockPanel Margin="8,8,8,0" >
-            <TextBlock VerticalAlignment="Center">
-                <Hyperlink Click="Hyperlink_ViewOpenSourceLicenses_Click">View Open Source Licenses</Hyperlink>
-            </TextBlock>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,-5,0,0">
-                <TextBlock FontWeight="Normal" Foreground="{StaticResource brush_foreground}" Margin="0,0,8,0" TextWrapping="Wrap" Width="430" VerticalAlignment="Center"><Run Text="By proceeding with the installation you agree that this software is provided to you &quot;as is&quot; without any warranty whatsoever. In no event shall the authors of this software be liable for any claim, damages or other liability."/></TextBlock>
-                <Button Style="{StaticResource Button_Primary}" Content="Begin Installation" Click="Button_Click" FontSize="16" Height="38"/>
+    <DockPanel Height="471" Margin="0">
+        <DockPanel.Background>
+            <ImageBrush ImageSource="cover.png" Stretch="UniformToFill"/>
+        </DockPanel.Background>
+        <!--<Image x:Name="image" Stretch="Fill" Source="cover.png" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+        <DockPanel VerticalAlignment="Bottom" Height="45" Width="788" Margin="0">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,-12,0,0">
+                <TextBlock FontWeight="Normal" Foreground="{StaticResource brush_foreground}" TextWrapping="WrapWithOverflow" Width="490" VerticalAlignment="Center" Margin="12,0,8,0" HorizontalAlignment="Left"><Run Text="By proceeding with the installation you agree that this software is provided to you &quot;as is&quot; without any warranty whatsoever. In no event shall the authors of this software be liable for any claim, damages or other liability."/></TextBlock>
+                <Button x:Name="AboutButton" Style="{StaticResource Button_Primary}" FontFamily="Segoe MDL2 Assets" FontWeight="Normal" Content="" Click="AboutButton_Click" FontSize="24" Height="45" Background="{DynamicResource brush_button_transparent}" Width="48" Margin="0,0,12,0" HorizontalAlignment="Right" UseLayoutRounding="True" Padding="0"/>
+                <Button x:Name="LangButton" Style="{StaticResource Button_Primary}" FontFamily="Segoe MDL2 Assets" FontWeight="Normal" Content="" Click="LangButton_Click" FontSize="24" Height="45" Background="{DynamicResource brush_button_transparent}" Width="47" Margin="0,0,12,0" HorizontalAlignment="Right" UseLayoutRounding="True" Padding="0"/>
+                <Button x:Name="BeginButton" Style="{StaticResource Button_Primary}" Content="Begin Installation" Click="BeginButton_Click" FontSize="16" Height="45" Background="{DynamicResource brush_button_transparent}" HorizontalAlignment="Right" Margin="0,0,12,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Panel.ZIndex="99"/>
             </StackPanel>
         </DockPanel>
-    </StackPanel>
+    </DockPanel>
 </UserControl>
