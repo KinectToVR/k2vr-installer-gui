@@ -1,0 +1,16 @@
+﻿<Window x:Class="k2vr_installer_gui.Pages.Popups.LanguageDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:res = "clr-namespace:k2vr_installer_gui.Properties;assembly=k2vr-installer-gui"
+        xmlns:local="clr-namespace:k2vr_installer_gui.Pages.Popups"
+        mc:Ignorable="d"
+        Title="{x:Static res:Resources.home_language_button}" Height="162.81" Width="472.727" ShowInTaskbar="False" Topmost="True" ResizeMode="NoResize" Icon="/k2vr-installer-gui;component/installer-icon.ico" WindowStartupLocation="CenterScreen">
+    <Grid Background="{DynamicResource brush_primary}">
+        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" FontSize="16" FontFamily="Jost* Semi" Margin="10,10,0,0" VerticalAlignment="Top" Width="446" Height="51" Background="{DynamicResource brush_secondary}" BorderBrush="{DynamicResource brush_primary}" Foreground="{DynamicResource brush_foreground}"/>
+        <Button Style="{StaticResource Button_Primary}" x:Name="lang_ok" FontFamily="Segoe MDL2 Assets" Content="" FontSize="28" HorizontalAlignment="Left" Height="60" Margin="395,66,0,0" VerticalAlignment="Top" Width="60"/>
+        <Button Style="{StaticResource Button_Primary}" x:Name="lang_cancel" FontFamily="Segoe MDL2 Assets" Content="" FontSize="28" HorizontalAlignment="Left" Height="60" Margin="327,66,0,0" VerticalAlignment="Top" Width="60"/>
+
+    </Grid>
+</Window>

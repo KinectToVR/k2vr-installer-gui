@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Globalization;
+using k2vr_installer_gui.Pages.Popups;
 
 namespace k2vr_installer_gui.Pages
 {
@@ -41,7 +43,17 @@ namespace k2vr_installer_gui.Pages
 
         private void LangButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Not implemented yet!");
+            //System.Threading.Thread.CurrentThread.CurrentUICulture =
+            //new System.Globalization.CultureInfo("ja-JP");
+            //MainWindow newWindow = new MainWindow();
+            //Application.Current.MainWindow = newWindow;
+            //newWindow.Show();
+            //App.Current.Windows[0].Close();
+            new LanguageDialog().ShowDialog();
+        }
+
+        private void Close()
+        {
         }
     }
 }
