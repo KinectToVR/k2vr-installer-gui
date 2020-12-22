@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:k2vr_installer_gui.Pages"
+             xmlns:local = "clr-namespace:k2vr_installer_gui" 
+             xmlns:res = "clr-namespace:k2vr_installer_gui.Properties;assembly=k2vr-installer-gui"
              mc:Ignorable="d" 
              d:DesignHeight="462" d:DesignWidth="800" Background="{StaticResource brush_background}">
 
@@ -14,10 +15,10 @@
         <!--<Image x:Name="image" Stretch="Fill" Source="cover.png" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
         <DockPanel VerticalAlignment="Bottom" Height="45" Width="788" Margin="0">
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,-12,0,0">
-                <TextBlock FontWeight="Normal" Foreground="{StaticResource brush_foreground}" TextWrapping="WrapWithOverflow" Width="490" VerticalAlignment="Center" Margin="12,0,8,0" HorizontalAlignment="Left"><Run Text="By proceeding with the installation you agree that this software is provided to you &quot;as is&quot; without any warranty whatsoever. In no event shall the authors of this software be liable for any claim, damages or other liability."/></TextBlock>
+                <TextBlock x:Name="DisclaimerLabel" FontWeight="Normal" Foreground="{StaticResource brush_foreground}" TextWrapping="WrapWithOverflow" Width="490" VerticalAlignment="Center" Margin="12,0,8,0" HorizontalAlignment="Left"><Run Text="{x:Static res:Resources.home_disclaimer}"/></TextBlock>
                 <Button x:Name="AboutButton" Style="{StaticResource Button_Primary}" FontFamily="Segoe MDL2 Assets" FontWeight="Normal" Content="" Click="AboutButton_Click" FontSize="24" Height="45" Background="{DynamicResource brush_button_transparent}" Width="48" Margin="0,0,12,0" HorizontalAlignment="Right" UseLayoutRounding="True" Padding="0"/>
                 <Button x:Name="LangButton" Style="{StaticResource Button_Primary}" FontFamily="Segoe MDL2 Assets" FontWeight="Normal" Content="" Click="LangButton_Click" FontSize="24" Height="45" Background="{DynamicResource brush_button_transparent}" Width="47" Margin="0,0,12,0" HorizontalAlignment="Right" UseLayoutRounding="True" Padding="0"/>
-                <Button x:Name="BeginButton" Style="{StaticResource Button_Primary}" Content="Begin Installation" Click="BeginButton_Click" FontSize="16" Height="45" Background="{DynamicResource brush_button_transparent}" HorizontalAlignment="Right" Margin="0,0,12,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Panel.ZIndex="99"/>
+                <Button x:Name="BeginButton" Style="{StaticResource Button_Primary}" Content="{x:Static res:Resources.home_begin_button}" Click="BeginButton_Click" FontSize="16" Height="45" Background="{DynamicResource brush_button_transparent}" HorizontalAlignment="Right" Margin="0,0,12,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Panel.ZIndex="99"/>
             </StackPanel>
         </DockPanel>
     </DockPanel>

@@ -117,7 +117,7 @@
             "setup_location_invalid": "インストール先が無効です！",
             "setup_allow_analytics_button": "匿名の遠隔測定データを送信できるようにする",
             "setup_analytics_info": "収集するデータについて",
-            "setup_install_button": "ダウンロードとインストールを開始する",
+            "setup_install_button": "ダウンロードしてインストールする",
             "download_cancel": "現在進行中のダウンロードを停止しても大丈夫でしょうか？",
             "install_steamvr_close_failed": "SteamVRは閉じられませんでした。ご自身でアプリを終了し、再度インストーラーを開いてください。",
             "install_sdk_failed": "Kinect SDKのインストールに失敗しました\nインストーラを再起動して再試行してください。\n助けが必要な方はDiscordサーバーに参加してください。(リンクについては k2vr.tech をチェック)",

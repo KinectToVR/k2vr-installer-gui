@@ -3,12 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:res = "clr-namespace:k2vr_installer_gui.Properties;assembly=k2vr-installer-gui"
              xmlns:local="clr-namespace:k2vr_installer_gui.Pages"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="{StaticResource brush_background}">
     <StackPanel>
-        <TextBlock Style="{StaticResource Heading}" Text="Select which device you intend to use:" FontFamily="Jost*" Margin="0,48,0,0"/>
-        <ListBox Style="{StaticResource ListBox}" FontFamily="Jost*" x:Name="ListBox_devices" ItemsSource="{DynamicResource devices}"
+        <TextBlock x:Name="setup_selection" Style="{StaticResource Heading}" Text="{x:Static res:Resources.setup_selection}" FontFamily="Jost*, Migu 1M" Margin="0,48,0,0"/>
+        <ListBox Style="{StaticResource ListBox}" FontFamily="Jost, Migu 1M*" x:Name="ListBox_devices" ItemsSource="{DynamicResource devices}"
                  HorizontalAlignment="Center" Background="Transparent" BorderThickness="0" SnapsToDevicePixels="True">
             <ListBox.ItemsPanel>
                 <!-- https://stackoverflow.com/a/1052512/ -->
@@ -29,13 +30,13 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <TextBlock Style="{StaticResource Heading}" Text="Select install location:" Margin="0,4,0,0"/>
+        <TextBlock x:Name="setup_location" Style="{StaticResource Heading}" Text="{x:Static res:Resources.setup_location}" Margin="0,4,0,0"/>
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
             <TextBox x:Name="TextBox_installLocation" Width="240" Height="20" VerticalContentAlignment="Center" Margin="0,0,10,0" BorderBrush="{x:Null}" Background="{DynamicResource brush_background}" Foreground="{DynamicResource brush_foreground}" SelectionBrush="{DynamicResource brush_primary}" />
-            <Button Style="{StaticResource Button_Secondary}" Content="Change" Click="Button_ChooseLocation_Click"/>
+            <Button x:Name="setup_change_location_button" Style="{StaticResource Button_Secondary}" Content="{x:Static res:Resources.setup_change_location_button}" Click="Button_ChooseLocation_Click"/>
         </StackPanel>
         <CheckBox Style="{StaticResource CheckBox}" x:Name="CheckBox_analytics" HorizontalAlignment="Center" Margin="0,16,0,0"
-                  FontFamily="Jost* Semi" FontSize="20" Content="Allow sending anonymous usage data" Visibility="Collapsed" />
+                  FontFamily="Jost* Semi, Migu 1M" FontSize="20" Content="Allow sending anonymous usage data" Visibility="Collapsed" />
         <TextBlock HorizontalAlignment="Center" Margin="0,0,0,8" Visibility="Collapsed">
             <Hyperlink Click="Hyperlink_Analytics_Click">What data is being collected?</Hyperlink>
         </TextBlock>
@@ -49,7 +50,7 @@
             <ListBoxItem>No</ListBoxItem>
         </ListBox>-->
 
-        <Button Style="{StaticResource Button_Primary}" Margin="20,20,20,0" Content="Download and install now" Click="Button_Install_Click" HorizontalAlignment="Center" Height="36" FontSize="16"/>
+        <Button x:Name="setup_install_button" Style="{StaticResource Button_Primary}" Margin="20,20,20,0" Content="{x:Static res:Resources.setup_install_button}" Click="Button_Install_Click" HorizontalAlignment="Center" Height="36" FontSize="16"/>
     </StackPanel>
 
     <UserControl.Resources>

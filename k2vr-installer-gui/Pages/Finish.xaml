@@ -2,21 +2,22 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:res = "clr-namespace:k2vr_installer_gui.Properties;assembly=k2vr-installer-gui"
              xmlns:local="clr-namespace:k2vr_installer_gui.Pages"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="{StaticResource brush_background}">
     <StackPanel>
         <Image Source="/Resources/k2vr-banner.png" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Stretch"/>
-        <TextBlock Style="{StaticResource Heading}" FontSize="35" Margin="0,40,0,20"><Run Text="Thank you for installing KinectToVR"/><Run Text="!"/></TextBlock>
+        <TextBlock Style="{StaticResource Heading}" FontSize="35" Margin="0,40,0,20"><Run Text="{x:Static res:Resources.finish_thanks}"/></TextBlock>
         <TextBlock Style="{StaticResource Heading}" FontStyle="Normal" Margin="0,0,0,10"
-                   Text="Visit our website for further instructions:"/>
-        <Button Style="{StaticResource Button_Primary}" HorizontalAlignment="Center" FontSize="15" Click="Button_Visit_website_Click" Content="Visit website"/>
+                   Text="{x:Static res:Resources.finish_website}"/>
+        <Button Style="{StaticResource Button_Primary}" HorizontalAlignment="Center" FontSize="15" Click="Button_Visit_website_Click" Content="{x:Static res:Resources.finish_website_button}"/>
         <TextBlock Style="{StaticResource Heading}" FontStyle="Normal" Margin="0,10,0,10"
-                   Text="We also highly recommend joining our Discord server for updates and support:"/>
-        <Button Style="{StaticResource Button_Blurple}" HorizontalAlignment="Center" FontSize="15" Click="Button_Visit_discord_Click" Content="Join Discord"/>
+                   Text="{x:Static res:Resources.finish_discord}"/>
+        <Button Style="{StaticResource Button_Blurple}" HorizontalAlignment="Center" FontSize="15" Click="Button_Visit_discord_Click" Content="{x:Static res:Resources.finish_discord_button}"/>
         <TextBlock Style="{StaticResource Heading}" FontStyle="Normal" Margin="0,35,0,10"
-                   Text="We recommend restarting your computer now."/>
-        <Button Style="{StaticResource Button_Red}" HorizontalAlignment="Center" FontSize="20" Click="Button_Close_Installer_Click" Content="Close this window"/>
+                   Text="{x:Static res:Resources.finish_restart}"/>
+        <Button Style="{StaticResource Button_Red}" HorizontalAlignment="Center" FontSize="20" Click="Button_Close_Installer_Click" Content="{x:Static res:Resources.finish_close_button}"/>
     </StackPanel>
 </UserControl>

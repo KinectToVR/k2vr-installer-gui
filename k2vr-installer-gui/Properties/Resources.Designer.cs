@@ -142,6 +142,15 @@ namespace k2vr_installer_gui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to By proceeding with the installation you agree that this software is provided to you \&quot;as is\&quot; without any warranty whatsoever. In no event shall the authors of this software be liable for any claim, damages or other liability..
+        /// </summary>
+        public static string home_disclaimer {
+            get {
+                return ResourceManager.GetString("home_disclaimer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change Language.
         /// </summary>
         public static string home_language_button {
@@ -365,6 +374,15 @@ namespace k2vr_installer_gui.Properties {
         public static string setup_change_location_button {
             get {
                 return ResourceManager.GetString("setup_change_location_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detected.
+        /// </summary>
+        public static string setup_device_detected {
+            get {
+                return ResourceManager.GetString("setup_device_detected", resourceCulture);
             }
         }
         

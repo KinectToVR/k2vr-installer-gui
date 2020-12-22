@@ -144,6 +144,9 @@
   <data name="home_begin_button" xml:space="preserve">
     <value>Begin Installation</value>
   </data>
+  <data name="home_disclaimer" xml:space="preserve">
+    <value>By proceeding with the installation you agree that this software is provided to you \"as is\" without any warranty whatsoever. In no event shall the authors of this software be liable for any claim, damages or other liability.</value>
+  </data>
   <data name="home_language_button" xml:space="preserve">
     <value>Change Language</value>
   </data>
@@ -226,6 +229,9 @@ Do you wish to update this installation?</value>
   </data>
   <data name="setup_change_location_button" xml:space="preserve">
     <value>Change</value>
+  </data>
+  <data name="setup_device_detected" xml:space="preserve">
+    <value>Detected</value>
   </data>
   <data name="setup_device_known" xml:space="preserve">
     <value>Remembered</value>

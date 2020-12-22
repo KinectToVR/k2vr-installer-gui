@@ -40,7 +40,7 @@ namespace k2vr_installer_gui.Pages
             }
             if (App.state.pluggedInDevice != TrackingDevice.None)
             {
-                ((Device)ListBox_devices.SelectedItem).Information = "(Detected)";
+                ((Device)ListBox_devices.SelectedItem).Information = "(" + Properties.Resources.setup_device_detected + ")";
             }
             switch (App.state.trackingDevice)
             {
@@ -56,7 +56,7 @@ namespace k2vr_installer_gui.Pages
             }
             if (App.state.trackingDevice != TrackingDevice.None)
             {
-                ((Device)ListBox_devices.SelectedItem).Information = "(Remembered)";
+                ((Device)ListBox_devices.SelectedItem).Information = "(" + Properties.Resources.setup_device_known + ")";
             }
             CheckBox_analytics.IsChecked = App.state.allowAnalytics;
             try
@@ -67,6 +67,15 @@ namespace k2vr_installer_gui.Pages
             {
                 TextBox_installLocation.Text = Environment.ExpandEnvironmentVariables(@"%SystemDrive%\K2EX");
             }
+            Localize();
+        }
+
+        public void Localize()
+        {
+            setup_selection.Text = Properties.Resources.setup_selection;
+            setup_location.Text = Properties.Resources.setup_location;
+            setup_change_location_button.Content = Properties.Resources.setup_change_location_button;
+            setup_install_button.Content = Properties.Resources.setup_install_button;
         }
 
         private void Button_ChooseLocation_Click(object sender, RoutedEventArgs e)

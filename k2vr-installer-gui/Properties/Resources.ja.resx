@@ -144,6 +144,9 @@
   <data name="home_begin_button" xml:space="preserve">
     <value>インストールを開始する</value>
   </data>
+  <data name="home_disclaimer" xml:space="preserve">
+    <value>インストールを進めることで 本ソフトウェアは現状のまま提供されており、保証はないことに同意するものとします。本ソフトウェアの作者は、その使用によって生じたいかなる損害についても責任を負いません。</value>
+  </data>
   <data name="home_language_button" xml:space="preserve">
     <value>言語の変更</value>
   </data>
@@ -224,6 +227,9 @@ OKをクリックすると、ファイルエクスプローラが開きます。
   <data name="setup_change_location_button" xml:space="preserve">
     <value>変更</value>
   </data>
+  <data name="setup_device_detected" xml:space="preserve">
+    <value>検出されました</value>
+  </data>
   <data name="setup_device_known" xml:space="preserve">
     <value>既知</value>
   </data>
@@ -234,7 +240,7 @@ OKをクリックすると、ファイルエクスプローラが開きます。
     <value>デバイスが選択されていません！</value>
   </data>
   <data name="setup_install_button" xml:space="preserve">
-    <value>ダウンロードとインストールを開始する</value>
+    <value>ダウンロードしてインストールする</value>
   </data>
   <data name="setup_location" xml:space="preserve">
     <value>インストール先を選択：</value>

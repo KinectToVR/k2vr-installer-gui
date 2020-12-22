@@ -4,26 +4,27 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:k2vr_installer_gui"
+        xmlns:res = "clr-namespace:k2vr_installer_gui.Properties;assembly=k2vr-installer-gui"
         xmlns:pages="clr-namespace:k2vr_installer_gui.Pages"
         mc:Ignorable="d"
         ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen"
-        Title="K2EX Installer" Height="550" Width="800" Background="{StaticResource brush_background}" FontFamily="Jost*" FontWeight="Normal" Icon="installer-icon.png" Closing="Window_Closing">
+        Title="K2EX Installer" Height="550" Width="800" Background="{StaticResource brush_background}" FontFamily="Jost*, Migu 1M" FontWeight="Normal" Icon="installer-icon.png" Closing="Window_Closing">
 
     <TabControl x:Name="TabControl_tabs" Background="{StaticResource brush_primary}" SelectionChanged="TabControl_tabs_SelectionChanged">
-        <TabItem Header="Start" FontFamily="Jost*" IsEnabled="False">
+        <TabItem x:Name="tabs_home" Header="{x:Static res:Resources.tabs_home}" FontFamily="Jost*" IsEnabled="False">
             <pages:Home Margin="0" Padding="0"/>
         </TabItem>
-        <TabItem Header="Options" IsEnabled="False">
+        <TabItem x:Name="tabs_setup" Header="{x:Static res:Resources.tabs_setup}" IsEnabled="False">
             <pages:Setup/>
         </TabItem>
-        <TabItem Header="Download" IsEnabled="False">
+        <TabItem x:Name="tabs_download" Header="{x:Static res:Resources.tabs_download}" IsEnabled="False">
             <pages:Download />
         </TabItem>
-        <TabItem Header="Install" IsEnabled="False">
+        <TabItem x:Name="tabs_install" Header="{x:Static res:Resources.tabs_install}" IsEnabled="False">
             <pages:Install />
         </TabItem>
-        <TabItem Header="Finish" IsEnabled="False">
+        <TabItem x:Name="tabs_finish" Header="{x:Static res:Resources.tabs_finish}" IsEnabled="False">
             <pages:Finish />
         </TabItem>
         <TabControl.Template>
