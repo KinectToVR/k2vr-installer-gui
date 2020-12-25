@@ -3,12 +3,13 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:res = "clr-namespace:k2vr_installer_gui.Properties;assembly=k2vr-installer-gui"
       xmlns:local="clr-namespace:k2vr_installer_gui.Pages"
       mc:Ignorable="d" 
       Height="450" Width="600"
       MinHeight="120" MinWidth="450"
       WindowStartupLocation="CenterScreen"
-      Title="Open Source Licenses" Background="{StaticResource brush_background}" FontFamily="Jost*">
+      Title="{x:Static res:Resources.home_licenses_button}" Background="{StaticResource brush_background}" FontFamily="Jost*">
     <TabControl x:Name="TabControl_OpenSourceLicenses" Background="{StaticResource brush_primary}">
         <TabItem Header="Newtonsoft.Json">
             <TextBlock xml:space="preserve" Padding="5">The MIT License (MIT)
