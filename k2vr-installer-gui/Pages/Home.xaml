@@ -14,10 +14,10 @@
         </DockPanel.Background>
         <!--<Image x:Name="image" Stretch="Fill" Source="cover.png" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
         <DockPanel VerticalAlignment="Bottom" Height="45" Width="788" Margin="0">
-            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,-12,0,0">
-                <TextBlock x:Name="DisclaimerLabel" FontWeight="Normal" Foreground="{StaticResource brush_foreground}" TextWrapping="WrapWithOverflow" Width="490" VerticalAlignment="Center" Margin="12,0,8,0" HorizontalAlignment="Left"><Run Text="{x:Static res:Resources.home_disclaimer}"/></TextBlock>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,-12,0,0" HorizontalAlignment="Right">
+                <TextBlock x:Name="DisclaimerLabel" FontWeight="Normal" Foreground="{StaticResource brush_foreground}" TextWrapping="WrapWithOverflow" Width="529" VerticalAlignment="Center" Margin="12,0,8,0" HorizontalAlignment="Left"><Run Text="{x:Static res:Resources.home_disclaimer}"/></TextBlock>
                 <Button x:Name="AboutButton" Style="{StaticResource Button_Primary}" FontFamily="Segoe MDL2 Assets" FontWeight="Normal" Content="" Click="AboutButton_Click" FontSize="24" Height="45" Background="{DynamicResource brush_button_transparent}" Width="48" Margin="0,0,12,0" HorizontalAlignment="Right" UseLayoutRounding="True" Padding="0"/>
-                <Button x:Name="LangButton" Style="{StaticResource Button_Primary}" FontFamily="Segoe MDL2 Assets" FontWeight="Normal" Content="" Click="LangButton_Click" FontSize="24" Height="45" Background="{DynamicResource brush_button_transparent}" Width="47" Margin="0,0,12,0" HorizontalAlignment="Right" UseLayoutRounding="True" Padding="0"/>
+                <Button x:Name="LangButton" Style="{StaticResource Button_Primary}" FontFamily="Segoe MDL2 Assets" FontWeight="Normal" Content="" Click="LangButton_Click" FontSize="24" Height="45" Background="{DynamicResource brush_button_transparent}" Width="47" Margin="0,0,12,0" HorizontalAlignment="Right" UseLayoutRounding="True" Padding="0" Visibility="Collapsed"/>
                 <Button x:Name="BeginButton" Style="{StaticResource Button_Primary}" Content="{x:Static res:Resources.home_begin_button}" Click="BeginButton_Click" FontSize="16" Height="45" Background="{DynamicResource brush_button_transparent}" HorizontalAlignment="Right" Margin="0,0,12,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Panel.ZIndex="99"/>
             </StackPanel>
         </DockPanel>
