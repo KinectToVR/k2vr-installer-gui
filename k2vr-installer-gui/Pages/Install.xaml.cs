@@ -103,7 +103,7 @@ namespace k2vr_installer_gui.Pages
                         Thread.Sleep(5000);
                         if (!process.HasExited)
                         {
-                            MessageBox.Show("Couldn't close SteamVR, please close it manually and try running this installer again!");
+                            MessageBox.Show(Properties.Resources.install_steamvr_close_failed);
                             Cancel();
                             return;
                         }
@@ -190,9 +190,7 @@ namespace k2vr_installer_gui.Pages
                         (App.state.trackingDevice == InstallerState.TrackingDevice.XboxOneKinect && !App.state.kinectV2SdkInstalled))
                     {
                         Log("Failed!");
-                        MessageBox.Show("Kinect SDK was not installed successfully!" + Environment.NewLine +
-                            "Restart this installer to try again" + Environment.NewLine +
-                            "Please join our Discord server for further assistance (link on www.k2vr.tech)");
+                        MessageBox.Show(Properties.Resources.install_sdk_failed);
                         Cancel();
                         return;
                     }

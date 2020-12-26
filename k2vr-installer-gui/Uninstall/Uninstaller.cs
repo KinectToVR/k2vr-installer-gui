@@ -50,10 +50,9 @@ namespace k2vr_installer_gui.Uninstall
             if (Directory.Exists(path))
             {
                 installPage.Log("K2VR Legacy installation found...", false);
-                if (MessageBox.Show("Legacy K2VR installation found!" + Environment.NewLine +
-                    "Do you wish to uninstall it? (recommended)", "Legacy K2VR found", MessageBoxButton.YesNo) == MessageBoxResult.Yes &&
-                    MessageBox.Show("Uninstalling K2VR legacy will delete the folder \"" + path + "\" and all its contents",
-                    "Confirm uninstall", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                if (MessageBox.Show(Properties.Resources.install_legacy_k2vr_remove, Properties.Resources.install_legacy_k2vr_remove_title, MessageBoxButton.YesNo) == MessageBoxResult.Yes &&
+                    MessageBox.Show(Properties.Resources.install_legacy_k2vr_confirm.Replace("{0}", path),
+                    Properties.Resources.install_legacy_k2vr_confirm_title, MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                 {
                     installPage.Log("Deleting...", false);
                     Directory.Delete(path, true);
@@ -80,8 +79,7 @@ namespace k2vr_installer_gui.Uninstall
             string ovrieFolder = Path.Combine("C:\\", "Program Files", "OpenVR-InputEmulator");
             if (File.Exists(Path.Combine(ovrieFolder, "Uninstall.exe")))
             {
-                if (MessageBox.Show("OpenVR Input Emulator found!" + Environment.NewLine +
-                "Do you wish to uninstall it? (recommended)", "Uninstall OpenVR Input Emulator?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show(Properties.Resources.install_remove_ovrie, Properties.Resources.install_remove_ovrie_title, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     installPage.Log("Uninstalling OpenVR Input Emulator...", false);
                     // copy installer to temp
@@ -110,16 +108,14 @@ namespace k2vr_installer_gui.Uninstall
                 installPage.Log("Found old installation at \"" + path + "\"...", false);
                 if (pair.Value.DriverRegistered || pair.Value.AppConfigRegistered)
                 {
-                    if (MessageBox.Show("K2EX appears to also be installed in " + "\"" + path + "\"" + ". Do you wish to disable it?", "Already installed", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    if (MessageBox.Show(Properties.Resources.installer_previous_disable.Replace("{0}", path), Properties.Resources.installer_previous_disable_title, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
                         installPage.Log("Disabling...", false);
                         UnregisterK2EX(path);
                     }
                     else
                     {
-                        MessageBox.Show("Multiple installations of K2EX would interfere with each other." + Environment.NewLine +
-                            "Restart this installer to try again" + Environment.NewLine +
-                            "Please join our Discord server for further assistance (link on www.k2vr.tech)");
+                        MessageBox.Show(Properties.Resources.install_multiple_k2ex);
                         installPage.Cancel();
                         return false;
                     }
@@ -146,14 +142,11 @@ namespace k2vr_installer_gui.Uninstall
             if (Directory.Exists(App.state.GetFullInstallationPath()))
             {
                 installPage.Log("Removing previous version...", false);
-                if (MessageBox.Show("KinectToVR appears to be already installed in \"" +App.state.GetFullInstallationPath() + "\"." + Environment.NewLine +
-                                    "Do you wish to update this installation?", "Confirm update", MessageBoxButton.YesNo) != MessageBoxResult.Yes ||
+                if (MessageBox.Show(Properties.Resources.install_update.Replace("{0}", App.state.GetFullInstallationPath()), Properties.Resources.install_update_title, MessageBoxButton.YesNo) != MessageBoxResult.Yes ||
                     !DeleteK2EXFolder(App.state.GetFullInstallationPath()))
                 {
                     // We need to abort because we can't unzip into a dir with files in it
-                    MessageBox.Show("Cannot install two versions of KinectToVR into the same directory." + Environment.NewLine +
-                        "Either uninstall the old version or select another install directory." + Environment.NewLine +
-                        "Restart this installer to try again");
+                    MessageBox.Show(Properties.Resources.install_existing_folder_fail);
                     installPage.Cancel();
                     return false;
                 }
@@ -213,9 +206,8 @@ namespace k2vr_installer_gui.Uninstall
                     {
                         File.Delete(Path.Combine(path, InstallerState.fileName));
                         string confSettingsPath = Path.Combine(path, "ConfigSettings.cfg");
-                        if (File.Exists(confSettingsPath) && MessageBox.Show("Do you wish to delete your calibration settings as well?" + Environment.NewLine +
-                            "Note: To reuse them, you will need to install KinectToVR in the directory \"" + path + "\" again!",
-                            "Delete calibration settings?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        if (File.Exists(confSettingsPath) && MessageBox.Show(Properties.Resources.install_calibration_remove.Replace("{0}", path),
+                            Properties.Resources.install_calibration_remove_title, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                         {
                             File.Delete(confSettingsPath);
                         }
@@ -227,8 +219,7 @@ namespace k2vr_installer_gui.Uninstall
                         }
                         else
                         {
-                            MessageBox.Show("Directory \"" + path + "\" contained non-standard files." + Environment.NewLine +
-                                            "Clicking OK will open the file explorer to allow you to investigate.");
+                            MessageBox.Show(Properties.Resources.install_unknown_files.Replace("{0}", path));
                             Process.Start("explorer.exe", path);
                             return false;
                         }
@@ -252,8 +243,7 @@ namespace k2vr_installer_gui.Uninstall
                     {
                         if (e.HResult == -2147024751) // Directory not empty
                         {
-                            if (MessageBox.Show("Do you wish to permanently delete the (old) installation directory \"" +
-                                path + "\" and all its contents?", "Remove old installation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                            if (MessageBox.Show((Properties.Resources.install_uninstall_confirm.Replace("{0}", path)), Properties.Resources.install_uninstall_title, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                             {
                                 Directory.Delete(path, true);
                                 return true;
