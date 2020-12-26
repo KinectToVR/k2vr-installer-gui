@@ -70,6 +70,42 @@ namespace k2vr_installer_gui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Join our Discord server for further assistance:.
+        /// </summary>
+        public static string download_failed_discord {
+            get {
+                return ResourceManager.GetString("download_failed_discord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click here to join.
+        /// </summary>
+        public static string download_failed_discord_button {
+            get {
+                return ResourceManager.GetString("download_failed_discord_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reason:.
+        /// </summary>
+        public static string download_failed_reason {
+            get {
+                return ResourceManager.GetString("download_failed_reason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download failed!.
+        /// </summary>
+        public static string download_failed_title {
+            get {
+                return ResourceManager.GetString("download_failed_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close this window.
         /// </summary>
         public static string finish_close_button {
@@ -246,6 +282,15 @@ namespace k2vr_installer_gui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Legacy K2VR found!.
+        /// </summary>
+        public static string install_legacy_k2vr_remove_title {
+            get {
+                return ResourceManager.GetString("install_legacy_k2vr_remove_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Multiple installations of K2EX risk interfering with each other.
         ///Restart this installer to try again
         ///Please join our Discord for further assistance (Link on k2vr.tech).
@@ -253,6 +298,24 @@ namespace k2vr_installer_gui.Properties {
         public static string install_multiple_k2ex {
             get {
                 return ResourceManager.GetString("install_multiple_k2ex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OpenVR Input Emulator was found. we strongly recommend removing it as it&apos;s been rendered obselete by recent versions of SteamVR..
+        /// </summary>
+        public static string install_remove_ovrie {
+            get {
+                return ResourceManager.GetString("install_remove_ovrie", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to uninstall OpenVR Input Emulator?.
+        /// </summary>
+        public static string install_remove_ovrie_title {
+            get {
+                return ResourceManager.GetString("install_remove_ovrie_title", resourceCulture);
             }
         }
         
@@ -282,6 +345,15 @@ namespace k2vr_installer_gui.Properties {
         public static string install_uninstall_confirm {
             get {
                 return ResourceManager.GetString("install_uninstall_confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove old installation?.
+        /// </summary>
+        public static string install_uninstall_title {
+            get {
+                return ResourceManager.GetString("install_uninstall_title", resourceCulture);
             }
         }
         

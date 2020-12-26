@@ -272,4 +272,28 @@ Do you wish to update this installation?</value>
   <data name="tabs_setup" xml:space="preserve">
     <value>Options</value>
   </data>
+  <data name="install_uninstall_title" xml:space="preserve">
+    <value>Remove old installation?</value>
+  </data>
+  <data name="install_remove_ovrie" xml:space="preserve">
+    <value>OpenVR Input Emulator was found. we strongly recommend removing it as it's been rendered obselete by recent versions of SteamVR.</value>
+  </data>
+  <data name="install_remove_ovrie_title" xml:space="preserve">
+    <value>Do you want to uninstall OpenVR Input Emulator?</value>
+  </data>
+  <data name="install_legacy_k2vr_remove_title" xml:space="preserve">
+    <value>Legacy K2VR found!</value>
+  </data>
+  <data name="download_failed_title" xml:space="preserve">
+    <value>Download failed!</value>
+  </data>
+  <data name="download_failed_reason" xml:space="preserve">
+    <value>Reason:</value>
+  </data>
+  <data name="download_failed_discord" xml:space="preserve">
+    <value>Join our Discord server for further assistance:</value>
+  </data>
+  <data name="download_failed_discord_button" xml:space="preserve">
+    <value>Click here to join</value>
+  </data>
 </root>

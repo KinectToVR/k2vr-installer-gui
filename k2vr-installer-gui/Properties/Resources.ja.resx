@@ -269,4 +269,28 @@ OKをクリックすると、ファイルエクスプローラが開きます。
   <data name="tabs_setup" xml:space="preserve">
     <value>設定</value>
   </data>
+  <data name="install_uninstall_title" xml:space="preserve">
+    <value>古いバージョンをアンインストールしますか？</value>
+  </data>
+  <data name="install_remove_ovrie" xml:space="preserve">
+    <value>OpenVR Input Emulatorが見つかりましたが、互換性がなくなったので削除することをお勧めします。</value>
+  </data>
+  <data name="install_remove_ovrie_title" xml:space="preserve">
+    <value>OpenVR Input Emulatorをアンインストールしますか？</value>
+  </data>
+  <data name="install_legacy_k2vr_remove_title" xml:space="preserve">
+    <value>レガシーバージョンのK2VRが見つかりました。</value>
+  </data>
+  <data name="download_failed_title" xml:space="preserve">
+    <value>ダウンロード失敗！</value>
+  </data>
+  <data name="download_failed_reason" xml:space="preserve">
+    <value>理由は:</value>
+  </data>
+  <data name="download_failed_discord" xml:space="preserve">
+    <value>Discordサーバーに参加して、さらなる支援を受けましょう。</value>
+  </data>
+  <data name="download_failed_discord_button" xml:space="preserve">
+    <value>Discordリンクはこちら</value>
+  </data>
 </root>
