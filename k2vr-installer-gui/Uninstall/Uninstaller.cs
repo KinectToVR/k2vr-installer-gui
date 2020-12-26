@@ -54,8 +54,34 @@ namespace k2vr_installer_gui.Uninstall
                     MessageBox.Show(Properties.Resources.install_legacy_k2vr_confirm.Replace("{0}", path),
                     Properties.Resources.install_legacy_k2vr_confirm_title, MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                 {
-                    installPage.Log("Deleting...", false);
-                    Directory.Delete(path, true);
+                    installPage.Log("Deleting...", true);
+
+                    // https://stackoverflow.com/a/11523266/4672279
+                    // this should fix msvcp140.dll access denied errors.
+                    
+
+                    System.IO.DirectoryInfo di = new DirectoryInfo(path);
+                    foreach (FileInfo file in di.GetFiles())
+                    {
+                        try
+                        {
+                            // we need to manually set file attribs before deleting.
+                            File.SetAttributes(file.FullName, FileAttributes.Normal);
+                            file.Delete();
+                        }
+                        catch (Exception)
+                        {
+                            installPage.Log($"Couldn't delete {file.FullName}!", true);
+                        }
+                    }
+                    try
+                    {
+                        Directory.Delete(path, true);
+                    }
+                    catch (Exception)
+                    {
+                        installPage.Log($"Couldn't delete {path}! try removing it yourself.", true);
+                    }
 
                     installPage.Log("Removing start menu shortcuts...", false);
                     string startMenuFolder = Path.Combine("C:\\", "ProgramData", "Microsoft", "Windows", "Start Menu", "Programs", "KinectToVR");
