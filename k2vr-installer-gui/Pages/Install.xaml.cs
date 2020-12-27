@@ -163,7 +163,12 @@ namespace k2vr_installer_gui.Pages
                 Log("Registering application...", false);
                 App.state.Write();
                 // we need to manually set file attribs before copying.
-                File.SetAttributes(Path.Combine(App.state.GetFullInstallationPath(), "k2vr-installer-gui.exe"), FileAttributes.Normal);
+                try {
+                    File.SetAttributes(Path.Combine(App.state.GetFullInstallationPath(), "k2vr-installer-gui.exe"), FileAttributes.Normal);
+                }
+                catch (Exception)
+                {
+                }
                 File.Copy(Assembly.GetExecutingAssembly().Location, Path.Combine(App.state.GetFullInstallationPath(), "k2vr-installer-gui.exe"), true);
                 Uninstaller.RegisterUninstaller();
 
