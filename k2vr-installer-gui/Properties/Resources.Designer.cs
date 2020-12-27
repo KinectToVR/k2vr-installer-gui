@@ -178,7 +178,7 @@ namespace k2vr_installer_gui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to By proceeding with the installation you agree that this software is provided to you \&quot;as is\&quot; without any warranty whatsoever. In no event shall the authors of this software be liable for any claim, damages or other liability..
+        ///   Looks up a localized string similar to By proceeding with the installation you agree that this software is provided to you &quot;as is&quot; without any warranty whatsoever. In no event shall the authors of this software be liable for any claim, damages or other liability..
         /// </summary>
         public static string home_disclaimer {
             get {
