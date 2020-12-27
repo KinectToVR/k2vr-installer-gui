@@ -267,6 +267,22 @@ namespace k2vr_installer_gui.Pages
                 {
                     Log("Failed (uncritical)!");
                 }
+                Log("Enabling driver in SteamVR...", false);
+                try
+                {
+                    if (steamVrSettings["driver_kinecttovr"] == null)
+                    {
+                        steamVrSettings["driver_kinecttovr"] = new JObject();
+                    }
+                    steamVrSettings["driver_kinecttovr"]["enable"] = true;
+                    steamVrSettings["driver_kinecttovr"]["blocked_by_safe_mode"] = false;
+                    JsonFile.Write(App.state.steamVrSettingsPath, steamVrSettings, 3, ' ');
+                    Log("Done!");
+                }
+                catch (Exception)
+                {
+                    Log("Failed (uncritical)!");
+                }
 
                 Log("Creating start menu entry...", false);
                 if (!Directory.Exists(App.startMenuFolder)) Directory.CreateDirectory(App.startMenuFolder);
