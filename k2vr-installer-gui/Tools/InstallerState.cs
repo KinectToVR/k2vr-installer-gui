@@ -66,6 +66,10 @@ namespace k2vr_installer_gui.Tools
             {
                 return new InstallerState();
             }
+            catch (DirectoryNotFoundException)
+            {
+                return new InstallerState();
+            }
         }
 
         public string GetInstallerStatePath()
