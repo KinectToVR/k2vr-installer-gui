@@ -164,6 +164,14 @@ namespace k2vr_installer_gui.Tools
 
             steamVrSettingsPath = Path.Combine(steamPath, "config", "steamvr.vrsettings");
             copiedDriverPath = Path.Combine(steamVrPath, "drivers", "KinectToVR");
+
+            if (!File.Exists(steamVrSettingsPath))
+            {
+                MessageBox.Show("steamvr.vrsettings not found!" + Environment.NewLine +
+                                "Make sure SteamVR has been launched at least once on this machine." + Environment.NewLine +
+                                "Please join our Discord server for further assistance (link on www.k2vr.tech)");
+                Application.Current.Shutdown(1);
+            }
         }
 
         public void Update()
