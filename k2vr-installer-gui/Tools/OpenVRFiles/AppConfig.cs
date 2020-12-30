@@ -18,7 +18,19 @@ namespace k2vr_installer_gui.Tools.OpenVRFiles
 
         public static AppConfig Read()
         {
-            return JsonFile.Read<AppConfig>(path);
+            try
+            {
+                return JsonFile.Read<AppConfig>(path);
+            }
+            catch (FileNotFoundException)
+            {
+                var appConfig = new AppConfig()
+                {
+                    manifest_paths = new List<string>()
+                };
+                appConfig.manifest_paths.Add(@"C:\Program Files (x86)\Steam\config\steamapps.vrmanifest");
+                return appConfig;
+            }
         }
 
         public void Write()
