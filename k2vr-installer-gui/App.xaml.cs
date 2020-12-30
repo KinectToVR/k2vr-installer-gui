@@ -52,9 +52,10 @@ namespace k2vr_installer_gui
                             }
                         }
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                         MessageBox.Show("An error happened while trying to uninstall. Join our Discord for help on manually uninstalling.");
+                        new ExceptionDialog(ex).ShowDialog();
                     }
                 }
                 Current.Shutdown(0);
