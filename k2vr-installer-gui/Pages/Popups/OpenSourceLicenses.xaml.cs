@@ -1,4 +1,5 @@
-﻿using System;
+﻿using k2vr_installer_gui.Tools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -34,8 +35,9 @@ namespace k2vr_installer_gui.Pages
 
         public VersionContext()
         {
-            Version = "K2EX Installer " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            Version = Version.Remove(Version.Length - 2);
+            string ver = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            Version = "Installer Version " + ver.Remove(ver.Length - 2) +
+                " for K2EX Version " + FileDownloader.files["k2vr"].Version;
         }
     }
 }
