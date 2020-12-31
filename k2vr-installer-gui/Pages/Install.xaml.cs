@@ -226,6 +226,10 @@ namespace k2vr_installer_gui.Pages
                 Log("Done!");
 
                 string kinectProcessName = "KinectV" + (App.state.trackingDevice == InstallerState.TrackingDevice.XboxOneKinect ? "2" : "1") + "Process";
+                if (App.state.trackingDevice == InstallerState.TrackingDevice.PlayStationMove)
+                {
+                    kinectProcessName = "psmsprocess";
+                }
 
                 Log("Registering OpenVR overlay...", false);
 

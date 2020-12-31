@@ -16,8 +16,8 @@ namespace k2vr_installer_gui.Tools
 
         public enum TrackingDevice
         {
-            Xbox360Kinect,
-            XboxOneKinect,
+            Xbox360Kinect, // also refers to kinect for windows v1
+            XboxOneKinect, // also refers to kinect for windows v2
             PlayStationMove,
             None
         }
@@ -88,11 +88,20 @@ namespace k2vr_installer_gui.Tools
                     {
                         string dependent = (string)device.GetPropertyValue("Dependent");
                         string devId = dependent.Substring(dependent.IndexOf("DeviceID=\""));
-                        if (devId.Contains("02B0") || devId.Contains("02BB") || devId.Contains("02AE"))
+                        if (
+                            devId.Contains("02B0") || // kinect 360 main
+                            devId.Contains("02BB") || // kinect 360 audio
+                            devId.Contains("02AE") || // kinect 360 camera
+                            devId.Contains("02C2") || // kinect v1 main
+                            devId.Contains("02BE") || // kinect v1 audio
+                            devId.Contains("02BF") || // kinect v1 camera
+                            devId.Contains("02C3"))   // kinect v1 security
                         {
                             pluggedInDevice = TrackingDevice.Xbox360Kinect;
                         }
-                        if (devId.Contains("02C4"))
+                        if (devId.Contains("02C4") || // kinect one main
+                            devId.Contains("02D8") || // kinect v2 main
+                            devId.Contains("02D9"))   // kinect v2 hub
                         {
                             pluggedInDevice = TrackingDevice.XboxOneKinect;
                         }
