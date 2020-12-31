@@ -106,12 +106,12 @@ namespace k2vr_installer_gui.Tools
         public void UpdateSdkInstalled()
         {
             kinectV1SdkInstalled = false;
-            if (Directory.Exists(Path.Combine("C:\\", "Program Files", "Microsoft SDKs", "Kinect", "v1.8")))
+            if (Directory.Exists(Path.Combine(Environment.ExpandEnvironmentVariables(@"%ProgramFiles%"), "Microsoft SDKs", "Kinect", "v1.8")))
             {
                 kinectV1SdkInstalled = true;
             }
             kinectV2SdkInstalled = false;
-            if (Directory.Exists(Path.Combine("C:\\", "Program Files", "Microsoft SDKs", "Kinect", "v2.0_1409")))
+            if (Directory.Exists(Path.Combine(Environment.ExpandEnvironmentVariables(@"%ProgramFiles%"), "Microsoft SDKs", "Kinect", "v2.0_1409")))
             {
                 kinectV2SdkInstalled = true;
             }
