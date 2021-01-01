@@ -29,7 +29,7 @@ namespace k2vr_installer_gui.Tools.OpenVRFiles
                     manifest_paths = new List<string>()
                 };
                 appConfig.manifest_paths.Add(
-                    Path.Combine(Environment.ExpandEnvironmentVariables(@"%ProgramFiles(x86)%"), "Steam", "config", "steamapps.vrmanifest")
+                    Path.Combine(App.state.steamPath, "config", "steamapps.vrmanifest")
                 );
                 return appConfig;
             }
