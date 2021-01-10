@@ -18,21 +18,23 @@ namespace k2vr_installer_gui.Tools.OpenVRFiles
 
         public static AppConfig Read()
         {
+            AppConfig appConfig = null;
             try
             {
-                return JsonFile.Read<AppConfig>(path);
+                appConfig = JsonFile.Read<AppConfig>(path);
             }
-            catch (FileNotFoundException)
+            catch (FileNotFoundException) { }
+            if (appConfig == null)
             {
-                var appConfig = new AppConfig()
+                appConfig = new AppConfig()
                 {
-                    manifest_paths = new List<string>()
+                    manifest_paths = new List<string>
+                    {
+                        Path.Combine(App.state.steamPath, "config", "steamapps.vrmanifest")
+                    }
                 };
-                appConfig.manifest_paths.Add(
-                    Path.Combine(App.state.steamPath, "config", "steamapps.vrmanifest")
-                );
-                return appConfig;
             }
+            return appConfig;
         }
 
         public void Write()
