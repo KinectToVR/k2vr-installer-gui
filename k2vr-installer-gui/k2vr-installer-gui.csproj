@@ -135,6 +135,7 @@
     <Compile Include="Tools\Analytics.cs" />
     <Compile Include="Tools\FileDownloader.cs" />
     <Compile Include="Tools\InstallerState.cs" />
+    <Compile Include="Tools\Logger.cs" />
     <Compile Include="Tools\OpenVRFiles\AppConfig.cs" />
     <Compile Include="Tools\OpenVRFiles\JsonFile.cs" />
     <Compile Include="Tools\OpenVRFiles\OpenVrPaths.cs" />
@@ -216,8 +217,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Content Include="Resources\migu-1m-regular.ttf" />
+    <Resource Include="Resources\UninstallFileLists\K2EXLegacyFiles.xml" />
+    <Resource Include="Resources\UninstallFileLists\KinectToVrLegacyFiles.xml" />
+    <None Include="Resources\strings.json" />
+    <None Include="Resources\UninstallFileLists\createXmlList.ps1" />
     <Resource Include="Resources\k2vr-banner.png" />
-    <Resource Include="Resources\OpenVrDriverFiles.xml" />
+    <Resource Include="Resources\UninstallFileLists\OpenVrDriverFiles.xml" />
     <EmbeddedResource Include="Properties\Resources.ja.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.ja.Designer.cs</LastGenOutput>

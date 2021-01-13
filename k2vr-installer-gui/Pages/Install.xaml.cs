@@ -38,16 +38,6 @@ namespace k2vr_installer_gui.Pages
             InitializeComponent();
         }
 
-        public void Log(string text, bool newLine = true)
-        {
-            if (newLine) text += Environment.NewLine;
-            TextBlock_installLog.Dispatcher.Invoke(() =>
-            {
-                TextBlock_installLog.Text += text;
-            });
-            App.Log(text);
-        }
-
         public void Cancel()
         {
             Dispatcher.Invoke(() =>
@@ -67,21 +57,29 @@ namespace k2vr_installer_gui.Pages
 
         public async void OnSelected()
         {
+            Logger.LogEvent += (LogEventArgs e) =>
+            {
+                if (!e.isUserRelevant) return;
+                TextBlock_installLog.Dispatcher.Invoke(() =>
+                {
+                    TextBlock_installLog.Text += e.text;
+                });
+            };
             await Task.Run(() =>
             {
-                Log("K2EX Installer " + Assembly.GetExecutingAssembly().GetName().Version.ToString() + " on " + DateTime.Now.ToString());
+                Logger.Log("K2EX Installer " + Assembly.GetExecutingAssembly().GetName().Version.ToString() + " on " + DateTime.Now.ToString());
 
-                Log("Checking if SteamVR is open...", false);
+                Logger.Log("Checking if SteamVR is open...", false);
                 foreach (Process process in Process.GetProcesses())
                 {
                     if (process.ProcessName == "vrmonitor")
                     {
-                        Log("Closing vrmonitor...", false);
+                        Logger.Log("Closing vrmonitor...", false);
                         process.CloseMainWindow();
                         Thread.Sleep(5000);
                         if (!process.HasExited)
                         {
-                            Log("Force closing...", false);
+                            Logger.Log("Force closing...", false);
                             /* When SteamVR is open with no headset detected,
                                CloseMainWindow will only close the "headset not found" popup
                                so we kill it, if it's still open */
@@ -97,7 +95,7 @@ namespace k2vr_installer_gui.Pages
                 {
                     if (process.ProcessName == "vrserver")
                     {
-                        Log("Closing vrserver...", false);
+                        Logger.Log("Closing vrserver...", false);
                         // CloseMainWindow won't work here because it doesn't have a window
                         process.Kill();
                         Thread.Sleep(5000);
@@ -109,12 +107,12 @@ namespace k2vr_installer_gui.Pages
                         }
                     }
                 }
-                Log("Done!");
+                Logger.Log("Done!");
 
-                Log("Checking for legacy installations...", false);
-                Uninstaller.UninstallK2VrLegacy(this);
+                Logger.Log("Checking for legacy installations...", false);
+                Uninstaller.UninstallK2VrLegacy();
 
-                Log("Checking for other K2EX installations...", false);
+                Logger.Log("Checking for other K2EX installations...", false);
                 try
                 {
                     if (!Uninstaller.UninstallAllK2EX(this)) return;
@@ -129,16 +127,16 @@ namespace k2vr_installer_gui.Pages
                         }
                     });
                 }
-                Log("Done!");
+                Logger.Log("Done!");
 
-                Log("Checking install directory...", false);
+                Logger.Log("Checking install directory...", false);
                 bool dirExists = Directory.Exists(App.state.GetFullInstallationPath());
-                Log("Done!");
-                Log("Creating install directory...", false);
+                Logger.Log("Done!");
+                Logger.Log("Creating install directory...", false);
                 if (!dirExists) Directory.CreateDirectory(App.state.GetFullInstallationPath());
-                Log("Done!");
+                Logger.Log("Done!");
 
-                Log("Extracting OpenVR driver...", false);
+                Logger.Log("Extracting OpenVR driver...", false);
                 string zipFileName = Path.Combine(App.downloadDirectory + FileDownloader.files["k2vr"].OutName);
                 using (ZipArchive archive = ZipFile.OpenRead(zipFileName))
                 {
@@ -158,12 +156,13 @@ namespace k2vr_installer_gui.Pages
                         }
                     }
                 }
-                Log("Done!");
+                Logger.Log("Done!");
 
-                Log("Registering application...", false);
+                Logger.Log("Registering application...", false);
                 App.state.Write();
                 // we need to manually set file attribs before copying.
-                try {
+                try
+                {
                     File.SetAttributes(Path.Combine(App.state.GetFullInstallationPath(), "k2vr-installer-gui.exe"), FileAttributes.Normal);
                 }
                 catch (Exception)
@@ -175,7 +174,7 @@ namespace k2vr_installer_gui.Pages
                 if ((App.state.trackingDevice == InstallerState.TrackingDevice.Xbox360Kinect && !App.state.kinectV1SdkInstalled) ||
                     (App.state.trackingDevice == InstallerState.TrackingDevice.XboxOneKinect && !App.state.kinectV2SdkInstalled))
                 {
-                    Log("Installing the Kinect SDK...", false);
+                    Logger.Log("Installing the Kinect SDK...", false);
                     string sdkInstaller = Path.Combine(App.downloadDirectory, FileDownloader.files[(App.state.trackingDevice == InstallerState.TrackingDevice.Xbox360Kinect) ? "kinect_v1_sdk" : "kinect_v2_sdk"].OutName);
                     Process sdkInstallerProcess = Process.Start(sdkInstaller);
                     Thread.Sleep(1000);
@@ -196,34 +195,34 @@ namespace k2vr_installer_gui.Pages
                     if ((App.state.trackingDevice == InstallerState.TrackingDevice.Xbox360Kinect && !App.state.kinectV1SdkInstalled) ||
                         (App.state.trackingDevice == InstallerState.TrackingDevice.XboxOneKinect && !App.state.kinectV2SdkInstalled))
                     {
-                        Log("Failed!");
+                        Logger.Log("Failed!");
                         MessageBox.Show(Properties.Resources.install_sdk_failed);
                         Cancel();
                         return;
                     }
-                    Log("Done!");
+                    Logger.Log("Done!");
                 }
                 else
                 {
-                    Log("Kinect SDK is already installed.");
+                    Logger.Log("Kinect SDK is already installed.");
                 }
 
-                Log("Installing Visual C++ Redistributable...", false);
+                Logger.Log("Installing Visual C++ Redistributable...", false);
                 string vcRedistPath = Path.Combine(App.downloadDirectory, FileDownloader.files["vc_redist2019"].OutName);
                 Process.Start(vcRedistPath, "/quiet /norestart").WaitForExit();
-                Log("Done!");
+                Logger.Log("Done!");
 
-                Log("Registering OpenVR driver...", false);
+                Logger.Log("Registering OpenVR driver...", false);
                 string driverPath = Path.Combine(App.state.GetFullInstallationPath(), "KinectToVR");
                 Process.Start(App.state.vrPathReg, "adddriver \"" + driverPath + "\"").WaitForExit();
-                Log("Checking...", false);
+                Logger.Log("Checking...", false);
                 var openVrPaths = OpenVrPaths.Read();
                 if (!openVrPaths.external_drivers.Contains(driverPath))
                 {
-                    Log("Copying...", false);
+                    Logger.Log("Copying...", false);
                     CopyFilesRecursively(new DirectoryInfo(driverPath), new DirectoryInfo(App.state.copiedDriverPath));
                 }
-                Log("Done!");
+                Logger.Log("Done!");
 
                 string kinectProcessName = "KinectV" + (App.state.trackingDevice == InstallerState.TrackingDevice.XboxOneKinect ? "2" : "1") + "Process";
                 if (App.state.trackingDevice == InstallerState.TrackingDevice.PlayStationMove)
@@ -231,7 +230,7 @@ namespace k2vr_installer_gui.Pages
                     kinectProcessName = "psmsprocess";
                 }
 
-                Log("Registering OpenVR overlay...", false);
+                Logger.Log("Registering OpenVR overlay...", false);
 
                 var appConfig = AppConfig.Read();
                 string manifestPath = Path.Combine(App.state.GetFullInstallationPath(), kinectProcessName + ".vrmanifest");
@@ -239,27 +238,27 @@ namespace k2vr_installer_gui.Pages
                 {
                     appConfig.manifest_paths.Add(manifestPath);
                     appConfig.Write();
-                    Log("Done!");
+                    Logger.Log("Done!");
                 }
                 else
                 {
-                    Log("Already done!");
+                    Logger.Log("Already done!");
                 }
 
-                Log("Disabling SteamVR Home, enabling advanced settings...", false);
+                Logger.Log("Disabling SteamVR Home, enabling advanced settings...", false);
                 var steamVrSettings = JsonConvert.DeserializeObject<dynamic>(File.ReadAllText(App.state.steamVrSettingsPath));
                 try
                 {
                     steamVrSettings["steamvr"]["enableHomeApp"] = false;
                     steamVrSettings["steamvr"]["showAdvancedSettings"] = true;
                     JsonFile.Write(App.state.steamVrSettingsPath, steamVrSettings, 3, ' ');
-                    Log("Done!");
+                    Logger.Log("Done!");
                 }
                 catch (Exception)
                 {
-                    Log("Failed (uncritical)!");
+                    Logger.Log("Failed (uncritical)!");
                 }
-                Log("Registering tracker roles...", false);
+                Logger.Log("Registering tracker roles...", false);
                 try
                 {
                     if (steamVrSettings["trackers"] == null)
@@ -270,13 +269,13 @@ namespace k2vr_installer_gui.Pages
                     steamVrSettings["trackers"]["/devices/htc/vive_trackerLHR-CB1441A7"] = "TrackerRole_RightFoot";
                     steamVrSettings["trackers"]["/devices/htc/vive_trackerLHR-CB9AD1T2"] = "TrackerRole_LeftFoot";
                     JsonFile.Write(App.state.steamVrSettingsPath, steamVrSettings, 3, ' ');
-                    Log("Done!");
+                    Logger.Log("Done!");
                 }
                 catch (Exception)
                 {
-                    Log("Failed (uncritical)!");
+                    Logger.Log("Failed (uncritical)!");
                 }
-                Log("Enabling driver in SteamVR...", false);
+                Logger.Log("Enabling driver in SteamVR...", false);
                 try
                 {
                     if (steamVrSettings["driver_kinecttovr"] == null)
@@ -286,14 +285,14 @@ namespace k2vr_installer_gui.Pages
                     steamVrSettings["driver_kinecttovr"]["enable"] = true;
                     steamVrSettings["driver_kinecttovr"]["blocked_by_safe_mode"] = false;
                     JsonFile.Write(App.state.steamVrSettingsPath, steamVrSettings, 3, ' ');
-                    Log("Done!");
+                    Logger.Log("Done!");
                 }
                 catch (Exception)
                 {
-                    Log("Failed (uncritical)!");
+                    Logger.Log("Failed (uncritical)!");
                 }
 
-                Log("Creating start menu entry...", false);
+                Logger.Log("Creating start menu entry...", false);
                 if (!Directory.Exists(App.startMenuFolder)) Directory.CreateDirectory(App.startMenuFolder);
                 // https://stackoverflow.com/a/4909475/
                 var shell = new IWshRuntimeLibrary.WshShell();
@@ -304,7 +303,7 @@ namespace k2vr_installer_gui.Pages
                 shortcut.IconLocation = Path.Combine(App.state.GetFullInstallationPath(), "k2vr.ico");
                 shortcut.WorkingDirectory = Path.Combine(App.state.GetFullInstallationPath());
                 shortcut.Save();
-                Log("Refreshing...", false);
+                Logger.Log("Refreshing...", false);
                 foreach (Process process in Process.GetProcesses())
                 {
                     if (process.ProcessName == "StartMenuExperienceHost")
@@ -313,10 +312,10 @@ namespace k2vr_installer_gui.Pages
                         Thread.Sleep(500);
                     }
                 }
-                Log("Done!");
+                Logger.Log("Done!");
 
-                Log("Installation complete!");
-                Log("The installation log can be found in \"" + App.downloadDirectory + "\"", false);
+                Logger.Log("Installation complete!");
+                Logger.Log("The installation log can be found in \"" + App.downloadDirectory + "\"", false);
                 Button_Complete_Install.Dispatcher.Invoke(() =>
                 {
                     Button_Complete_Install.IsEnabled = true;

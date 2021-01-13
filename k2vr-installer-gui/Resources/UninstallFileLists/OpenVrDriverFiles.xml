@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<OpenVrDriverFiles>
+<FileList>
   <Files>
     <string>driver.vrdrivermanifest</string>
     <string>bin\win64\driver_KinectToVR.dll</string>
@@ -146,4 +146,4 @@
     <string>resources\rendermodels\valve_controller_knu_ev2_0_left</string>
     <string>resources\rendermodels\valve_controller_knu_ev2_0_right</string>
   </Folders>
-</OpenVrDriverFiles>
+</FileList>

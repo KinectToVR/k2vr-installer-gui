@@ -24,16 +24,16 @@ namespace k2vr_installer_gui.Uninstall
         public bool DriverRegistered = false;
         public bool AppConfigRegistered = false;
     }
-    public class OpenVrDriverFiles
+    public class FileList
     {
         public List<string> Files;
         public List<string> Folders;
 
-        public static OpenVrDriverFiles Read()
+        public static FileList Read(string fileName)
         {
-            var xmlSerializer = new XmlSerializer(typeof(OpenVrDriverFiles));
-            var s = Application.GetResourceStream(new Uri("pack://application:,,,/Resources/OpenVrDriverFiles.xml"));
-            OpenVrDriverFiles obj = (OpenVrDriverFiles)xmlSerializer.Deserialize(s.Stream);
+            var xmlSerializer = new XmlSerializer(typeof(FileList));
+            var s = Application.GetResourceStream(new Uri("pack://application:,,,/Resources/UninstallFileLists/" + fileName + ".xml"));
+            FileList obj = (FileList)xmlSerializer.Deserialize(s.Stream);
             s.Stream.Dispose();
             return obj;
         }
@@ -44,17 +44,17 @@ namespace k2vr_installer_gui.Uninstall
         static string k2vrLegacyDefaultPath = Path.Combine("C:\\", "KinectToVR");
         static Guid uninstallGuid = new Guid("ba21a8d1-e588-48ab-bf4c-b37e8fb3708e"); // this was randomly generated
 
-        public static void UninstallK2VrLegacy(Pages.Install installPage)
+        public static void UninstallK2VrLegacy()
         {
             string path = k2vrLegacyDefaultPath;
             if (Directory.Exists(path))
             {
-                installPage.Log("K2VR Legacy installation found...", false);
+                Logger.Log("K2VR Legacy installation found...", false);
                 if (MessageBox.Show(Properties.Resources.install_legacy_k2vr_remove, Properties.Resources.install_legacy_k2vr_remove_title, MessageBoxButton.YesNo) == MessageBoxResult.Yes &&
                     MessageBox.Show(Properties.Resources.install_legacy_k2vr_confirm.Replace("{0}", path),
                     Properties.Resources.install_legacy_k2vr_confirm_title, MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                 {
-                    installPage.Log("Deleting...", true);
+                    Logger.Log("Deleting...", true);
 
                     // https://stackoverflow.com/a/11523266/4672279
                     // this should fix msvcp140.dll access denied errors.
@@ -71,7 +71,7 @@ namespace k2vr_installer_gui.Uninstall
                         }
                         catch (Exception)
                         {
-                            installPage.Log($"Couldn't delete {file.FullName}!", true);
+                            Logger.Log($"Couldn't delete {file.FullName}!", true);
                         }
                     }
                     try
@@ -80,10 +80,10 @@ namespace k2vr_installer_gui.Uninstall
                     }
                     catch (Exception)
                     {
-                        installPage.Log($"Couldn't delete {path}! try removing it yourself.", true);
+                        Logger.Log($"Couldn't delete {path}! try removing it yourself.", true);
                     }
 
-                    installPage.Log("Removing start menu shortcuts...", false);
+                    Logger.Log("Removing start menu shortcuts...", false);
                     string startMenuFolder = Path.Combine("C:\\", "ProgramData", "Microsoft", "Windows", "Start Menu", "Programs", "KinectToVR");
                     if (Directory.Exists(startMenuFolder))
                     {
@@ -91,27 +91,27 @@ namespace k2vr_installer_gui.Uninstall
                         File.Delete(Path.Combine(startMenuFolder, "KinectToVR (Xbox One).lnk"));
                         try { Directory.Delete(startMenuFolder, false); } catch (IOException) { }
                     }
-                    installPage.Log("Done!");
+                    Logger.Log("Done!");
                 }
                 else
                 {
-                    installPage.Log("Keeping!");
+                    Logger.Log("Keeping!");
                 }
             }
             else
             {
-                installPage.Log("Not found!");
+                Logger.Log("Not found!");
             }
             string ovrieFolder = Path.Combine("C:\\", "Program Files", "OpenVR-InputEmulator");
             if (File.Exists(Path.Combine(ovrieFolder, "Uninstall.exe")))
             {
                 if (MessageBox.Show(Properties.Resources.install_remove_ovrie, Properties.Resources.install_remove_ovrie_title, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    installPage.Log("Uninstalling OpenVR Input Emulator...", false);
+                    Logger.Log("Uninstalling OpenVR Input Emulator...", false);
                     // copy installer to temp
                     File.Copy(Path.Combine(ovrieFolder, "Uninstall.exe"), Path.Combine(App.downloadDirectory, "Uninstall.exe"), true);
                     Process.Start(Path.Combine(App.downloadDirectory, "Uninstall.exe"), "_?=" + ovrieFolder + "\\").WaitForExit();
-                    installPage.Log("Done!");
+                    Logger.Log("Done!");
                 }
             }
         }
@@ -131,12 +131,12 @@ namespace k2vr_installer_gui.Uninstall
             {
                 string path = pair.Key;
                 if (path == App.state.GetFullInstallationPath()) continue;
-                installPage.Log("Found old installation at \"" + path + "\"...", false);
+                Logger.Log("Found old installation at \"" + path + "\"...", false);
                 if (pair.Value.DriverRegistered || pair.Value.AppConfigRegistered)
                 {
                     if (MessageBox.Show(Properties.Resources.installer_previous_disable.Replace("{0}", path), Properties.Resources.installer_previous_disable_title, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
-                        installPage.Log("Disabling...", false);
+                        Logger.Log("Disabling...", false);
                         UnregisterK2EX(path);
                     }
                     else
@@ -150,8 +150,8 @@ namespace k2vr_installer_gui.Uninstall
             }
             if (Directory.Exists(App.state.copiedDriverPath))
             {
-                installPage.Log("Deleting copied driver...", false);
-                var ovrDriverFiles = OpenVrDriverFiles.Read();
+                Logger.Log("Deleting copied driver...", false);
+                var ovrDriverFiles = FileList.Read("OpenVrDriverFiles");
                 foreach (string file in ovrDriverFiles.Files)
                 {
                     string delFile = Path.Combine(App.state.copiedDriverPath, file);
@@ -163,11 +163,11 @@ namespace k2vr_installer_gui.Uninstall
                     if (Directory.Exists(delDir)) Directory.Delete(delDir, false);
                 }
                 try { Directory.Delete(App.state.copiedDriverPath, false); } catch (IOException) { }
-                installPage.Log("Deleted...", false);
+                Logger.Log("Deleted...", false);
             }
             if (Directory.Exists(App.state.GetFullInstallationPath()))
             {
-                installPage.Log("Removing previous version...", false);
+                Logger.Log("Removing previous version...", false);
                 if (MessageBox.Show(Properties.Resources.install_update.Replace("{0}", App.state.GetFullInstallationPath()), Properties.Resources.install_update_title, MessageBoxButton.YesNo) != MessageBoxResult.Yes ||
                     !DeleteK2EXFolder(App.state.GetFullInstallationPath()))
                 {
@@ -179,7 +179,7 @@ namespace k2vr_installer_gui.Uninstall
             }
             if (Directory.Exists(App.startMenuFolder))
             {
-                installPage.Log("Removing start menu shortcuts...", false);
+                Logger.Log("Removing start menu shortcuts...", false);
                 DeleteK2EXStartMenuShortcuts();
             }
             return true;
@@ -353,7 +353,7 @@ namespace k2vr_installer_gui.Uninstall
             {
                 if (parent == null)
                 {
-                    App.Log("Uninstall registry key not found.");
+                    Logger.Log("Uninstall registry key not found.", isUserRelevant: false);
                     return;
                 }
                 try
@@ -368,7 +368,7 @@ namespace k2vr_installer_gui.Uninstall
 
                         if (key == null)
                         {
-                            App.Log(string.Format("Unable to create uninstaller '{0}\\{1}'", uninstallRegKeyPath, guidText));
+                            Logger.Log(string.Format("Unable to create uninstaller '{0}\\{1}'", uninstallRegKeyPath, guidText), isUserRelevant: false);
                             return;
                         }
 
@@ -397,7 +397,7 @@ namespace k2vr_installer_gui.Uninstall
                 }
                 catch (Exception)
                 {
-                    App.Log("An error occurred writing uninstall information to the registry.  The service is fully installed but can only be uninstalled manually through the command line.");
+                    Logger.Log("An error occurred writing uninstall information to the registry.  The service is fully installed but can only be uninstalled manually through the command line.", isUserRelevant: false); ;
                 }
             }
         }

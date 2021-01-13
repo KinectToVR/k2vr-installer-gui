@@ -62,11 +62,6 @@ namespace k2vr_installer_gui
             }
         }
 
-        public static void Log(string text)
-        {
-            File.AppendAllText(Path.Combine(App.downloadDirectory, "install.log"), text + Environment.NewLine);
-        }
-
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
             new ExceptionDialog(e.Exception).ShowDialog();
