@@ -119,6 +119,15 @@ namespace k2vr_installer_gui.Pages
                 return;
             }
 
+            if (installLocation != @"C:\K2EX" &&                                        // Ignore legacy installations
+                Directory.Exists(installLocation) &&                                    // Folder exists
+                !Utils.IsDirectoryEmpty(installLocation) &&                             // Foler isn't empty
+                !File.Exists(Path.Combine(installLocation, "installerSettings.xml")))   // Folder isn't installed by this installer
+            {
+                MessageBox.Show("The directory you want to install KinectToVR to must be empty!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             TrackingDevice device = TrackingDevice.None;
             switch (((Device)this.ListBox_devices.SelectedItem).Name)
             {

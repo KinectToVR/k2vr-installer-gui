@@ -138,6 +138,7 @@
     <Compile Include="Tools\OpenVRFiles\AppConfig.cs" />
     <Compile Include="Tools\OpenVRFiles\JsonFile.cs" />
     <Compile Include="Tools\OpenVRFiles\OpenVrPaths.cs" />
+    <Compile Include="Tools\Utils.cs" />
     <Compile Include="Uninstall\Uninstaller.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
