@@ -39,10 +39,13 @@ jobs:
       - name: Get short SHA
         id: slug
         run: "$slug = '::set-output name=slug::' + $env:GITHUB_SHA.SubString(0,7); echo $slug"
+        
+      - name: Rename release executable
+        run: mv k2vr-installer-gui/bin/x64/Release/k2vr-installer-gui.exe k2vr-installer-gui/bin/x64/Release/k2ex-installer-${{ steps.slug.outputs.slug }}.exe
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v2.2.0
         with:
           name: k2ex-installer-${{ steps.slug.outputs.slug }}.exe
-          path: k2vr-installer-gui/bin/x64/Release/k2vr-installer-gui.exe
+          path: k2vr-installer-gui/bin/x64/Release/k2ex-installer-${{ steps.slug.outputs.slug }}.exe
           if-no-files-found: error
