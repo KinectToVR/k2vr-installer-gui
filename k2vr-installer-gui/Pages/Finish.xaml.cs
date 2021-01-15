@@ -44,5 +44,10 @@ namespace k2vr_installer_gui.Pages
         {
             Application.Current.Shutdown();
         }
+
+        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Process.Start("https://github.com/kinecttovr/kinecttovr");
+        }
     }
 }

@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="{StaticResource brush_background}">
     <StackPanel>
-        <Image Source="/Resources/k2vr-banner.png" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Stretch"/>
+        <Image Source="/Resources/k2vr-banner.png" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Stretch" ToolTip="https://github.com/kinecttovr/kinecttovr" MouseLeftButtonDown="Image_MouseLeftButtonDown" Cursor="Hand"/>
         <TextBlock Style="{StaticResource Heading}" FontSize="35" Margin="0,40,0,20"><Run Text="{x:Static res:Resources.finish_thanks}"/></TextBlock>
         <TextBlock Style="{StaticResource Heading}" FontStyle="Normal" Margin="0,0,0,10"
                    Text="{x:Static res:Resources.finish_website}"/>
