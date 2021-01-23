@@ -20,7 +20,7 @@
     </FileToDownload>
     <FileToDownload>
       <Name>kinect_v1_sdk</Name>
-      <Md5>479010273D25BEAB4868D57FFF907D50</Md5>
+      <Md5>6D3A32D7E8D5A215F7AE155D5F1DF7EF</Md5>
       <OutName>kinectv1-sdk-1.8.exe</OutName>
       <PrettyName>Kinect SDK 1.8 for Xbox 360 Kinect</PrettyName>
       <Url>https://download.microsoft.com/download/E/1/D/E1DEC243-0389-4A23-87BF-F47DE869FC1A/KinectSDK-v1.8-Setup.exe</Url>
@@ -28,7 +28,7 @@
     </FileToDownload>
     <FileToDownload>
       <Name>kinect_v2_sdk</Name>
-      <Md5>09A95EA4BDB9A619828E6D13AC486962</Md5>
+      <Md5>D41D8CD98F00B204E9800998ECF8427E</Md5>
       <OutName>kinectv2-sdk-2.0.exe</OutName>
       <PrettyName>Kinect SDK 2.0 for Xbox One Kinect</PrettyName>
       <Url>https://download.microsoft.com/download/F/2/D/F2D1012E-3BC6-49C5-B8B3-5ACFF58AF7B8/KinectSDK-v2.0_1409-Setup.exe</Url>
