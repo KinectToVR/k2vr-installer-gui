@@ -28,7 +28,7 @@
     </FileToDownload>
     <FileToDownload>
       <Name>kinect_v2_sdk</Name>
-      <Md5>D41D8CD98F00B204E9800998ECF8427E</Md5>
+      <Md5>09A95EA4BDB9A619828E6D13AC486962</Md5>
       <OutName>kinectv2-sdk-2.0.exe</OutName>
       <PrettyName>Kinect SDK 2.0 for Xbox One Kinect</PrettyName>
       <Url>https://download.microsoft.com/download/F/2/D/F2D1012E-3BC6-49C5-B8B3-5ACFF58AF7B8/KinectSDK-v2.0_1409-Setup.exe</Url>
