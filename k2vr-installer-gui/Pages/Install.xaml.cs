@@ -215,7 +215,28 @@ namespace k2vr_installer_gui.Pages
 
                 Log("Registering OpenVR driver...", false);
                 string driverPath = Path.Combine(App.state.GetFullInstallationPath(), "KinectToVR");
-                Process.Start(App.state.vrPathReg, "adddriver \"" + driverPath + "\"").WaitForExit();
+
+                // Get the username and domain, and separate them
+                string username = Utils.GetUsername();
+                string domain = username.Substring(0, username.IndexOf('\\'));
+                username = username.Substring(username.IndexOf('\\') + 1);
+
+                // Start VRPathReg, as the logged in user
+                Process.Start(
+                    new ProcessStartInfo()
+                    {
+                        CreateNoWindow = true,
+                        WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
+                        FileName = App.state.vrPathReg,
+                        Arguments = "adddriver \"" + driverPath + "\"",
+                        Domain = domain,
+                        UserName = username,
+                    }
+                    ).WaitForExit();
+                
+                // TODO: Remove? Haven't tested the above as i have a fucked up steamVR install and i dont want to break it even further
+                //Process.Start(App.state.vrPathReg, "adddriver \"" + driverPath + "\"").WaitForExit();
+
                 Log("Checking...", false);
                 var openVrPaths = OpenVrPaths.Read();
                 if (!openVrPaths.external_drivers.Contains(driverPath))
