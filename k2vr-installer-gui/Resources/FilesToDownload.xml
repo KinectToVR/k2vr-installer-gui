@@ -3,11 +3,11 @@
   <Files>
     <FileToDownload>
       <Name>k2vr</Name>
-      <Md5>438D99E0B077E53D2484C560F81A3BA7</Md5>
+      <Md5>9A3F7FBF15B6904631FB042582BA2D0D</Md5>
       <OutName>K2EX.zip</OutName>
-      <PrettyName>KinectToVR 0.8.0 EX</PrettyName>
-      <Version>0.8.0</Version>
-      <Url>https://github.com/KinectToVR/KinectToVR/releases/download/a0.8.0/K2EX.zip</Url>
+      <PrettyName>KinectToVR 0.8.1 EX</PrettyName>
+      <Version>0.8.1</Version>
+      <Url>https://github.com/KinectToVR/KinectToVR/releases/download/a0.8.1/K2EX.zip</Url>
       <AlwaysRequired>true</AlwaysRequired>
     </FileToDownload>
     <FileToDownload>
