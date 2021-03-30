@@ -360,6 +360,7 @@ namespace k2vr_installer_gui.Uninstall
 
         public static bool UninstallK2EX(string path)
         {
+            if (!Utils.EnsureSteamVrClosed()) return false;
             UnregisterK2EX(path);
             bool retVal = DeleteK2EXFolder(path, true);
             DeleteK2EXStartMenuShortcuts();
