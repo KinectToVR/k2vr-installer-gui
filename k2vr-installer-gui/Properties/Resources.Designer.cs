@@ -243,8 +243,8 @@ namespace k2vr_installer_gui.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot install two versions of KinectToVR into the same directory.
-        ///Either uninstall the old version or select another install directory.
+        ///   Looks up a localized string similar to Cannot install two versions of KinectToVR into the same directory, or install KinectToVR into a directory with existing files.
+        ///Either uninstall the old version or select another, empty install directory.
         ///Restart this install to try again..
         /// </summary>
         public static string install_existing_folder_fail {

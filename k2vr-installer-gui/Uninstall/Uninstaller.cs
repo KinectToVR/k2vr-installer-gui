@@ -37,6 +37,21 @@ namespace k2vr_installer_gui.Uninstall
             s.Stream.Dispose();
             return obj;
         }
+
+        public void Delete(string basePath)
+        {
+            foreach (string file in Files)
+            {
+                string delFile = Path.Combine(basePath, file);
+                if (File.Exists(delFile)) File.Delete(delFile);
+            }
+            for (int i = Folders.Count - 1; i >= 0; i--)
+            {
+                string delDir = Path.Combine(basePath, Folders[i]);
+                if (Directory.Exists(delDir)) Directory.Delete(delDir, false);
+            }
+            Directory.Delete(basePath, false);
+        }
     }
     static class Uninstaller
     {
@@ -58,29 +73,47 @@ namespace k2vr_installer_gui.Uninstall
 
                     // https://stackoverflow.com/a/11523266/4672279
                     // this should fix msvcp140.dll access denied errors.
-                    
 
-                    System.IO.DirectoryInfo di = new DirectoryInfo(path);
-                    foreach (FileInfo file in di.GetFiles())
+                    FileList kinectToVrLegacyFiles = FileList.Read("KinectToVrLegacyFiles");
+                    foreach (string file in kinectToVrLegacyFiles.Files)
                     {
+                        string delFile = Path.Combine(path, file);
                         try
                         {
-                            // we need to manually set file attribs before deleting.
-                            File.SetAttributes(file.FullName, FileAttributes.Normal);
-                            file.Delete();
+                            if (File.Exists(delFile))
+                            {
+                                // we need to manually set file attribs before deleting.
+                                File.SetAttributes(delFile, FileAttributes.Normal);
+                                File.Delete(delFile);
+                            }
                         }
                         catch (Exception)
                         {
-                            Logger.Log($"Couldn't delete {file.FullName}!", true);
+                            Logger.Log($"Couldn't delete {delFile}!", true);
                         }
                     }
+
+                    for (int i = kinectToVrLegacyFiles.Folders.Count - 1; i >= 0; i--)
+                    {
+                        string delDir = Path.Combine(path, kinectToVrLegacyFiles.Folders[i]);
+                        try
+                        {
+                            if (Directory.Exists(delDir)) Directory.Delete(delDir, false);
+                        }
+                        catch (Exception)
+                        {
+                            Logger.Log($"Couldn't delete {delDir}!", true);
+                        }
+                    }
+
                     try
                     {
-                        Directory.Delete(path, true);
+                        Directory.Delete(path, false);
                     }
                     catch (Exception)
                     {
-                        Logger.Log($"Couldn't delete {path}! try removing it yourself.", true);
+                        Logger.Log($"Couldn't delete {path}! Try removing it yourself.", true);
+                        MessageBox.Show($"Couldn't delete {path}! Try removing it yourself.");
                     }
 
                     Logger.Log("Removing start menu shortcuts...", false);
@@ -89,7 +122,11 @@ namespace k2vr_installer_gui.Uninstall
                     {
                         File.Delete(Path.Combine(startMenuFolder, "KinectToVR (Xbox 360).lnk"));
                         File.Delete(Path.Combine(startMenuFolder, "KinectToVR (Xbox One).lnk"));
-                        try { Directory.Delete(startMenuFolder, false); } catch (IOException) { }
+                        try { Directory.Delete(startMenuFolder, false); }
+                        catch (IOException)
+                        {
+                            Logger.Log("Failed to delete start menu folder!", true);
+                        }
                     }
                     Logger.Log("Done!");
                 }
@@ -151,18 +188,8 @@ namespace k2vr_installer_gui.Uninstall
             if (Directory.Exists(App.state.copiedDriverPath))
             {
                 Logger.Log("Deleting copied driver...", false);
-                var ovrDriverFiles = FileList.Read("OpenVrDriverFiles");
-                foreach (string file in ovrDriverFiles.Files)
-                {
-                    string delFile = Path.Combine(App.state.copiedDriverPath, file);
-                    if (File.Exists(delFile)) File.Delete(delFile);
-                }
-                for (int i = ovrDriverFiles.Folders.Count - 1; i >= 0; i--)
-                {
-                    string delDir = Path.Combine(App.state.copiedDriverPath, ovrDriverFiles.Folders[i]);
-                    if (Directory.Exists(delDir)) Directory.Delete(delDir, false);
-                }
-                try { Directory.Delete(App.state.copiedDriverPath, false); } catch (IOException) { }
+                FileList ovrDriverFiles = FileList.Read("OpenVrDriverFiles");
+                ovrDriverFiles.Delete(App.state.copiedDriverPath);
                 Logger.Log("Deleted...", false);
             }
             if (Directory.Exists(App.state.GetFullInstallationPath()))
@@ -192,7 +219,11 @@ namespace k2vr_installer_gui.Uninstall
                 File.Delete(Path.Combine(App.startMenuFolder, "KinectToVR.lnk"));
                 File.Delete(Path.Combine(App.startMenuFolder, "K2EX (Xbox 360).lnk"));
                 File.Delete(Path.Combine(App.startMenuFolder, "K2EX (Xbox One).lnk"));
-                try { Directory.Delete(App.startMenuFolder, false); } catch (IOException) { }
+                try { Directory.Delete(App.startMenuFolder, false); }
+                catch (IOException)
+                {
+                    Logger.Log("Failed to delete start menu folder!", true);
+                }
             }
         }
 
@@ -260,7 +291,7 @@ namespace k2vr_installer_gui.Uninstall
                 }
                 else
                 {
-                    try
+                    try // First try deleting it only if it's already empty
                     {
                         Directory.Delete(path, false);
                         return true;
@@ -269,13 +300,24 @@ namespace k2vr_installer_gui.Uninstall
                     {
                         if (e.HResult == -2147024751) // Directory not empty
                         {
+                            // Ask user if they really want to delete that folder (they might have a custom install or something
+                            // and our file list doesn't have hashes
                             if (MessageBox.Show((Properties.Resources.install_uninstall_confirm.Replace("{0}", path)), Properties.Resources.install_uninstall_title, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                             {
-                                Directory.Delete(path, true);
-                                return true;
+                                FileList k2exLegacyFiles = FileList.Read("K2EXLegacyFiles");
+                                try // Try deleting based on file list
+                                {
+                                    k2exLegacyFiles.Delete(path);
+                                    return true; // Tell the caller we succeeded
+                                }
+                                catch (Exception) // Failed, probably due to nonstandard files, so we open explorer
+                                {
+                                    MessageBox.Show(Properties.Resources.install_unknown_files.Replace("{0}", path));
+                                    Process.Start("explorer.exe", path);
+                                }
                             }
                         }
-                        return false;
+                        return false; // Tell the caller we failed deleting the folder
                     }
                 }
             }
