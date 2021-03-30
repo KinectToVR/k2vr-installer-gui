@@ -173,7 +173,7 @@ Delete calibration settings?</value>
   <data name="install_existing_folder_fail" xml:space="preserve">
     <value>Cannot install two versions of KinectToVR into the same directory, or install KinectToVR into a directory with existing files.
 Either uninstall the old version or select another, empty install directory.
-Restart this install to try again.</value>
+Restart this installer to try again.</value>
   </data>
   <data name="install_legacy_k2vr_confirm" xml:space="preserve">
     <value>Uninstalling legacy K2VR will delete the folder {0} and all it's contents.</value>
