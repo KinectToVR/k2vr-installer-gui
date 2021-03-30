@@ -27,6 +27,8 @@ namespace k2vr_installer_gui.Tools
 
         public static void Log(string text, bool newLine = true, bool isUserRelevant = true)
         {
+            if (App.isUninstall) return;
+            // TODO: Find a proper way to log when uninstalling
             if (newLine) text += Environment.NewLine;
             File.AppendAllText(Path.Combine(App.downloadDirectory, "install.log"), text + Environment.NewLine);
             LogEvent?.Invoke(new LogEventArgs(text, isUserRelevant));

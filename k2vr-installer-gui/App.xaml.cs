@@ -20,9 +20,12 @@ namespace k2vr_installer_gui
         public static readonly string downloadDirectory = exeDirectory + @"k2vr-installer\";
         public const string installedPathRegKeyName = "KinectToVR";
         public static InstallerState state;
+        public static bool isUninstall = false;
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            if (e.Args.Length > 0 && e.Args[0] == "/uninstall") isUninstall = true;
+
             string installPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\" + installedPathRegKeyName, "InstallPath", "") ?? "";
 
             // get system display language
@@ -32,7 +35,7 @@ namespace k2vr_installer_gui
 
             state = InstallerState.Read(installPath);
             state.Update();
-            if (e.Args.Length > 0 && e.Args[0] == "/uninstall")
+            if (isUninstall)
             {
                 if (MessageBox.Show("Are you sure you want to uninstall KinectToVR?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
