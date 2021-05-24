@@ -180,7 +180,20 @@ namespace k2vr_installer_gui.Pages
 
                 Logger.Log("Registering OpenVR driver...", false);
                 string driverPath = Path.Combine(App.state.GetFullInstallationPath(), "KinectToVR");
-                Process.Start(App.state.vrPathReg, "adddriver \"" + driverPath + "\"").WaitForExit();
+                // Process.Start(App.state.vrPathReg, "adddriver \"" + driverPath + "\"").WaitForExit();
+                var openVrPathsJSON = JsonConvert.DeserializeObject<dynamic>(File.ReadAllText(Environment.ExpandEnvironmentVariables(Path.Combine("%LocalAppData%", "openvr", "openvrpaths.vrpath"))));
+                try
+                {
+                    JArray DriverList = openVrPathsJSON["external_drivers"];
+                    DriverList.Add(driverPath);
+                    openVrPathsJSON["external_drivers"] = DriverList;
+                    JsonFile.Write((Environment.ExpandEnvironmentVariables(Path.Combine("%LocalAppData%", "openvr", "openvrpaths.vrpath"))), openVrPathsJSON, 3, ' ');
+                    Logger.Log("Done!");
+                }
+                catch (Exception)
+                {
+                    Logger.Log("Couldn't add to VRPaths...");
+                }
                 Logger.Log("Checking...", false);
                 var openVrPaths = OpenVrPaths.Read();
                 if (!openVrPaths.external_drivers.Contains(driverPath))
