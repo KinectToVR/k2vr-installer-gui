@@ -370,12 +370,12 @@ namespace k2vr_installer_gui.Uninstall
 
         public static void UnregisterUninstaller()
         {
-            using (RegistryKey parent = Registry.LocalMachine.OpenSubKey("SOFTWARE", true))
+            using (RegistryKey parent = Registry.CurrentUser.OpenSubKey("SOFTWARE", true))
             {
                 parent.DeleteSubKey(App.installedPathRegKeyName);
             }
             string uninstallRegKeyPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
-            using (RegistryKey parent = Registry.LocalMachine.OpenSubKey(uninstallRegKeyPath, true))
+            using (RegistryKey parent = Registry.CurrentUser.OpenSubKey(uninstallRegKeyPath, true))
             {
                 if (parent == null) return;
                 string guidText = uninstallGuid.ToString("B").ToUpper();
@@ -385,14 +385,14 @@ namespace k2vr_installer_gui.Uninstall
 
         public static void RegisterUninstaller()
         {
-            using (RegistryKey parent = Registry.LocalMachine.OpenSubKey("SOFTWARE", true))
+            using (RegistryKey parent = Registry.CurrentUser.OpenSubKey("SOFTWARE", true))
             {
                 RegistryKey key = parent.OpenSubKey(App.installedPathRegKeyName, true) ?? parent.CreateSubKey(App.installedPathRegKeyName);
                 key.SetValue("InstallPath", App.state.GetFullInstallationPath());
             }
 
             string uninstallRegKeyPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
-            using (RegistryKey parent = Registry.LocalMachine.OpenSubKey(uninstallRegKeyPath, true))
+            using (RegistryKey parent = Registry.CurrentUser.OpenSubKey(uninstallRegKeyPath, true))
             {
                 if (parent == null)
                 {

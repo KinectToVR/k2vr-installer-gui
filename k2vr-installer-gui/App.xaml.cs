@@ -15,7 +15,7 @@ namespace k2vr_installer_gui
     /// </summary>
     public partial class App : Application
     {
-        public static readonly string startMenuFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), "K2EX");
+        public static readonly string startMenuFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.StartMenu), "K2EX");
         public static readonly string exeDirectory = AppDomain.CurrentDomain.BaseDirectory;
         public static readonly string downloadDirectory = exeDirectory + @"k2vr-installer\";
         public const string installedPathRegKeyName = "KinectToVR";
@@ -26,7 +26,7 @@ namespace k2vr_installer_gui
         {
             if (e.Args.Length > 0 && e.Args[0] == "/uninstall") isUninstall = true;
 
-            string installPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\" + installedPathRegKeyName, "InstallPath", "") ?? "";
+            string installPath = (string)Registry.GetValue(@"HKEY_CURRENT_USER\SOFTWARE\" + installedPathRegKeyName, "InstallPath", "") ?? "";
 
             // get system display language
             string displayLanguage = CultureInfo.InstalledUICulture.TwoLetterISOLanguageName;
