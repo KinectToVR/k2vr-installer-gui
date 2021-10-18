@@ -79,12 +79,12 @@ namespace k2vr_installer_gui.Tools
 
         public void UpdatePluggedInDevice()
         {
-            using (var searcher = new ManagementObjectSearcher(@"Select * From Win32_USBControllerDevice"))
+            try
             {
-                ManagementObjectCollection devices = searcher.Get();
-                foreach (ManagementBaseObject device in devices)
+                using (var searcher = new ManagementObjectSearcher(@"Select * From Win32_USBControllerDevice"))
                 {
-                    try
+                    ManagementObjectCollection devices = searcher.Get();
+                    foreach (ManagementBaseObject device in devices)
                     {
                         string dependent = (string)device.GetPropertyValue("Dependent");
                         string devId = dependent.Substring(dependent.IndexOf("DeviceID=\""));
@@ -106,10 +106,10 @@ namespace k2vr_installer_gui.Tools
                             pluggedInDevice = TrackingDevice.XboxOneKinect;
                         }
                     }
-                    catch (ManagementException) { }
+                    devices.Dispose();
                 }
-                devices.Dispose();
             }
+            catch (Exception) { }
         }
 
         public void UpdateSdkInstalled()
