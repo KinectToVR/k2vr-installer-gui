@@ -20,40 +20,53 @@ namespace k2vr_installer_gui.Tools
         public static bool EnsureSteamVrClosed()
         {
             Logger.Log("Checking if SteamVR is open...", false);
-            foreach (Process process in Process.GetProcesses())
+
+            if (Process.GetProcesses().FirstOrDefault((Process proc) => proc.ProcessName == "vrserver" || proc.ProcessName == "vrserver") != null)
             {
-                if (process.ProcessName == "vrmonitor")
+                //Ask if SteamVR should be closed
+                if (MessageBox.Show(
+                    "SteamVR needs to be closed to continue the installation." + Environment.NewLine + "Do you want Setup to close SteamVR?",
+                    "Please close SteamVR",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning
+                    ) != MessageBoxResult.Yes)
                 {
-                    Logger.Log("Closing vrmonitor...", false);
-                    process.CloseMainWindow();
-                    Thread.Sleep(5000);
-                    if (!process.HasExited)
-                    {
-                        Logger.Log("Force closing...", false);
-                        /* When SteamVR is open with no headset detected,
-                           CloseMainWindow will only close the "headset not found" popup
-                           so we kill it, if it's still open */
-                        process.Kill();
-                        Thread.Sleep(3000);
-                    }
+                    return false;
                 }
             }
 
+            //Close VrMonitor
+            foreach (Process process in Process.GetProcesses().Where((proc) => proc.ProcessName == "vrmonitor"))
+            {
+                Logger.Log("Closing vrmonitor (PID: " + process.Id + ")...", false);
+
+                process.CloseMainWindow();
+                Thread.Sleep(5000);
+                if (!process.HasExited)
+                {
+                    Logger.Log("Force closing...", false);
+                    /* When SteamVR is open with no headset detected,
+                        CloseMainWindow will only close the "headset not found" popup
+                        so we kill it, if it's still open */
+                    process.Kill();
+                    Thread.Sleep(3000);
+                }
+            }
+
+            //Close VrServer
             /* Apparently, SteamVR server can run without the monitor,
                so we close that, if it's open as well (monitor will complain if you close server first) */
-            foreach (Process process in Process.GetProcesses())
+            foreach (Process process in Process.GetProcesses().Where((proc) => proc.ProcessName == "vrserver"))
             {
-                if (process.ProcessName == "vrserver")
+                Logger.Log("Closing vrserver (PID: " + process.Id + ")...", false);
+
+                // CloseMainWindow won't work here because it doesn't have a window
+                process.Kill(); 
+                Thread.Sleep(5000);
+                if (!process.HasExited)
                 {
-                    Logger.Log("Closing vrserver...", false);
-                    // CloseMainWindow won't work here because it doesn't have a window
-                    process.Kill();
-                    Thread.Sleep(5000);
-                    if (!process.HasExited)
-                    {
-                        MessageBox.Show(Properties.Resources.install_steamvr_close_failed);
-                        return false;
-                    }
+                    MessageBox.Show(Properties.Resources.install_steamvr_close_failed);
+                    return false;
                 }
             }
             Logger.Log("Done!");
