@@ -26,12 +26,16 @@ namespace k2vr_installer_gui.Tools
                 //Ask if SteamVR should be closed
                 if (MessageBox.Show(
                     "SteamVR needs to be closed to continue the installation." + Environment.NewLine + "Do you want Setup to close SteamVR?",
-                    "Please close SteamVR",
+                    "Close SteamVR?",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Warning
                     ) != MessageBoxResult.Yes)
                 {
-                    return false;
+                    //Only exit if SteamVR is still running
+                    if (Process.GetProcesses().FirstOrDefault((Process proc) => proc.ProcessName == "vrserver" || proc.ProcessName == "vrserver") != null)
+                    {
+                        return false;
+                    }
                 }
             }
 
