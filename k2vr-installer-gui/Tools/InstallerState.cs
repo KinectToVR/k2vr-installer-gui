@@ -5,12 +5,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Management;
 using System.Windows;
-using System.Windows.Documents;
 using System.Xml.Serialization;
 
 namespace k2vr_installer_gui.Tools
 {
-    public class InstallerState
+	public class InstallerState
     {
         public const string fileName = "installerSettings.xml";
 
@@ -109,7 +108,10 @@ namespace k2vr_installer_gui.Tools
                     devices.Dispose();
                 }
             }
-            catch (Exception) { }
+            catch (Exception e)
+            {
+                Logger.Log($"Failed to detect a Kinect! Continuing anyway...");
+            }
         }
 
         public void UpdateSdkInstalled()
