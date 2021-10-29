@@ -262,12 +262,13 @@ namespace k2vr_installer_gui.Uninstall
                     if (uninstallFromSettings)
                     {
                         File.Delete(Path.Combine(path, InstallerState.fileName));
-                        string confSettingsPath = Path.Combine(path, "ConfigSettings.cfg");
+                        string confSettingsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "KinectToVR", "ConfigSettings.cfg");
                         if (File.Exists(confSettingsPath) && MessageBox.Show(Properties.Resources.install_calibration_remove.Replace("{0}", path),
                             Properties.Resources.install_calibration_remove_title, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                         {
                             File.Delete(confSettingsPath);
                         }
+
                         string[] files = Directory.GetFiles(path);
                         string[] directories = Directory.GetDirectories(path);
                         if (directories.Length == 0 && files.Length == 1 && files[0] == Path.Combine(path, "k2vr-installer-gui.exe"))
