@@ -24,6 +24,7 @@ namespace k2vr_installer_gui.Tools
             //Check if SteamVR is running
             if (Process.GetProcesses().FirstOrDefault((Process proc) => proc.ProcessName == "vrserver" || proc.ProcessName == "vrmonitor") == null)
             {
+                Logger.Log("Done!");
                 return true;
             }
 
@@ -36,7 +37,13 @@ namespace k2vr_installer_gui.Tools
                 ) != MessageBoxResult.Yes)
             {
                 //Only exit setup if SteamVR is still running after choosing "No"
-                return (Process.GetProcesses().FirstOrDefault((Process proc) => proc.ProcessName == "vrserver" || proc.ProcessName == "vrmonitor") == null);
+                if (Process.GetProcesses().FirstOrDefault((Process proc) => proc.ProcessName == "vrserver" || proc.ProcessName == "vrmonitor") == null)
+                {
+                    Logger.Log("Done!");
+                    return true;
+                }
+                MessageBox.Show("SteamVR needs to be closed to install KinectToVR!" + Environment.NewLine + "Restart this installer to try again.", "Close SteamVR", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
             }
 
 
