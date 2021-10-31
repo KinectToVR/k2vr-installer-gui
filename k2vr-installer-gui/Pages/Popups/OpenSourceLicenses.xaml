@@ -37,7 +37,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         <TabItem Header="ookii-dialogs-wpf" Foreground="{StaticResource brush_foreground}" >
             <TextBlock xml:space="preserve" Padding="5">BSD 3-Clause License
 
-Copyright (c) C. Augusto Proiete 2018-2020
+Copyright (c) C. Augusto Proiete 2018-2021
 Copyright (c) Sven Groot         2009-2018
 All rights reserved.
 
