@@ -216,9 +216,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Content Include="Resources\migu-1m-regular.ttf" />
+    <Resource Include="Resources\migu-1m-regular.ttf" />
     <Resource Include="Resources\UninstallFileLists\K2EXLegacyFiles.xml" />
     <Resource Include="Resources\UninstallFileLists\KinectToVrLegacyFiles.xml" />
+    <Resource Include="Resources\Inter-Medium.ttf" />
     <None Include="Resources\UninstallFileLists\createXmlList.ps1" />
     <Resource Include="Resources\k2vr-banner.png" />
     <Resource Include="Resources\UninstallFileLists\OpenVrDriverFiles.xml" />

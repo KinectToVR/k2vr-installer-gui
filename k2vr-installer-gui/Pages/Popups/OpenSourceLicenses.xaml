@@ -9,7 +9,7 @@
       Height="450" Width="600"
       MinHeight="120" MinWidth="450"
       WindowStartupLocation="CenterScreen"
-      Title="{x:Static res:Resources.home_licenses_button}" Background="{StaticResource brush_background}" FontFamily="Jost*">
+      Title="{x:Static res:Resources.home_licenses_button}" Background="{StaticResource brush_background}" FontFamily="pack://application:,,,/Resources/Inter,/Resources/Migu 1M">
     <TabControl x:Name="TabControl_OpenSourceLicenses" Background="{StaticResource brush_primary}">
         <TabItem Header="Newtonsoft.Json">
             <TextBlock xml:space="preserve" Padding="5">The MIT License (MIT)

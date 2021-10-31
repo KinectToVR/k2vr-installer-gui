@@ -9,7 +9,7 @@
         WindowStartupLocation="CenterScreen"
         Title="Download Error" SizeToContent="Height" Width="800"
         Icon="/installer-icon.png" Background="{StaticResource brush_background}"
-        FontFamily="Jost*">
+        FontFamily="pack://application:,,,/Resources/Inter,/Resources/Migu 1M">
     <StackPanel Margin="10">
         <TextBlock x:Name="TextBlock_title" Style="{StaticResource Heading}" Foreground="#FF6464" Margin="0 0 0 5"
                    Text="Download failed!"/>
