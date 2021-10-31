@@ -28,11 +28,6 @@ namespace k2vr_installer_gui
 
             string installPath = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\" + installedPathRegKeyName, "InstallPath", "") ?? "";
 
-            // get system display language
-            string displayLanguage = CultureInfo.InstalledUICulture.TwoLetterISOLanguageName;
-            // import strings.json from resources and parse it into a JObject
-
-
             state = InstallerState.Read(installPath);
             state.Update();
             if (isUninstall)
