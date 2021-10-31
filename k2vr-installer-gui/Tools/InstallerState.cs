@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 
 namespace k2vr_installer_gui.Tools
 {
-	public class InstallerState
+    public class InstallerState
     {
         public const string fileName = "installerSettings.xml";
 
@@ -132,7 +132,7 @@ namespace k2vr_installer_gui.Tools
         {
             steamPath = "";
             steamPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Valve\Steam", "InstallPath", "").ToString();
-            if (steamPath == "")
+            if (!Directory.Exists(steamPath))
             {
                 MessageBox.Show("Steam installation folder not found!" + Environment.NewLine +
                     "Are you sure it is installed?" + Environment.NewLine +
@@ -141,8 +141,29 @@ namespace k2vr_installer_gui.Tools
                 return;
             }
 
-            steamVrPath = "";
-            vrPathReg = "";
+            // If SteamVR is installed, it should be registered as an uninstallable application
+            steamVrPath = (string) Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 250820", "InstallLocation", "") ?? "";
+            vrPathReg = Path.Combine(steamVrPath, "bin", "win64", "vrpathreg.exe");
+
+            if (!Directory.Exists(steamVrPath))
+            {
+                MessageBox.Show("SteamVR installation folder not found!" + Environment.NewLine +
+                                "Are you sure it is installed?" + Environment.NewLine +
+                                "If you are, please join our Discord server for further assistance (link on www.k2vr.tech)");
+                Application.Current.Shutdown(1);
+                return;
+            }
+
+            if (!File.Exists(OpenVrPaths.path))
+            {
+                MessageBox.Show("OpenVRPaths not found!" + Environment.NewLine +
+                                "Have you launched SteamVR before?" + Environment.NewLine +
+                                "If so, please join our Discord server for further assistance (link on www.k2vr.tech)");
+                Application.Current.Shutdown(1);
+                return;
+            }
+
+            /*
             try
             {
                 var openVrPaths = OpenVrPaths.Read();
@@ -165,6 +186,7 @@ namespace k2vr_installer_gui.Tools
                 Application.Current.Shutdown(1);
                 return;
             }
+
             if (vrPathReg == "")
             {
                 MessageBox.Show("VRPathReg not found!" + Environment.NewLine +
@@ -172,6 +194,7 @@ namespace k2vr_installer_gui.Tools
                 Application.Current.Shutdown(1);
                 return;
             }
+            */
 
             steamVrSettingsPath = Path.Combine(steamPath, "config", "steamvr.vrsettings");
             copiedDriverPath = Path.Combine(steamVrPath, "drivers", "KinectToVR");

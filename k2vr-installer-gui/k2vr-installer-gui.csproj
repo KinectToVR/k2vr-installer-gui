@@ -245,7 +245,6 @@
     <Resource Include="installer-icon.png" />
     <Resource Include="Pages\cover.png" />
     <Resource Include="installer-icon.ico" />
-    <Content Include="Resources\Jost-600-Semi.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
