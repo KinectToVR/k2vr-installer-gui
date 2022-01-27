@@ -6,7 +6,7 @@ namespace k2vr_installer_gui.Tools.OpenVRFiles
 {
     class OpenVrPaths
     {
-        static string path = Environment.ExpandEnvironmentVariables(Path.Combine("%LocalAppData%", "openvr", "openvrpaths.vrpath"));
+        public static string path = Environment.ExpandEnvironmentVariables(Path.Combine("%LocalAppData%", "openvr", "openvrpaths.vrpath"));
 
         // Prevent Warning CS0649: Field '...' is never assigned to, and will always have its default value null:
 #pragma warning disable 0649

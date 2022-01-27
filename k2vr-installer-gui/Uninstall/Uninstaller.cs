@@ -230,6 +230,14 @@ namespace k2vr_installer_gui.Uninstall
         public static void UnregisterK2EX(string path)
         {
             string driverPath = path + @"\KinectToVR";
+            if (!File.Exists(App.state.vrPathReg))
+            {
+                MessageBox.Show("SteamVR installation folder not found or corrupt!" + Environment.NewLine +
+                                "Try verifying your SteamVR install's integrity, or reinstalling it." + Environment.NewLine +
+                                "If none of these work, please join our Discord server for further assistance (link on www.k2vr.tech)");
+                Application.Current.Shutdown(1);
+                return;
+            }
             Process.Start(App.state.vrPathReg, "removedriver \"" + driverPath + "\"").WaitForExit();
 
             var openVrPaths = OpenVrPaths.Read();
