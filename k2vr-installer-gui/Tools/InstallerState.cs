@@ -131,8 +131,8 @@ namespace k2vr_installer_gui.Tools
         public void UpdateSteamPaths()
         {
             steamPath = "";
-            steamPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Valve\Steam", "InstallPath", "").ToString();
-            if (steamPath == "")
+            steamPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Valve\Steam", "InstallPath", null)?.ToString();
+            if (steamPath == "" || steamPath == null)
             {
                 MessageBox.Show("Steam installation folder not found!" + Environment.NewLine +
                     "Are you sure it is installed?" + Environment.NewLine +
