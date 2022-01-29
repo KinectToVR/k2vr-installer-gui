@@ -38,7 +38,7 @@ namespace k2vr_installer_gui.Uninstall
             return obj;
         }
 
-        public void Delete(string basePath)
+        public bool Delete(string basePath)
         {
             foreach (string file in Files)
             {
@@ -48,9 +48,12 @@ namespace k2vr_installer_gui.Uninstall
             for (int i = Folders.Count - 1; i >= 0; i--)
             {
                 string delDir = Path.Combine(basePath, Folders[i]);
-                if (Directory.Exists(delDir)) Directory.Delete(delDir, false);
+                if (Directory.Exists(delDir))
+                {
+                    if (!Utils.DeleteDirectoryIfEmpty(delDir)) return false;
+                }
             }
-            Directory.Delete(basePath, false);
+            return Utils.DeleteDirectoryIfEmpty(basePath);
         }
     }
     static class Uninstaller
@@ -189,7 +192,14 @@ namespace k2vr_installer_gui.Uninstall
             {
                 Logger.Log("Deleting copied driver...", false);
                 FileList ovrDriverFiles = FileList.Read("OpenVrDriverFiles");
-                ovrDriverFiles.Delete(App.state.copiedDriverPath);
+                if (!ovrDriverFiles.Delete(App.state.copiedDriverPath))
+                {
+                    MessageBox.Show(Properties.Resources.install_unknown_files.Replace("{0}", App.state.copiedDriverPath));
+                    Process.Start("explorer.exe", App.state.copiedDriverPath);
+                    MessageBox.Show("If you have ensured that the folder is now empty, please restart the installer.");
+                    installPage.Cancel();
+                    return false;
+                }
                 Logger.Log("Deleted...", false);
             }
             if (Directory.Exists(App.state.GetFullInstallationPath()))

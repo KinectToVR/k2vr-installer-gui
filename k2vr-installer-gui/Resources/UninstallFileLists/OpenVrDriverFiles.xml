@@ -1,8 +1,17 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <FileList>
   <Files>
+    <!-- Common files -->
     <string>driver.vrdrivermanifest</string>
     <string>bin\win64\driver_KinectToVR.dll</string>
+
+    <!-- Files from 0.9.0 -->
+    <string>bin\win64\boost_serialization-vc142-mt-x64-1_77.dll</string>
+    <string>bin\win64\gflags.dll</string>
+    <string>bin\win64\glog.dll</string>
+    <string>bin\win64\KinectToVR_API.dll</string>
+    
+    <!-- Files from 0.8.0 -->
     <string>resources\driver.vrresources</string>
     <string>resources\anims\bonemask_fingeraux.txt</string>
     <string>resources\anims\bonemask_fingers.txt</string>
@@ -134,9 +143,12 @@
     <string>resources\rendermodels\valve_controller_knu_ev2_0_right\valve_controller_knu_ev2_0_right.obj</string>
   </Files>
   <Folders>
+    <!-- Common folders -->
     <string>bin</string>
-    <string>resources</string>
     <string>bin\win64</string>
+
+    <!-- Folders from 0.8.0 -->
+    <string>resources</string>
     <string>resources\anims</string>
     <string>resources\icons</string>
     <string>resources\input</string>

@@ -17,6 +17,16 @@ namespace k2vr_installer_gui.Tools
             return (Directory.GetFiles(path).Length + Directory.GetDirectories(path).Length) == 0;
         }
 
+        public static bool DeleteDirectoryIfEmpty(string directory)
+        {
+            if (IsDirectoryEmpty(directory))
+            {
+                Directory.Delete(directory, false);
+                return true;
+            }
+            return false;
+        }
+
         public static bool EnsureSteamVrClosed()
         {
             Logger.Log("Checking if SteamVR is open...", false);
@@ -73,7 +83,7 @@ namespace k2vr_installer_gui.Tools
                 Logger.Log("Closing vrserver...", false);
 
                 // CloseMainWindow won't work here because it doesn't have a window
-                process.Kill(); 
+                process.Kill();
                 Thread.Sleep(5000);
                 if (!process.HasExited)
                 {
