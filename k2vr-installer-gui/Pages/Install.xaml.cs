@@ -166,8 +166,16 @@ namespace k2vr_installer_gui.Pages
 
                 Logger.Log("Installing Visual C++ Redistributable...", false);
                 string vcRedistPath = Path.Combine(App.downloadDirectory, FileDownloader.files["vc_redist2019"].OutName);
-                Process.Start(vcRedistPath, "/quiet /norestart").WaitForExit();
-                Logger.Log("Done!");
+                try
+                {
+                    Process.Start(vcRedistPath, "/quiet /norestart").WaitForExit();
+                    Logger.Log("Done!");
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("The Visual C++ Redistributable could not be installed, if you run into problems launching KinectToVR, please join our Discord for further assistance (Link on k2vr.tech).");
+                    Logger.Log("Failed!");
+                }
 
                 Logger.Log("Registering OpenVR driver...", false);
                 string driverPath = Path.Combine(App.state.GetFullInstallationPath(), "KinectToVR");
