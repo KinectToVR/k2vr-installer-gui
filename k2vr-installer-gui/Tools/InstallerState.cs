@@ -108,7 +108,7 @@ namespace k2vr_installer_gui.Tools
                     devices.Dispose();
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Logger.Log($"Failed to detect a Kinect! Continuing anyway...");
             }
