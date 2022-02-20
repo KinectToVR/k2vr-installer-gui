@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("KinectToVR Team")]
 [assembly: AssemblyProduct("k2vr-installer-gui")]
-[assembly: AssemblyCopyright("Copyright ©KinectToVR Team 2020")]
+[assembly: AssemblyCopyright("Copyright ©KinectToVR Team 2020-2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
