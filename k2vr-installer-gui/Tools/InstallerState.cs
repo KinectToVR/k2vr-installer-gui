@@ -5,12 +5,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Management;
 using System.Windows;
-using System.Windows.Documents;
 using System.Xml.Serialization;
 
 namespace k2vr_installer_gui.Tools
 {
-    public class InstallerState
+	public class InstallerState
     {
         public const string fileName = "installerSettings.xml";
 
@@ -79,12 +78,12 @@ namespace k2vr_installer_gui.Tools
 
         public void UpdatePluggedInDevice()
         {
-            using (var searcher = new ManagementObjectSearcher(@"Select * From Win32_USBControllerDevice"))
+            try
             {
-                ManagementObjectCollection devices = searcher.Get();
-                foreach (ManagementBaseObject device in devices)
+                using (var searcher = new ManagementObjectSearcher(@"Select * From Win32_USBControllerDevice"))
                 {
-                    try
+                    ManagementObjectCollection devices = searcher.Get();
+                    foreach (ManagementBaseObject device in devices)
                     {
                         string dependent = (string)device.GetPropertyValue("Dependent");
                         string devId = dependent.Substring(dependent.IndexOf("DeviceID=\""));
@@ -106,9 +105,12 @@ namespace k2vr_installer_gui.Tools
                             pluggedInDevice = TrackingDevice.XboxOneKinect;
                         }
                     }
-                    catch (ManagementException) { }
+                    devices.Dispose();
                 }
-                devices.Dispose();
+            }
+            catch (Exception)
+            {
+                Logger.Log($"Failed to detect a Kinect! Continuing anyway...");
             }
         }
 
@@ -129,8 +131,8 @@ namespace k2vr_installer_gui.Tools
         public void UpdateSteamPaths()
         {
             steamPath = "";
-            steamPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Valve\Steam", "InstallPath", "").ToString();
-            if (steamPath == "")
+            steamPath = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Valve\Steam", "InstallPath", null)?.ToString();
+            if (steamPath == "" || steamPath == null)
             {
                 MessageBox.Show("Steam installation folder not found!" + Environment.NewLine +
                     "Are you sure it is installed?" + Environment.NewLine +

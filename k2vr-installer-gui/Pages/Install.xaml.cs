@@ -46,15 +46,6 @@ namespace k2vr_installer_gui.Pages
             });
         }
 
-        // https://stackoverflow.com/a/58779/
-        static void CopyFilesRecursively(DirectoryInfo source, DirectoryInfo target)
-        {
-            foreach (DirectoryInfo dir in source.GetDirectories())
-                CopyFilesRecursively(dir, target.CreateSubdirectory(dir.Name));
-            foreach (FileInfo file in source.GetFiles())
-                file.CopyTo(Path.Combine(target.FullName, file.Name));
-        }
-
         public async void OnSelected()
         {
             Logger.LogEvent += (LogEventArgs e) =>
@@ -175,19 +166,25 @@ namespace k2vr_installer_gui.Pages
 
                 Logger.Log("Installing Visual C++ Redistributable...", false);
                 string vcRedistPath = Path.Combine(App.downloadDirectory, FileDownloader.files["vc_redist2019"].OutName);
-                Process.Start(vcRedistPath, "/quiet /norestart").WaitForExit();
-                Logger.Log("Done!");
+                try
+                {
+                    Process.Start(vcRedistPath, "/quiet /norestart").WaitForExit();
+                    Logger.Log("Done!");
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("The Visual C++ Redistributable could not be installed, if you run into problems launching KinectToVR, please join our Discord for further assistance (Link on k2vr.tech).");
+                    Logger.Log("Failed!");
+                }
 
                 Logger.Log("Registering OpenVR driver...", false);
                 string driverPath = Path.Combine(App.state.GetFullInstallationPath(), "KinectToVR");
                 // Process.Start(App.state.vrPathReg, "adddriver \"" + driverPath + "\"").WaitForExit();
-                var openVrPathsJSON = JsonConvert.DeserializeObject<dynamic>(File.ReadAllText(Environment.ExpandEnvironmentVariables(Path.Combine("%LocalAppData%", "openvr", "openvrpaths.vrpath"))));
+                var openVrPaths = OpenVrPaths.Read();
                 try
                 {
-                    JArray DriverList = openVrPathsJSON["external_drivers"];
-                    DriverList.Add(driverPath);
-                    openVrPathsJSON["external_drivers"] = DriverList;
-                    JsonFile.Write((Environment.ExpandEnvironmentVariables(Path.Combine("%LocalAppData%", "openvr", "openvrpaths.vrpath"))), openVrPathsJSON, 3, ' ');
+                    openVrPaths.external_drivers.Add(driverPath);
+                    openVrPaths.Write();
                     Logger.Log("Done!");
                 }
                 catch (Exception)
@@ -195,11 +192,11 @@ namespace k2vr_installer_gui.Pages
                     Logger.Log("Couldn't add to VRPaths...");
                 }
                 Logger.Log("Checking...", false);
-                var openVrPaths = OpenVrPaths.Read();
-                if (!openVrPaths.external_drivers.Contains(driverPath))
+                var openVrPathsCheck = OpenVrPaths.Read();
+                if (!openVrPathsCheck.external_drivers.Contains(driverPath))
                 {
-                    Logger.Log("Copying...", false);
-                    CopyFilesRecursively(new DirectoryInfo(driverPath), new DirectoryInfo(App.state.copiedDriverPath));
+                    MessageBox.Show("Driver could not be registered, make sure SteamVR is closed!" + Environment.NewLine + "Restart this installer to try again." + Environment.NewLine + "Please join our Discord for further assistance (Link on k2vr.tech).");
+                    Cancel();
                 }
                 Logger.Log("Done!");
 

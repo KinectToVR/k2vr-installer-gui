@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="{x:Static res:Resources.home_language_button}" Height="162.81" Width="472.727" ShowInTaskbar="False" Topmost="True" ResizeMode="NoResize" Icon="/k2vr-installer-gui;component/installer-icon.ico" WindowStartupLocation="CenterScreen">
     <Grid Background="{DynamicResource brush_primary}">
-        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" FontSize="16" FontFamily="Jost* Semi" Margin="10,10,0,0" VerticalAlignment="Top" Width="446" Height="51" Background="{DynamicResource brush_secondary}" BorderBrush="{DynamicResource brush_primary}" Foreground="{DynamicResource brush_foreground}"/>
+		<ComboBox x:Name="comboBox" HorizontalAlignment="Left" FontSize="16" FontFamily="pack://application:,,,/Resources/Inter,/Resources/Migu 1M" Margin="10,10,0,0" VerticalAlignment="Top" Width="446" Height="51" Background="{DynamicResource brush_secondary}" BorderBrush="{DynamicResource brush_primary}" Foreground="{DynamicResource brush_foreground}"/>
         <Button Style="{StaticResource Button_Primary}" x:Name="lang_ok" FontFamily="Segoe MDL2 Assets" Content="" FontSize="28" HorizontalAlignment="Left" Height="60" Margin="395,66,0,0" VerticalAlignment="Top" Width="60"/>
         <Button Style="{StaticResource Button_Primary}" x:Name="lang_cancel" FontFamily="Segoe MDL2 Assets" Content="" FontSize="28" HorizontalAlignment="Left" Height="60" Margin="327,66,0,0" VerticalAlignment="Top" Width="60"/>
 

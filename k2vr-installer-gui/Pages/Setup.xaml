@@ -8,8 +8,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="{StaticResource brush_background}">
     <StackPanel>
-        <TextBlock x:Name="setup_selection" Style="{StaticResource Heading}" Text="{x:Static res:Resources.setup_selection}" FontFamily="Jost*, Migu 1M" Margin="0,48,0,0"/>
-        <ListBox Style="{StaticResource ListBox}" FontFamily="Jost, Migu 1M*" x:Name="ListBox_devices" ItemsSource="{DynamicResource devices}"
+		<TextBlock x:Name="setup_selection" Style="{StaticResource Heading}" Text="{x:Static res:Resources.setup_selection}" FontFamily="pack://application:,,,/Resources/Inter,/Resources/Migu 1M" Margin="0,48,0,0"/>
+		<ListBox Style="{StaticResource ListBox}" FontFamily="pack://application:,,,/Resources/Inter,/Resources/Migu 1M" x:Name="ListBox_devices" ItemsSource="{DynamicResource devices}"
                  HorizontalAlignment="Center" Background="Transparent" BorderThickness="0" SnapsToDevicePixels="True">
             <ListBox.ItemsPanel>
                 <!-- https://stackoverflow.com/a/1052512/ -->
@@ -36,7 +36,7 @@
             <Button x:Name="setup_change_location_button" Style="{StaticResource Button_Secondary}" Content="{x:Static res:Resources.setup_change_location_button}" Click="Button_ChooseLocation_Click"/>
         </StackPanel>
         <CheckBox Style="{StaticResource CheckBox}" x:Name="CheckBox_analytics" HorizontalAlignment="Center" Margin="0,16,0,0"
-                  FontFamily="Jost* Semi, Migu 1M" FontSize="20" Content="Allow sending anonymous usage data" Visibility="Collapsed" />
+                  FontFamily="pack://application:,,,/Resources/Inter,/Resources/Migu 1M" FontSize="20" Content="Allow sending anonymous usage data" Visibility="Collapsed" />
         <TextBlock HorizontalAlignment="Center" Margin="0,0,0,8" Visibility="Collapsed">
             <Hyperlink Click="Hyperlink_Analytics_Click">What data is being collected?</Hyperlink>
         </TextBlock>

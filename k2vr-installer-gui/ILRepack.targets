@@ -6,7 +6,8 @@
 
     <ItemGroup>
       <InputAssemblies Include="$(OutputPath)$(TargetName)$(TargetExt)"/>
-      <InputAssemblies Include="$(OutputPath)*.dll" Exclude="$(OutputPath)$(TargetName)$(TargetExt)"/>
+      <InputAssemblies Include="$(OutputPath)Ookii.Dialogs.Wpf.dll" />
+      <InputAssemblies Include="$(OutputPath)Newtonsoft.Json.dll" />
     </ItemGroup>
 
     <PropertyGroup>

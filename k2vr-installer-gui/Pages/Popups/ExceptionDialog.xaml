@@ -8,7 +8,7 @@
         WindowStartupLocation="CenterScreen"
         Title="Unhandled Exception" Height="500" Width="500" MinHeight="300" MinWidth="450"
         Icon="/installer-icon.png" Background="{StaticResource brush_background}" Foreground="{StaticResource brush_foreground}"
-        FontFamily="Jost*">
+        FontFamily="pack://application:,,,/Resources/Inter,/Resources/Migu 1M">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
